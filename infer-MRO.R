@@ -2,17 +2,17 @@
 source("hypertraps.R")
 
 df.ncbi = read.table("Data/mro-ncbi-tree.phy-cooked.txt-data.txt", header=FALSE)
-ancs.ncbi = as.matrix(df[seq(1, nrow(df.ncbi), by=2),])
-descs.ncbi = as.matrix(df[seq(2, nrow(df.ncbi), by=2),])
+ancs.ncbi = as.matrix(df.ncbi[seq(1, nrow(df.ncbi), by=2),])
+descs.ncbi = as.matrix(df.ncbi[seq(2, nrow(df.ncbi), by=2),])
 
 df.tt = read.table("Data/mro-tree-tt-format.phy-data.txt", header=FALSE)
-ancs.tt = as.matrix(df[seq(1, nrow(df.tt), by=2),])
-descs.tt = as.matrix(df[seq(2, nrow(df.tt), by=2),])
+ancs.tt = as.matrix(df.tt[seq(1, nrow(df.tt), by=2),])
+descs.tt = as.matrix(df.tt[seq(2, nrow(df.tt), by=2),])
 t1s.tt = as.matrix(read.table("Data/mro-tree-tt-format.phy-datatime.txt", header=FALSE))
 
 df.ttp = read.table("Data/mro-tree-ttplus-format.phy-data.txt", header=FALSE)
-ancs.ttp = as.matrix(df[seq(1, nrow(df.ttp), by=2),])
-descs.ttp = as.matrix(df[seq(2, nrow(df.ttp), by=2),])
+ancs.ttp = as.matrix(df.ttp[seq(1, nrow(df.ttp), by=2),])
+descs.ttp = as.matrix(df.ttp[seq(2, nrow(df.ttp), by=2),])
 t1s.ttp = as.matrix(read.table("Data/mro-ttplus-1.txt", header=FALSE))
 t2s.ttp = as.matrix(read.table("Data/mro-ttplus-2.txt", header=FALSE))
 
