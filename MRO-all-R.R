@@ -1,5 +1,7 @@
 library(phytools)
 library(parallel)
+library(sybilSBML)
+
 source("hypertraps.R")
 
 # read data
@@ -75,4 +77,78 @@ g.pathways = ggarrange(plotHypercube.motifs(parallelised.runs[[1]])+theme(legend
 sf = 2
 png("mro-pathways.png", width=600*sf, height=600*sf, res=72*sf)
 print(g.pathways)
+dev.off()
+
+fba.mod = readSBMLmod("12918_2011_715_MOESM4_ESM.XML")
+optimizeProb(fba.mod)
+etc.rs = grep("COMPLEX",fba.mod@react_name)
+atp.obj = rep(0, length(fba.mod@react_name))
+atp.obj[420] = 1
+res.df = data.frame()
+for(ko in 1:length(fba.mod@react_name)) {
+  tmp.mod = fba.mod
+  tmp.mod@lowbnd[ko] = 0
+  tmp.mod@uppbnd[ko] = 0
+  soln = optimizeProb(tmp.mod)
+  soln.atp = optimizeProb(tmp.mod, obj_coef = atp.obj)
+  tmp.mod@lowbnd[345] = 0
+  tmp.mod@uppbnd[345] = 1
+  soln.hypoxia = optimizeProb(tmp.mod)
+  soln.atp.hypoxia = optimizeProb(tmp.mod, obj_coef = atp.obj)
+  res.df = rbind(res.df, data.frame(name=fba.mod@react_name[ko], 
+                                    ko.val=soln@lp_obj, ko.atp.val=soln.atp@lp_obj,
+                                    ko.val.hypoxia=soln.hypoxia@lp_obj,
+                                    ko.atp.val.hypoxia=soln.atp.hypoxia@lp_obj))
+}
+tmp.mod = fba.mod
+soln = optimizeProb(tmp.mod)
+soln.atp = optimizeProb(tmp.mod, obj_coef = atp.obj)
+tmp.mod@lowbnd[345] = 0
+tmp.mod@uppbnd[345] = 1
+soln.hypoxia = optimizeProb(tmp.mod)
+soln.atp.hypoxia = optimizeProb(tmp.mod, obj_coef = atp.obj)
+res.df = rbind(res.df, data.frame(name="full model", 
+                                  ko.val=soln@lp_obj, ko.atp.val=soln.atp@lp_obj,
+                                  ko.val.hypoxia=soln.hypoxia@lp_obj,
+                                  ko.atp.val.hypoxia=soln.atp.hypoxia@lp_obj))
+write.csv(res.df, "fba-res.csv")
+res.df$class = ""
+res.df$class[etc.rs] = res.df$name[etc.rs]
+ggplot(res.df, aes(x=ko.atp.val, y=ko.atp.val.hypoxia, label=factor(class))) + geom_point() + geom_text()
+
+res.df = read.csv("fba-res.csv")
+res.df$label = ""
+res.df$label[grep("COMPLEX I ", res.df$name)] = "CI"
+res.df$label[grep("COMPLEX II ", res.df$name)] = "CII"
+res.df$label[grep("COMPLEX III ", res.df$name)] = "CIII"
+res.df$label[grep("COMPLEX IV ", res.df$name)] = "CIV"
+res.df$label[grep("ATP SYNTHASE ", res.df$name)] = "CV"
+
+res.df$name[grep("Pyruvate", res.df$name)]
+res.df$name[grep("Acetyl-CoA", res.df$name)]
+ggplot(res.df, aes(x=ko.val, y=ko.val.hypoxia, label=label)) + 
+  geom_point() + 
+  geom_text_repel()
+
+first.steps = parallelised.runs[[1]]$routes[,1]
+first.df = res.df[res.df$label!="",]
+first.df$propn = 0
+for(i in 1:nrow(first.df)) {
+  ref = which(featurenames == first.df$label[i])-1
+  propn = sum(first.steps == ref) / length(first.steps)
+  first.df$propn[i] = propn
+}
+g.normoxic = ggplot(first.df, aes(x=ko.atp.val, y=propn, label=label)) + 
+  geom_point() + geom_smooth(method="lm", color="#AAAAFF", fill="#AAAAFF") + 
+  geom_text_repel() + theme_light() +
+  labs(x = "ATP objective on KO", y = "First loss probability")
+
+g.normoxic
+fit.lm = summary(lm(propn~ko.atp.val, data=first.df))
+
+cs = fit.lm$coefficients
+tstr = sprintf("Slope %.1e +- %.1e, p=%.2e", cs[2,1], cs[2,2], cs[2,4])
+
+png("mro-first-fba.png", width=300*sf, height=300*sf, res=72*sf)
+print(g.normoxic + ggtitle(tstr))
 dev.off()
