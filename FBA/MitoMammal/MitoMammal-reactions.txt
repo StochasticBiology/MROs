@@ -1,0 +1,561 @@
+Reaction number,Reaction name,Subsystem,Gene name,lb,ub
+1,EX_2hb(e),Exchange reaction,,-infty,infty
+2,EX_ac(e) ,Exchange reaction,,-infty,infty
+3,EX_acac(e),Exchange reaction,,-infty,infty
+4,EX_akg(e),Exchange reaction,,-infty,infty
+5,EX_ala_B(e) ,Exchange reaction,,-infty,infty
+6,EX_ala_L(e),Exchange reaction,,-infty,infty
+7,EX_arg_L(e),Exchange reaction,,-infty,infty
+8,EX_argsuc(e),Exchange reaction,,-infty,infty
+9,EX_asn_L(e),Exchange reaction,,-infty,infty
+10,EX_asp_L(e),Exchange reaction,,-infty,infty
+11,EX_bhb(e),Exchange reaction,,-infty,infty
+12,EX_bilirub(e),Exchange reaction,,-infty,infty
+13,EX_biomass(e),Exchange reaction,,-infty,infty
+14,EX_but(e),Exchange reaction,,-infty,infty
+15,EX_chol(e),Exchange reaction,,-infty,infty
+16,EX_cit(e),Exchange reaction,,-infty,infty
+17,EX_citr_L(e),Exchange reaction,,-infty,infty
+18,EX_co(e),Exchange reaction,,-infty,infty
+19,EX_co2(e),Exchange reaction,,-infty,infty
+20,EX_creat(e),Exchange reaction,,-infty,infty
+21,EX_cyan(e),Exchange reaction,,-infty,infty
+22,EX_cys_L(e),Exchange reaction,,-infty,infty
+23,EX_etoh(e),Exchange reaction,,-infty,infty
+24,EX_fe2(e),Exchange reaction,,-infty,infty
+25,EX_for(e),Exchange reaction,,-infty,infty
+26,EX_fum(e),Exchange reaction,,-infty,infty
+27,EX_glc_D(e),Exchange reaction,,-infty,infty
+28,EX_gln_L(e),Exchange reaction,,-infty,infty
+29,EX_glu_L(e),Exchange reaction,,-infty,infty
+30,EX_gly(e) ,Exchange reaction,,-infty,infty
+31,EX_glyc(e),Exchange reaction,,-infty,infty
+32,EX_h(e),Exchange reaction,,-infty,infty
+33,EX_h2o(e),Exchange reaction,,-infty,infty
+34,EX_HC00250(e),Exchange reaction,,-infty,infty
+35,EX_hco3(e),Exchange reaction,,-infty,infty
+36,EX_hdca(e),Exchange reaction,,-infty,infty
+37,EX_his_L(e),Exchange reaction,,-infty,infty
+38,EX_icit(e),Exchange reaction,,-infty,infty
+39,EX_ile_L(e),Exchange reaction,,-infty,infty
+40,EX_lac_L(e),Exchange reaction,,-infty,infty
+41,EX_leu_L(e),Exchange reaction,,-infty,infty
+42,EX_lys_L(e),Exchange reaction,,-infty,infty
+43,EX_mal_L(e),Exchange reaction,,-infty,infty
+44,EX_mercplac(e),Exchange reaction,,-infty,infty
+45,EX_met_L(e),Exchange reaction,,-infty,infty
+46,EX_nad(e),Exchange reaction,,-infty,infty
+47,EX_nadh(e),Exchange reaction,,-infty,infty
+48,EX_nh4(e),Exchange reaction,,-infty,infty
+49,EX_no(e),Exchange reaction,,-infty,infty
+50,EX_o2(e),Exchange reaction,,-infty,infty
+51,EX_oaa(e),Exchange reaction,,-infty,infty
+52,EX_pchol_hs(e),Exchange reaction,,-infty,infty
+53,EX_pcreat(e),Exchange reaction,,-infty,infty
+54,EX_pe_hs(e),Exchange reaction,,-infty,infty
+55,EX_phe_L(e),Exchange reaction,,-infty,infty
+56,EX_pi(e),Exchange reaction,,-infty,infty
+57,EX_ppa(e),Exchange reaction,,-infty,infty
+58,EX_pro_L(e),Exchange reaction,,-infty,infty
+59,EX_ps_hs(e),Exchange reaction,,-infty,infty
+60,EX_ser_L(e),Exchange reaction,,-infty,infty
+61,EX_so3(e),Exchange reaction,,-infty,infty
+62,EX_succ(e),Exchange reaction,,-infty,infty
+63,EX_tcynt(e),Exchange reaction,,-infty,infty
+64,EX_thr_L(e),Exchange reaction,,-infty,infty
+65,EX_trp_L(e),Exchange reaction,,-infty,infty
+66,EX_tsul(e),Exchange reaction,,-infty,infty
+67,EX_tyr_L(e),Exchange reaction,,-infty,infty
+68,EX_urea(e),Exchange reaction,,-infty,infty
+69,EX_val_L(e),Exchange reaction,,-infty,infty
+70,EX_fol(e),Exchange reaction,,-infty,infty
+71,OF_ATP_MitoCore,Objective Function - ATP,,0,1000
+72,OF_HEME_MitoCore,Objective Function - Heme,,0,1000
+73,OF_LIPID_MitoCore,Objective Function - Lipid synthesis,,0,1000
+74,OF_PROTEIN_MitoCore,Objective Function - Protein Synthesis,,0,1000
+75,HEX1,Glycolysis,Hexokinases,0,1000
+76,G6PPer,Gluconeogenesis,Glucose 6-phosphatase,0,0
+77,PGI,Glycolysis/gluconeogenesis,glucose-6-phosphate isomerase,-1000,1000
+78,PFK,Glycolysis,phosphofructokinase,0,1000
+79,FBP,Gluconeogenesis,fructose-bisphosphatase,0,0
+80,FBA,Glycolysis/gluconeogenesis,fructose-bisphosphate aldolase,-1000,1000
+81,TPI,Glycolysis/gluconeogenesis,triose-phosphate isomerase,-1000,1000
+82,GAPD,Glycolysis/gluconeogenesis,glyceraldehyde-3-phosphate dehydrogenase,-1000,1000
+83,PGK,Glycolysis/gluconeogenesis,Phosphoglycerate kinase 1,-1000,1000
+84,PGM,Glycolysis/gluconeogenesis,Phosphoglycerate mutase 1,-1000,1000
+85,ENO,Glycolysis/gluconeogenesis,enolase,-1000,1000
+86,PYK,Glycolysis/gluconeogenesis,pyruvate kinase,0,1000
+87,r0122,Glycolysis,pyruvate kinase,0,1000
+88,PEPCK,Gluconeogenesis,phosphoenolpyruvate carboxykinase,0,1000
+89,LDH_L,Glycolysis/gluconeogenesis,L-lactate dehydrogenase,-1000,1000
+90,G6PDH2r,Pentose phosphate pathway,glucose 6-phosphate dehydrogenase,0,1000
+91,PGL,Pentose phosphate pathway,6-phosphogluconolactonase,0,1000
+92,GND,Pentose phosphate pathway,phosphogluconate dehydrogenase,-1000,1000
+93,RPI,Pentose phosphate pathway,ribose-5-phosphate isomerase,-1000,1000
+94,RPE,Pentose phosphate pathway,ribulose 5-phosphate 3-epimerase,-1000,1000
+95,TKT1,Pentose phosphate pathway,transketolase,-1000,1000
+96,TALA,Pentose phosphate pathway,transaldolase,-1000,1000
+97,TKT2,Pentose phosphate pathway,transketolase,-1000,1000
+98,PDHm,TCA cycle,pyruvate dehydrogenase,0,1000
+99,CSm,TCA cycle,citrate synthase,0,1000
+100,ACONTm,TCA cycle,Aconitate hydratase,-1000,1000
+101,ICDHxm,TCA cycle,Isocitrate dehydrogenase (NAD+),0,1000
+102,ICDHyrm,TCA cycle,"Isocitrate dehydrogenase (NADP+), mitochondrial",-1000,1000
+103,AKGDm,TCA cycle,2-oxoglutarate dehydrogenase complex,0,1000
+104,SUCOAS1m,TCA cycle,Succinate--CoA ligase (GDP-forming),-1000,1000
+105,SUCOASm,TCA cycle,Succinate--CoA ligase (ADP-forming),-1000,1000
+106,FUMm,TCA cycle,fumarate hydratase,-1000,1000
+107,MDHm,TCA cycle,"malate dehydrogenase 2, NAD (mitochondrial)",-1000,1000
+108,CI_MitoMap,Electron transport chain CI,NADH dehydrogenase,-1000,1000
+109,CII_MitoMap,Electron transport chain CII,succinate dehydrogenase,-1000,1000
+110,CIII_MitoMap,Electron transport chain CIII,cytochrome c reductase,-1000,1000
+111,CIV_MitoMap,Electron transport chain CIV,cytochrome c oxidase,0,1000
+112,CV_MitoMap,Electron transport chain CV,ATP synthase,-1000,1000
+113,PEPCKm,TCA cycle periphery,Phosphoenolpyruvate carboxykinase (GTP),0,1000
+114,PCm,TCA cycle periphery,"Pyruvate carboxylase, mitochondrial",0,1000
+115,ME2m,TCA cycle periphery,Malic Enzyme 3,0,1000
+116,ME1m,TCA cycle periphery,Malic Enzyme 2,0,1000
+117,r0081,TCA cycle periphery,glutamic pyruvate transaminase (alanine aminotransferase) 2,-1000,1000
+118,ACITLm_MitoCore,TCA cycle periphery,ATP citrate lyase,0,1000
+119,NDPK1m,TCA cycle periphery,nucleoside diphosphate kinase 4,-1000,1000
+120,NNT_MitoCore,TCA cycle periphery,nicotinamide nucleotide transhydrogenase,0,1000
+121,ADK1m,TCA cycle periphery,adenylate kinase 2 or 3,-1000,1000
+122,ME2,Cytosolic misc,Malic Enzyme 1,0,1000
+123,ALATA_L,Cytosolic misc,glutamic-pyruvate transaminase (alanine aminotransferase),-1000,1000
+124,NDPK1,Cytosolic misc,nucleoside diphosphate kinase (mulitple),-1000,1000
+125,FUM,Cytosolic misc,fumarate hydratase,-1000,1000
+126,ADK1,Cytosolic misc,adenylate kinase 1,-1000,1000
+127,ICDHy,Reductive carboxylation,Isocitrate dehydrogenase (NADP+),-0.1,1000
+128,ACONT,Reductive carboxylation,"aconitase 1, soluble",-1000,1000
+129,ACITL,Reductive carboxylation / Acetyl-CoA production for biosynthesis,ATP citrate lyase,0,1000
+130,ASPTA,Malate aspartate shuttle,"glutamic-oxaloacetic transaminase 1, soluble",-1000,1000
+131,MDH,Malate aspartate shuttle,"malate dehydrogenase 1, NAD (soluble)",-1000,1000
+132,AKGMALtm,Malate aspartate shuttle,solute carrier family 25 (mitochondrial carrier; oxoglutarate carrier),-1000,1000
+133,ASPGLUmB_MitoCore,Malate aspartate shuttle,"solute carrier family 25 (aspartate/glutamate carrier), member 12 or 13",0,1000
+134,ASPTAm,Malate aspartate shuttle,"glutamic-oxaloacetic transaminase 2, mitochondrial",-1000,1000
+135,G3PD1,Glycerol phosphate shuttle,glycerol-3-phosphate dehydrogenase 1,-1000,1000
+136,r0205,Glycerol phosphate shuttle,glycerol-3-phosphate dehydrogenase,0,1000
+137,FACOAL160i,Carnitine shuttle,acyl-CoA synthetase long-chain family (various),0,1000
+138,C160CPT1,Carnitine shuttle,carnitine palmitoyltransferase 1B (muscle),-1000,1000
+139,PPA,Carnitine shuttle,pyrophosphatase 1,0,1000
+140,r2435,Carnitine shuttle,carnitine carrier,-1000,1000
+141,C160CPT2,Carnitine shuttle,carnitine palmitoyltransferase 2,-1000,1000
+142,PPAm,Carnitine shuttle,pyrophosphatase 2,-1000,1000
+143,ACOT2_MitoCore,Fatty acid elongation in mitochondria,acyl-CoA thioesterase 2,0,1000
+144,ACADLC16_MitoCore,FA metabolism,long-chain acyl-CoA dehydrogenase,0,1000
+145,MECR16C_MitoCore,Fatty acid elongation in mitochondria,mitochondrial trans-2-enoyl-CoA reductase,0,1000
+146,MTPC16_MitoCore,FA metabolism,Mitochondrial trifunctional protein,-1000,1000
+147,ACADLC14_MitoCore,FA metabolism,long-chain acyl-CoA dehydrogenase,0,1000
+148,MECR14C_MitoCore,Fatty acid elongation in mitochondria,mitochondrial trans-2-enoyl-CoA reductase,0,1000
+149,MTPC14_MitoCore,FA metabolism,Mitochondrial trifunctional protein,-1000,1000
+150,r1447,FA metabolism,medium acyl-CoA dehydrogenase,0,1000
+151,r0638,Fatty acid elongation in mitochondria,mitochondrial trans-2-enoyl-CoA reductase,-1000,0
+152,r0660,FA metabolism,enoyl CoA hydratase,-1000,1000
+153,r0722,FA metabolism,3-hydroxyacyl-CoA dehydrogenase,-1000,1000
+154,r0724,FA metabolism,acetyl-CoA acyltransferase 2,-1000,1000
+155,r1451,FA metabolism,medium acyl-CoA dehydrogenase,0,1000
+156,r0735,Fatty acid elongation in mitochondria,mitochondrial trans-2-enoyl-CoA reductase,-1000,0
+157,r0728,FA metabolism,enoyl CoA hydratase,-1000,1000
+158,r0726,FA metabolism,3-hydroxyacyl-CoA dehydrogenase,-1000,1000
+159,r0634,FA metabolism,acetyl-CoA acyltransferase 2,-1000,1000
+160,r1448,FA metabolism,medium acyl-CoA dehydrogenase,0,1000
+161,r0633,Fatty acid elongation in mitochondria,mitochondrial trans-2-enoyl-CoA reductase,-1000,0
+162,r0731,FA metabolism,enoyl CoA hydratase,-1000,1000
+163,r0730,FA metabolism,3-hydroxyacyl-CoA dehydrogenase,-1000,1000
+164,r0732,FA metabolism,acetyl-CoA acyltransferase 2,-1000,1000
+165,r1450,FA metabolism,medium acyl-CoA dehydrogenase,0,1000
+166,r0791,Fatty acid elongation in mitochondria,mitochondrial trans-2-enoyl-CoA reductase,0,1000
+167,r0734,FA metabolism,enoyl CoA hydratase,-1000,1000
+168,r0733,FA metabolism,3-hydroxyacyl-CoA dehydrogenase,-1000,1000
+169,r0287,FA metabolism,acetyl-CoA acyltransferase 2,-1000,1000
+170,r1446,FA metabolism,short acyl-CoA dehydrogenase,0,1000
+171,ECOAH1m,FA metabolism,enoyl CoA hydratase,-1000,1000
+172,HACD1m,FA metabolism,3-hydroxyacyl-CoA dehydrogenase,-1000,1000
+173,ACACT1rm,FA and ketone body metabolism / Ketogenesis,acetyl-CoA acetyltransferase 1,-1000,1000
+174,ACCOAC,FA synthesis - cytosolic,acetyl-CoA carboxylase,0,1000
+175,MCOATA,FA synthesis - cytosolic,fatty acid synthase,-1000,1000
+176,ACOATA,FA synthesis - cytosolic,fatty acid synthase,0,1000
+177,r0678,FA synthesis - cytosolic,fatty acid synthase,0,1000
+178,r0691,FA synthesis - cytosolic,fatty acid synthase,-1000,1000
+179,r0681,FA synthesis - cytosolic,fatty acid synthase,-1000,1000
+180,r0682,FA synthesis - cytosolic,fatty acid synthase,-1000,1000
+181,r0760,FA synthesis - cytosolic,fatty acid synthase,0,1000
+182,r0761,FA synthesis - cytosolic,fatty acid synthase,-1000,1000
+183,r0762,FA synthesis - cytosolic,fatty acid synthase,-1000,1000
+184,r0763,FA synthesis - cytosolic,fatty acid synthase,-1000,1000
+185,r0764,FA synthesis - cytosolic,fatty acid synthase,0,1000
+186,r0694,FA synthesis - cytosolic,fatty acid synthase,-1000,1000
+187,r0695,FA synthesis - cytosolic,fatty acid synthase,-1000,1000
+188,r0765,FA synthesis - cytosolic,fatty acid synthase,-1000,1000
+189,r0766,FA synthesis - cytosolic,fatty acid synthase,0,1000
+190,r0692,FA synthesis - cytosolic,fatty acid synthase,-1000,1000
+191,r0693,FA synthesis - cytosolic,fatty acid synthase,-1000,1000
+192,r0767,FA synthesis - cytosolic,fatty acid synthase,-1000,1000
+193,r0768,FA synthesis - cytosolic,fatty acid synthase,0,1000
+194,r0769,FA synthesis - cytosolic,fatty acid synthase,-1000,1000
+195,r0770,FA synthesis - cytosolic,fatty acid synthase,-1000,1000
+196,r0712,FA synthesis - cytosolic,fatty acid synthase,-1000,1000
+197,r0713,FA synthesis - cytosolic,fatty acid synthase,0,1000
+198,r0701,FA synthesis - cytosolic,fatty acid synthase,-1000,1000
+199,r0702,FA synthesis - cytosolic,fatty acid synthase,-1000,1000
+200,r0771,FA synthesis - cytosolic,fatty acid synthase,-1000,1000
+201,r0772,FA synthesis - cytosolic,fatty acid synthase,0,1000
+202,r0696,FA synthesis - cytosolic,fatty acid synthase,-1000,1000
+203,r0697,FA synthesis - cytosolic,fatty acid synthase,-1000,1000
+204,r0773,FA synthesis - cytosolic,fatty acid synthase,-1000,1000
+205,FA160ACPH,FA synthesis - cytosolic,fatty acid synthase,0,1000
+206,FACOAL40im,Butanoate metabolism,acyl-CoA synthetase medium-chain family member 3,0,1000
+207,BDHm,Ketone bodies - degradation,"3-hydroxybutyrate dehydrogenase, type 1",-1000,1000
+208,OCOAT1m,Ketone bodies - degradation,3-oxoacid CoA transferase 1,-1000,1000
+209,HMGCOASim,Ketogenesis,3-hydroxy-3-methylglutaryl-CoA synthase 2 (mitochondrial),0,0
+210,HMGLm,Ketogenesis / Leucine degradation,3-hydroxymethyl-3-methylglutaryl-CoA lyase,0,1000
+211,LEUTAm,Leucine degradation,OIVD3m,-1000,1000
+212,OIVD1m,Leucine degradation,branched-chain ?-ketoacid dehydrogenase complex,0,1000
+213,r0655,Leucine degradation,isovaleryl-CoA dehydrogenase,0,1000
+214,MCCCrm,Leucine degradation,methylcrotonoyl-CoA carboxylase,0,1000
+215,MGCHrm,Leucine degradation,Methylglutaconyl-CoA hydratase,-1000,1000
+216,ILETAm,Isoleucine degradation,"branched chain amino-acid transaminase 2, mitochondrial",-1000,1000
+217,OIVD3m,Isoleucine degradation,branched-chain ?-ketoacid dehydrogenase complex,0,1000
+218,r0603,Isoleucine degradation,acyl-CoA dehydrogenase,0,1000
+219,ECOAH9m,Isoleucine degradation,"enoyl CoA hydratase, short chain",0,1000
+220,HACD9m,Isoleucine degradation,3-hydroxyacyl-CoA dehydrogenase,-1000,1000
+221,ACACT10m,Isoleucine degradation,acetyl-CoA acyltransferase 2,0,1000
+222,VALTAm,Valine degradation,"branched chain amino-acid transaminase 2, mitochondrial",-1000,1000
+223,OIVD2m,Valine degradation,branched-chain ?-ketoacid dehydrogenase complex,0,1000
+224,r0560,Valine degradation,acyl-CoA dehydrogenase,0,1000
+225,ECOAH12m,Valine degradation,"enoyl CoA hydratase, short chain",-1000,1000
+226,3HBCOAHLm,Valine degradation,3-hydroxyisobutyryl-CoA hydrolase,-1000,1000
+227,HIBDm,Valine degradation,3-hydroxyisobutyrate dehydrogenase,-1000,1000
+228,ACCOALm,Propanoate metabolism,acyl-CoA synthetase short-chain family member 3,0,1000
+229,MMSAD1m,Propanoate metabolism,"aldehyde dehydrogenase 6 family, member A1",0,1000
+230,PPCOACm,Propanoate metabolism,propionyl CoA carboxylase,0,1000
+231,MMEm,Propanoate metabolism,methylmalonyl CoA epimerase,-1000,1000
+232,MMMm,Propanoate metabolism,methylmalonyl CoA mutase,-1000,1000
+233,MMCDm,Propanoate synthesis,ethylmalonyl-CoA decarboxylase 1,0,1000
+234,RE2649M,Propanoate synthesis,acyl-CoA thioesterase 2,-1000,1000
+235,THRD_L,Threonine degradation,serine dehydratase,0,1000
+236,r1155,Threonine degradation,,0,1000
+237,r1154,Threonine and Methionine degradation,branched-chain ?-ketoacid dehydrogenase complex,0,1000
+238,2HBO,Threonine and Methionine degradation,L-lactate dehydrogenase,-1000,1000
+239,METAT,Methionine degradation,"methionine adenosyltransferase II, alpha",0,1000
+240,METAT2_MitoCore,Methionine degradation,Multiple methyltransferases,0,1000
+241,AHC,Methionine degradation,adenosylhomocysteinase,0,1000
+242,ADNK1,Methionine degradation,adenosine kinase,-1000,1000
+243,CYSTS,Methionine and Serine degradation,cystathionine-beta-synthase,-1000,1000
+244,CYSTGL,Methionine and Serine degradation,cystathionine gamma-lyase,0,1000
+245,CYSO,Cysteine degradation I,cysteine dioxygenase type 1,0,1000
+246,3SALATAi,Cysteine degradation I,"glutamic-oxaloacetic transaminase 1, soluble",-1000,1000
+247,3SPYRSP,Cysteine degradation I,Non-Enzymatic,-1000,1000
+248,CYSTA,Cysteine degradation II,"glutamic-oxaloacetic transaminase 1, soluble",-1000,1000
+249,CYSTAm,Cysteine degradation II,"glutamic-oxaloacetic transaminase 2, mitochondrial",-1000,1000
+250,MCPST,Cysteine degradation II,mercaptopyruvate sulfurtransferase,0,1000
+251,MCPSTm_MitoCore,Cysteine degradation II,mercaptopyruvate sulfurtransferase,0,1000
+252,r0595m_MitoCore,Cysteine degradation II,mercaptopyruvate sulfurtransferase,0,1000
+253,r0595B_MitoCore,Cysteine degradation II,mercaptopyruvate sulfurtransferase,0,1000
+254,MCLOR,Cysteine degradation II,L-lactate dehydrogenase,-1000,1000
+255,r0193,Cysteine degradation III,cystathionine gamma-lyase,0,1000
+256,TRPO2,Tryptophan Metabolism,"tryptophan 2,3-dioxygenase",0,1000
+257,FKYNH,Tryptophan Metabolism,Kynurenine formamidase,0,1000
+258,KYN3OX,Tryptophan Metabolism,Kynurenine 3-monooxygenase,0,1000
+259,HKYNH,Tryptophan Metabolism,kynureninase,-1000,1000
+260,3HAO,Tryptophan Metabolism,"3-hydroxyanthranilate 3,4-dioxygenase",0,1000
+261,PCLAD,Tryptophan Metabolism,aminocarboxymuconate semialdehyde decarboxylase,0,1000
+262,r0645,Tryptophan Metabolism,Unknown,0,1000
+263,AMCOXO,Tryptophan Metabolism,Unknown,0,1000
+264,AMCOXO2_MitoCore,Tryptophan Metabolism,Unknown,0,1000
+265,2OXOADPTmB_MitoCore,Tryptophan Metabolism,2-oxoadipate shuttle (cytosol/mitochondria),0,1000
+266,2OXOADPTmC_MitoCore,Tryptophan Metabolism,2-oxoadipate shuttle (cytosol/mitochondria),0,1000
+267,2OXOADOXm,Tryptophan / Lysine Metabolism,2-oxoadipate dehydrogenase complex,0,1000
+268,r0541,Tryptophan / Lysine Metabolism,"Glutaryl-CoA dehydrogenase, mitochondrial",0,1000
+269,SACCD3m,Lysine degradation (saccharopine pathway),aminoadipate-semialdehyde synthase,-1000,1000
+270,r0525,Lysine degradation (saccharopine pathway),aminoadipate-semialdehyde synthase,-1000,1000
+271,AASAD3m,Lysine degradation (saccharopine pathway),"aldehyde dehydrogenase 7 family, member A1",0,1000
+272,R03103_MitoCore,Lysine degradation (saccharopine pathway),"aldehyde dehydrogenase 7 family, member A1",0,1000
+273,r0450,Lysine degradation (saccharopine pathway),aminoadipate aminotransferase,-1000,1000
+274,LYSOXc_MitoCore,Lysine degradation (L-pipecolate pathway),Unknown,0,1000
+275,PPD2CSPc_MitoCore,Lysine degradation (L-pipecolate pathway),Non-Enzymatic,-1000,1000
+276,1PPDCRc_MitoCore,Lysine degradation (L-pipecolate pathway),Unknown,0,1000
+277,1PPDCRc_NADPH_MitoCore,Lysine degradation (L-pipecolate pathway),Unknown,0,1000
+278,LPCOXc_MitoCore,Lysine degradation (L-pipecolate pathway),pipecolic acid oxidase,0,1000
+279,RE1254C,Lysine degradation (L-pipecolate pathway),Unknown,-1000,1000
+280,r0594,Lysine degradation (L-pipecolate pathway),"aldehyde dehydrogenase 7 family, member A1",0,1000
+281,2AMADPTmB_MitoCore,Lysine degradation (L-pipecolate pathway),2-oxoadipate shuttle (cytosol/mitochondria),0,1000
+282,2AMADPTmC_MitoCore,Lysine degradation (L-pipecolate pathway),2-oxoadipate shuttle (cytosol/mitochondria),0,1000
+283,PROD2mB_MitoCore,Proline degradation,Proline dehydrogenase 1,0,1000
+284,G5SADrm,Proline degradation/synthesis,Non-Enzymatic,-1000,1000
+285,r0074,Proline / ornithine degradation,"aldehyde dehydrogenase 4 family, member A1",0,1000
+286,GLU5Km,Proline synthesis,"aldehyde dehydrogenase 18 family, member A1",0,1000
+287,G5SDym,Proline synthesis,"aldehyde dehydrogenase 18 family, member A1",-1000,1000
+288,P5CRm,Proline synthesis,pyrroline-5-carboxylate reductase 1,0,1000
+289,P5CRxm,Proline synthesis,pyrroline-5-carboxylate reductase 1,0,1000
+290,ORNTArm,Ornithine degradation,ornithine aminotransferase,-1000,1000
+291,ORNDC,Ornithine degradation (cytosolic),ornithine decarboxylase 1,0,1000
+292,PTRCOX1,Ornithine degradation (cytosolic),"amine oxidase, copper containing 1",0,1000
+293,r0464c_MitoCore,Ornithine degradation (cytosolic),aldehyde dehydrogenase family,0,1000
+294,ABUTD,Ornithine degradation (cytosolic),aldehyde dehydrogenase family,0,1000
+295,ARGDCm,Arginine degradation,antizyme inhibitor 2,0,1000
+296,AGMTm,Arginine degradation,agmatine ureohydrolase (agmatinase),-1000,1000
+297,PTRCAT1m_MitoCore,Arginine degradation,spermidine/spermine N1-acetyltransferase family member 2,0,1000
+298,APRTO2m_MitoCore,Arginine degradation,monoamine oxidase B,0,1000
+299,NABTNOm,Arginine degradation,aldehyde dehydrogenase family,0,1000
+300,4aabutn_MitoCore,Arginine degradation,Unknown,0,1000
+301,GLUDC,GABA shunt,"glutamate decarboxylase 2 (pancreatic islets and brain, 65kDa)",0,1000
+302,4ABUTtm,GABA shunt - transport,,-1000,1000
+303,ABTArm,GABA shunt,4-aminobutyrate aminotransferase,-1000,1000
+304,r0178,GABA shunt,"aldehyde dehydrogenase 5 family, member A1",0,1000
+305,GLUDxm,Glutamate degradation/synthesis,glutamate dehydrogenase 1 or 2,0,1000
+306,GLUDym,Glutamate degradation/synthesis,glutamate dehydrogenase 1 or 2,0,1000
+307,GLUDxi,Glutamate degradation/synthesis - cytosolic,glutamate dehydrogenase 1,0,1000
+308,GLUDy,Glutamate degradation/synthesis - cytosolic,glutamate dehydrogenase 1,0,1000
+309,GLNS,Glutamine synthesis,Glutamine synthetase,0,1000
+310,GLUNm,Glutamine degradation,Glutaminase,0,1000
+311,GLUN_MitoCore,Glutamine degradation - cytosolic,Glutaminase or carbamoyl-phosphate synthetase 2,0,1000
+312,PGCD,Serine and glycine biosynthesis,phosphoglycerate dehydrogenase,-1000,1000
+313,PSERT,Serine and glycine biosynthesis,phosphoserine aminotransferase 1,-1000,1000
+314,PSP_L,Serine and glycine biosynthesis,phosphoserine phosphatase,0,1000
+315,GHMT2r,Serine and glycine biosynthesis,serine hydroxymethyltransferase 1 (soluble),-1000,1000
+316,FOLR2,Folate cytosolic,"ENSMUSG00000006378,Gcat",0,0
+317,DHFR,Folate cytosolic,dihydrofolate reductase,0,0
+318,MTHFD,Folate cytosolic,"methylenetetrahydrofolate dehydrogenase (NADP+ dependent) 1, methenyltetrahydrofolate cyclohydrolase, formyltetrahydrofolate synthetase",-1000,1000
+319,MTHFC,Folate cytosolic,"methylenetetrahydrofolate dehydrogenase (NADP+ dependent) 1, methenyltetrahydrofolate cyclohydrolase, formyltetrahydrofolate synthetase",-1000,1000
+320,FTCD,Folate cytosolic,formimidoyltransferase cyclodeaminase,-1000,1000
+321,FTHFL,Folate cytosolic,"methylenetetrahydrofolate dehydrogenase (NADP+ dependent) 1, methenyltetrahydrofolate cyclohydrolase, formyltetrahydrofolate synthetase",0,1000
+322,FTHFDH,Folate cytosolic,"aldehyde dehydrogenase 1 family, member L1",0,1000
+323,r0060,Serine degradation,Serine dehydratases,0,1000
+324,GHMT2rm,Serine and glycine biosynthesis,serine hydroxymethyltransferase 2 (mitochondrial),-1000,1000
+325,GCCam,Glycine cleavage system (GCS),glycine dehydrogenase (decarboxylating),-1000,1000
+326,GCCbim,Glycine cleavage system (GCS),aminomethyltransferase,-1000,1000
+327,GCCcm,Glycine cleavage system (GCS),dihydrolipoamide dehydrogenase,-1000,1000
+328,r0514,Folate mitochondrial,dihydrofolate reductase,-1000,1000
+329,r0226,Folate mitochondrial,dihydrofolate reductase,-1000,1000
+330,MTHFDm,Folate mitochondrial,methylenetetrahydrofolate dehydrogenase,-1000,0
+331,MTHFD2m,Folate mitochondrial,methylenetetrahydrofolate dehydrogenase,-1000,0
+332,MTHFCm,Folate mitochondrial,methylenetetrahydrofolate dehydrogenase,-1000,1000
+333,FTHFLm,Folate mitochondrial,methylenetetrahydrofolate dehydrogenase (NADP+ dependent) 1-like,-1000,1000
+334,FTHFDHm_MitoCore,Folate mitochondrial,"aldehyde dehydrogenase 1 family, member L2",0,1000
+335,GLYATm,Glycine degradation,glycine C-acetyltransferase,-1000,1000
+336,AOBUTDsm,Glycine degradation,Non-enzymatic,0,1000
+337,AACTOORm_MitoCore,Glycine degradation,monoamine oxidase B,0,1000
+338,LGTHLm_MitoCore,Glycine degradation,glyoxalase I,-1000,1000
+339,GLYOXm,Glycine degradation,hydroxyacylglutathione hydrolase,0,1000
+340,LDH_Dm_MitoCore,Glycine degradation,"Probable D-lactate dehydrogenase, mitochondrial",-1000,1000
+341,CBPSam,Citrulline biosynthesis,"carbamoyl-phosphate synthase 1, mitochondrial",0,1000
+342,OCBTm,Citrulline biosynthesis,"Ornithine carbamoyltransferase, mitochondrial",0,1000
+343,NOS1,NOS Signalling,"nitric oxide synthase 2, inducible",0,1000
+344,NOS2,NOS Signalling,"nitric oxide synthase 2, inducible",0,1000
+345,r0129,Glutathione degradation,gamma-glutamyltransferase 6,0,1000
+346,AMPTASECG,Glutathione degradation,alanyl (membrane) aminopeptidase,0,1000
+347,GLUCYS,Glutathione synthesis,"glutamate-cysteine ligase, catalytic subunit",0,1000
+348,GTHS,Glutathione synthesis,Glutathione synthetase,0,1000
+349,r0399,Phenylalanine degradation,phenylalanine hydroxylase,0,1000
+350,DHPR,Phenylalanine degradation,quinoid dihydropteridine reductase,-1000,1000
+351,TYRTA,Tyrosine degradation,"glutamic-oxaloacetic transaminase 1, soluble",-1000,1000
+352,TYRTB_MitoCore,Tyrosine degradation,interleukin 4 induced 1,0,1000
+353,34HPPOR,Tyrosine degradation,4-hydroxyphenylpyruvate dioxygenase,0,1000
+354,HGNTOR,Tyrosine degradation,"homogentisate 1,2-dioxygenase",0,1000
+355,MACACI,Tyrosine degradation,glutathione S-transferase zeta 1,0,1000
+356,FUMAC,Tyrosine degradation,fumarylacetoacetate hydrolase (fumarylacetoacetase),0,1000
+357,ASNS1,Asparagine synthesis,asparagine synthetase (glutamine-hydrolyzing),0,1000
+358,r0127,Asparagine degradation,asparaginase,0,1000
+359,HISD,Histidine degradation,histidine ammonia-lyase,0,1000
+360,URCN,Histidine degradation,urocanate hydratase 1,0,1000
+361,IZPN,Histidine degradation,amidohydrolase domain containing 1,0,1000
+362,GluForTx,Histidine degradation,formimidoyltransferase cyclodeaminase,-1000,1000
+363,APAT2rm,Beta-alanine degradation,4-aminobutyrate aminotransferase,-1000,1000
+364,MMSAD3m,Beta-alanine degradation,"aldehyde dehydrogenase 6 family, member A1",0,1000
+365,MMSAD3m2_MitoCore,Beta-alanine degradation,"aldehyde dehydrogenase 6 family, member A1",0,1000
+366,ASP1DC,Beta-alanine synthesis,glutamate decarboxylase-like 1,0,0
+367,CKc,Creatine ATP buffer,Creatine kinase,-1000,1000
+368,CK,Creatine ATP buffer,"Creatine kinase S-type, mitochondrial",-1000,1000
+369,ACOAHi,Acetate production,acyl-CoA thioesterase 12,0,1000
+370,ALCD2yf,Alcohol metabolism,"aldo-keto reductase family 1, member A1 (aldehyde reductase)",0,1000
+371,ALCD2if,Alcohol metabolism,alcohol dehydrogenase,0,1000
+372,ACALDtm,Alcohol metabolism,N/A,-1000,1000
+373,ALDD2xm,Alcohol metabolism,aldehyde dehydrogenase family,0,1000
+374,ALDD2x,Alcohol metabolism,aldehyde dehydrogenase family,0,1000
+375,ACSm,Alcohol metabolism,acyl-CoA synthetase short-chain family member 1,0,1000
+376,ACS,Alcohol metabolism,acyl-CoA synthetase short-chain family member 2,0,1000
+377,ADSL1,Purine Nucleotide Cycle,adenylosuccinate lyase,0,1000
+378,ADSS,Purine Nucleotide Cycle,adenylosuccinate synthase,0,1000
+379,AMPD1,Purine Nucleotide Cycle,adenosine monophosphate deaminase 1,0,1000
+380,ARGN,Urea Cycle,arginase 1,0,1000
+381,ARGSL,Urea Cycle,argininosuccinate lyase,-1000,1000
+382,ARGSS,Urea Cycle,argininosuccinate synthase,0,1000
+383,ARGNm,Urea Cycle,arginase 2,0,1000
+384,ALASm,Haem Synthesis,5'-aminolevulinate synthase 1,0,1000
+385,5AOPtm,Haem Synthesis,Unknown,-1000,1000
+386,PPBNGS,Haem Synthesis,aminolevulinate dehydratase,-1000,1000
+387,HMBS,Haem Synthesis,hydroxymethylbilane synthase,0,1000
+388,UPP3S,Haem Synthesis,uroporphyrinogen III synthase,-1000,1000
+389,UPPDC1,Haem Synthesis,uroporphyrinogen decarboxylase,0,1000
+390,CPPPGO,Haem Synthesis,coproporphyrinogen oxidase,0,1000
+391,PPPGOmB_MitoCore,Haem Synthesis,protoporphyrinogen oxidase,0,1000
+392,FCLTm,Haem Synthesis,ferrochelatase,0,1000
+393,PHEMEtm,Haem Synthesis,Unknown,0,1000
+394,HOXG,Haem Degradation,heme oxygenase 1 or 2,0,1000
+395,BILIRED,Haem Degradation,biliverdin reductase B,0,1000
+396,BILIRED2_MitoCore,Haem Degradation,biliverdin reductase A,0,1000
+397,PCHOLPm_hs,Cardiolipin synthesis,"phospholipase D1, phosphatidylcholine-specific",0,1000
+398,GLYK,Cardiolipin synthesis,glycerol kinase,0,1000
+399,GLYC3Ptm,Cardiolipin synthesis,,0,1000
+400,GPAMm_hsB_MitoCore,Cardiolipin synthesis,"glycerol-3-phosphate acyltransferase 2, mitochondrial",0,1000
+401,AGPAT1B_MitoCore,Cardiolipin synthesis,1-acylglycerol-3-phosphate O-acyltransferase 5,0,1000
+402,CDSm,Cardiolipin synthesis,"TAM41, mitochondrial translocator assembly and maintenance protein, homolog (S. cerevisiae)",-1000,1000
+403,PGPPTm,Cardiolipin synthesis,phosphatidylglycerophosphate synthase 1,0,1000
+404,PGPP_hsm_MitoCore,Cardiolipin synthesis,"protein tyrosine phosphatase, mitochondrial 1",0,1000
+405,CLS_hsm_MitoCore,Cardiolipin synthesis,cardiolipin synthase 1,0,1000
+406,CLPN_MitoCore,Cardiolipin synthesis,cardiolipin synthase 1,-1000,1000
+407,CYTK1m,Cardiolipin synthesis,"cytidine monophosphate (UMP-CMP) kinase 2, mitochondrial",-1000,1000
+408,NDPK3m,Cardiolipin synthesis,NME/NM23 nucleoside diphosphate kinase 4,-1000,1000
+409,SPODMm,ROS defense,superoxide dismutase,0,1000
+410,GTHP,ROS defense,glutathione peroxidase 2,0,1000
+411,GTHPm,ROS defense,glutathione peroxidase 1,0,1000
+412,GTHO,ROS defense,glutathione reductase,0,1000
+413,GTHOm,ROS defense,glutathione reductase,0,1000
+414,CITtamB,Mitochondrial transporters - characterised,"solute carrier family 25 (mitochondrial carrier; citrate transporter), member 1",-1000,0
+415,r0913,Mitochondrial transporters - characterised,"solute carrier family 25 (mitochondrial carrier; citrate transporter), member 1",0,1000
+416,CITtbm,Mitochondrial transporters - characterised,"solute carrier family 25 (mitochondrial carrier; citrate transporter), member 1",-1000,0
+417,r0917,Mitochondrial transporters - characterised,"solute carrier family 25 (mitochondrial carrier; citrate transporter), member 1",0,1000
+418,r0917b_MitoCore,Mitochondrial transporters - characterised,"solute carrier family 25 (mitochondrial carrier; citrate transporter), member 1",-1000,0
+419,PIt2mB_MitoCore,Mitochondrial transporters - characterised,"solute carrier family 25 (mitochondrial carrier; phosphate carrier), member 3",-1000,1000
+420,ATPtmB_MitoCore,Mitochondrial transporters - characterised,"solute carrier family 25 (mitochondrial carrier; adenine nucleotide translocator), member 4, 5 and 6",-1000,1000
+421,HtmB_MitoCore,Mitochondrial transporters - characterised,"uncoupling protein 1, 2 and 3",0,1000
+422,MALtm,Mitochondrial transporters - characterised,"solute carrier family 25 (mitochondrial carrier; dicarboxylate transporter), member 10",-1000,1000
+423,MALSO3tm,Mitochondrial transporters - characterised,"solute carrier family 25 (mitochondrial carrier; dicarboxylate transporter), member 10",-1000,1000
+424,MALTSULtm,Mitochondrial transporters - characterised,"solute carrier family 25 (mitochondrial carrier; dicarboxylate transporter), member 10",-1000,1000
+425,MALSO4tm,Mitochondrial transporters - characterised,"solute carrier family 25 (mitochondrial carrier; dicarboxylate transporter), member 10",-1000,1000
+426,SUCCt2m,Mitochondrial transporters - characterised,"solute carrier family 25 (mitochondrial carrier; dicarboxylate transporter), member 10",-1000,1000
+427,r0830,Mitochondrial transporters - characterised,"solute carrier family 25 (mitochondrial carrier; dicarboxylate transporter), member 10",-1000,1000
+428,r0830B_MitoCore,Mitochondrial transporters - characterised,"solute carrier family 25 (mitochondrial carrier; dicarboxylate transporter), member 10",-1000,1000
+429,r0829,Mitochondrial transporters - characterised,"solute carrier family 25 (mitochondrial carrier; dicarboxylate transporter), member 10",-1000,1000
+430,SUCCt3m_MitoCore,Mitochondrial transporters - characterised,"solute carrier family 25 (mitochondrial carrier; dicarboxylate transporter), member 10",-1000,1000
+431,COAtmB_MitoCore,Mitochondrial transporters - characterised,"solute carrier family 25, member 42",0,0
+432,COAtmC_MitoCore,Mitochondrial transporters - characterised,"solute carrier family 25, member 42",0,0
+433,GLUt2mB_MitoCore,Mitochondrial transporters - characterised,"solute carrier family 25 (glutamate carrier), member 18",0,1000
+434,ORNt4mB_MitoCore,Mitochondrial transporters - characterised,solute carrier family 25 (mitochondrial carrier; ornithine transporter) member 15,-1000,1000
+435,r2398B_MitoCore,Mitochondrial transporters - characterised,solute carrier family 25 (mitochondrial carrier; ornithine transporter) member 15,-1000,1000
+436,r2402B_MitoCore,Mitochondrial transporters - characterised,solute carrier family 25 (mitochondrial carrier; ornithine transporter) member 15,-1000,1000
+437,LYStmB_MitoCore,Mitochondrial transporters - characterised,"solute carrier family 25 (mitochondrial carnitine/acylcarnitine carrier), member 29",-1000,1000
+438,ORNt3mB_MitoCore,Mitochondrial transporters - characterised,"solute carrier family 25 (mitochondrial carnitine/acylcarnitine carrier), member 29",-1000,1000
+439,ARGtmB_MitoCore,Mitochondrial transporters - characterised,"solute carrier family 25 (mitochondrial carnitine/acylcarnitine carrier), member 29",-1000,1000
+440,r1427,Mitochondrial transporters - characterised,"solute carrier family 25 (mitochondrial carnitine/acylcarnitine carrier), member 29",-1000,1000
+441,PYRt2m,Mitochondrial transporters - characterised,mitochondrial pyruvate carrier 1 and 2,0,1000
+442,ACACt2mB_MitoCore,Mitochondrial transporters - characterised,mitochondrial pyruvate carrier 1 and 2,-1000,1000
+443,FE2tm,Mitochondrial transporters - characterised,"solute carrier family 25 (mitochondrial iron transporter), member 37 or 28",-1000,1000
+444,ASNtm,Mitochondrial transporters - uncharacterised,Unknown,-1000,1000
+445,r1437,Mitochondrial transporters - uncharacterised,Unknown,-1000,1000
+446,GLNtm,Mitochondrial transporters - uncharacterised,Unknown,-1000,1000
+447,PROtm,Mitochondrial transporters - uncharacterised,Unknown,-1000,1000
+448,r1078,Mitochondrial transporters - uncharacterised,Unknown,-1000,1000
+449,r1436,Mitochondrial transporters - uncharacterised,Unknown,-1000,1000
+450,r1455,Mitochondrial transporters - uncharacterised,Unknown,-1000,1000
+451,TRPtm_MitoCore,Mitochondrial transporters - uncharacterised,Unknown,-1000,1000
+452,GLYtm,Mitochondrial transporters - uncharacterised,Unknown,-1000,1000
+453,ILEt5m,Mitochondrial transporters - uncharacterised,Unknown,-1000,1000
+454,LEUt5m,Mitochondrial transporters - uncharacterised,Unknown,-1000,1000
+455,VALt5m,Mitochondrial transporters - uncharacterised,Unknown,-1000,1000
+456,r1434,Mitochondrial transporters - uncharacterised,Unknown,-1000,0.001
+457,r1435,Mitochondrial transporters - uncharacterised,Unknown,-1000,1000
+458,r1440,Mitochondrial transporters - uncharacterised,Unknown,-1000,1000
+459,BALAtmr,Mitochondrial transporters - uncharacterised,Unknown,-1000,1000
+460,UREAtm,Mitochondrial transporters - uncharacterised,Unknown,-1000,1000
+461,FUMtmB_MitoCore,Mitochondrial transporters - uncharacterised,Unknown,-1000,0
+462,BHBtmB_MitoCore,Mitochondrial transporters - uncharacterised,Unknown,-1000,1000
+463,PPAtmB_MitoCore,Mitochondrial transporters - uncharacterised,Unknown,-1000,1000
+464,BUTt2mB_MitoCore,Mitochondrial transporters - uncharacterised,Unknown,-1000,1000
+465,FORt2mB_MitoCore,Mitochondrial transporters - uncharacterised,Unknown,-1000,1000
+466,r0962B_MitoCore,Mitochondrial transporters - uncharacterised,Unknown,-1000,1000
+467,CHLtmB_MitoCore,Mitochondrial transporters - uncharacterised,Unknown,-1000,1000
+468,CO2tm,Mitochondrial transport - diffusion / artificial,,-1000,1000
+469,H2Otm,Mitochondrial transport - diffusion / artificial,,-1000,1000
+470,O2tm,Mitochondrial transport - diffusion / artificial,,-1000,1000
+471,GLYCtm,Mitochondrial transport - diffusion / artificial,,-1000,1000
+472,CYANtm,Mitochondrial transport - diffusion / artificial,,-1000,1000
+473,TCYNTtmB_MitoCore,Mitochondrial transport - diffusion / artificial,,-1000,1000
+474,CREATtmdiffir,Mitochondrial transport - diffusion / artificial,,-1000,1000
+475,PCREATtmdiffirB_MitoCore,Mitochondrial transport - diffusion / artificial,,-1000,1000
+476,r0941,Mitochondrial transport - diffusion / artificial,,-1000,1000
+477,r0838B_MitoCore,Mitochondrial transport - diffusion / artificial,,-1000,1000
+478,Biomasst_MitoCore,Mitochondrial transport - diffusion / artificial,,-1000,1000
+479,PCFLOPm,Mitochondrial transport - lipids,,0,1000
+480,PSFLIPm,Mitochondrial transport - lipids,,0,1000
+481,PEFLIPm,Mitochondrial transport - lipids,,0,1000
+482,Biomass_MitoCore,Boundary conditions - core,,-1000,0
+483,O2t,Boundary conditions - core,,0,19.8
+484,CO2t,Boundary conditions - core,,-1000,1000
+485,HCO3t_MitoCore,Boundary conditions - core,,-1000,1.71
+486,GLCt1r,Boundary conditions - core,,-1000,0.9
+487,HDCAtr,Boundary conditions - core,,-1000,1
+488,HDCAtm_MitoCore,Boundary conditions - core,,-1000,0
+489,L_LACt2r,Boundary conditions - core,,-1000,0.575
+490,BHBt,Boundary conditions - core,,0,0.048
+491,ACACt2,Boundary conditions - core,,0,0.114
+492,ETOHt,Boundary conditions - alternative fuels,,0,0
+493,BUTt2r,Boundary conditions - alternative fuels,,-1000,0.006
+494,GLYCt,Boundary conditions - alternative fuels,,-0.01,1000
+495,r0942,Boundary conditions - alternative fuels,,0,0
+496,r0942b_MitoCore,Boundary conditions - alternative fuels,,0,0
+497,HIStiDF,Boundary conditions - essential amino acids,,0,0.01
+498,ILEtec,Boundary conditions - essential amino acids,,0,0.004
+499,LEUtec,Boundary conditions - essential amino acids,,0,0.016
+500,LYStiDF,Boundary conditions - essential amino acids,,0,0.03
+501,METtec,Boundary conditions - essential amino acids,,0,0.005
+502,PHEtec,Boundary conditions - essential amino acids,,0,0.012
+503,r2534,Boundary conditions - essential amino acids,,0,0.012
+504,TRPt,Boundary conditions - essential amino acids,,0,0.008
+505,VALtec,Boundary conditions - essential amino acids,,0,0.011
+506,ARGtiDF,Boundary conditions - nonessential amino acids,,-1000,0.007
+507,ASPte,Boundary conditions - nonessential amino acids,,-0.154,1000
+508,CYStec,Boundary conditions - nonessential amino acids,,-1000,0.001
+509,GLUt_MitoCore,Boundary conditions - nonessential amino acids,,-1000,0
+510,r2525,Boundary conditions - nonessential amino acids,,-1000,0
+511,GLYt2r,Boundary conditions - nonessential amino acids,,-1000,0.009
+512,PROt2r,Boundary conditions - nonessential amino acids,,-1000,0.004
+513,r2526,Boundary conditions - nonessential amino acids,,-1000,0.017
+514,TYRt,Boundary conditions - nonessential amino acids,,-1000,0.011
+515,r2532,Boundary conditions - nonessential amino acids,,-1000,0.01
+516,ALAt2r,Boundary conditions - nonessential amino acids,,-1000,0.01
+517,FUMt_MitoCore,Boundary Conditions - Biomarkers,,-1000,0
+518,SUMt_MitoCore,Boundary Conditions - Biomarkers,,-1000,0
+519,r0817,Boundary Conditions - Biomarkers,,0,1000
+520,NH4t3r,Boundary Conditions - Biomarkers,,-1000,1000
+521,ACt2r,Boundary Conditions - Biomarkers,,-0.01,0.01
+522,PPAt,Boundary Conditions - Biomarkers,,-1000,0
+523,2HBt2,Boundary Conditions - Biomarkers,,-1000,0
+524,CHOLtu,Boundary Conditions - Biomarkers,,-1000,0
+525,r1088,Boundary Conditions - Biomarkers,,-1000,0
+526,ICITt_MitoCore,Boundary Conditions - Biomarkers,,-1000,0
+527,UREAt,Boundary Conditions - Biomarkers,,-1000,0
+528,r1512,Boundary Conditions - Biomarkers,,-1000,0
+529,ARGSUCt_MitoCore,Boundary Conditions - Biomarkers,,-1000,0
+530,MAL_Lte,Boundary Conditions - Biomarkers,,-1000,0
+531,OAAt_MitoCore,Boundary Conditions - Biomarkers,,-1000,0
+532,AKGt_MitoCore,Boundary Conditions - Biomarkers,,-1000,0
+533,MERCPLACt_MitoCore,Boundary Conditions - Biomarkers,,-1000,0
+534,r0899,Boundary Conditions - Misc,,0,0
+535,FE2t,Boundary Conditions - Misc,,-1000,1000
+536,H2Ot,Boundary Conditions - Misc,,-1000,1000
+537,Hct_MitoCore,Boundary Conditions - Misc,,-1000,1000
+538,Hmt_MitoCore,Boundary Conditions - Misc,,-1000,1000
+539,SO3t_MitoCore,Boundary Conditions - Misc,,-1000,1000
+540,TSULt_MitoCore,Boundary Conditions - Misc,,-1000,1000
+541,r0940,Boundary Conditions - Misc,,-1000,1000
+542,CYANt,Boundary Conditions - Misc,,-1000,1000
+543,TCYNTt,Boundary Conditions - Misc,,-1000,1000
+544,r1423,Boundary Conditions - Misc,,-1000,1000
+545,FORt_MitoCore,Boundary Conditions - Misc,,-1000,0
+546,FOLt_MitoCore,Boundary Conditions - Misc,,0,1000
+547,NADHt_MitoCore,Boundary Conditions - Misc,,0,0
+548,NADt_MitoCore,Boundary Conditions - Misc,,0,0
+549,NADHtm_MitoCore,Boundary Conditions - Misc,,0,0
+550,NADtm_MitoCore,Boundary Conditions - Misc,,0,0
+551,COt,Boundary Conditions - Misc,,-1000,1000
+552,NOt,Boundary Conditions - Misc,,-1000,1000
+553,PCHOLHSTDe,Boundary Conditions - Lipids,,-1000,1000
+554,PSt3,Boundary Conditions - Lipids,,-1000,1000
+555,PEt,Boundary Conditions - Lipids,,-1000,1000
+556,CBPS,Pyrimidine synthesis,"Carbamoyl-Phosphate Synthetase 2, Aspartate Transcarbamylase, And Dihydroorotase",0,1000
+557,ASPCTr,Pyrimidine synthesis,"Carbamoyl-Phosphate Synthetase 2, Aspartate Transcarbamylase, And Dihydroorotase",-1000,1000
+558,DHORTS,Pyrimidine synthesis,"Carbamoyl-Phosphate Synthetase 2, Aspartate Transcarbamylase, And Dihydroorotase",-1000,1000
+559,DHORD9,Pyrimidine synthesis,Dihydoorotic Acid Dehydrogenase (Quinone 10),-1000,1000
+560,DM_orot_c,Boundary Conditions   demand,N/A,0,1000
