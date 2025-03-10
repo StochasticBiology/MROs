@@ -39,9 +39,12 @@ ETC_names <- c("NADH dehydrogenase", "succinate dehydrogenase", "cytochrome c re
 
 # Make a data frame to keep track of what's KOed, and the fluxes at each complex of (primary) interest (thus far, at least)
 d <- data.frame(KO = NULL, EX_O2 = NULL, MAX_ATP = NULL, ETC = NULL, TCA = NULL)
+d2 <- data.frame(KO = NULL, EX_O2 = NULL, MAX_ATP = NULL, ETC = NULL, TCA = NULL)
+d3 <- data.frame(KO = NULL, EX_O2 = NULL, MAX_ATP = NULL, ETC = NULL, TCA = NULL)
+d4 <- data.frame(KO = NULL, EX_O2 = NULL, MAX_ATP = NULL, ETC = NULL, TCA = NULL)
 
 
-# Get a baseline with MitoMammal across all other cases as well, because we have a "full" set of mitochondrial functions
+# Get a baseline with MitoMammal across all cases, because we have a "full" set of mitochondrial functions
 mm.base <- optimizeProb(mm, lpdir = "max")
 mm.FD <- data.frame(x = getFluxDist(mm.base))
 names(mm.FD) <- "Flux (µM/min/gDW)"
@@ -50,6 +53,7 @@ names(mm.FD) <- "Flux (µM/min/gDW)"
 these_data <- data.frame(KO="NONE", EX_O2 = round(mm.FD[EX_o2,],4), MAX_ATP = mm.FD[OBJ_inds[1],], ETC = t(mm.FD[ETC_inds,]), TCA = t(mm.FD[TCA_inds[1],]))
 
 d <- rbind(d, these_data)
+d2 <- rbind(d2, these_data)
 
 KO_inds <- c(ETC_inds, TCA_inds[1])
 KO_names <- c("CI", "CII", "CIII", "CIV", "CV", "PDH")
@@ -84,30 +88,58 @@ for(i in 1:ncol(KO_inds)){
   d <- rbind(d, these_data)
 }
 
-## Do triple knockouts
-#KO_inds  <- combn(c(ETC_inds,TCA_inds[1]), m=3)
-#KO_names <- combn(c("CI", "CII", "CIII", "CIV", "CV", "PDH"), m = 3)
+names(d) <- c("KO","EX_O2","MAX_ATP","CI","CII","CIII","CIV","CV","PDH")
 
-#for(i in 1:ncol(KO_inds)){
-#  mm.KO <- optimizeProb(mm, react = c(KO_inds[1,i], KO_inds[2,i], KO_inds[3,i]), lb = c(0,0,0), ub = c(0,0,0), lpdir = "max")
-#
-#  # Fetch the flux distribution
-#  mm.KO.FD <- data.frame(x=getFluxDist(mm.KO))
-#  names(mm.KO.FD) <- "Flux (µM/min/gDW)"
-#
-#  # Extract the data
-#  these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i], KO_names[3,i],sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = #t(mm.KO.FD[ETC_inds,]), TCA = t(mm.KO.FD[TCA_inds[1],]))
-#
-#  d <- rbind(d, these_data)
-#}
+print(d)
 
 # Print to file
-filename <- "MAX_ATP-no-restriction.csv"
+filename <- "single-double-KO-MAX_ATP-no-restriction.csv"
 write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = d, row.names = F)
 
+# Do triple knockouts
+KO_inds  <- combn(c(ETC_inds,TCA_inds[1]), m=3)
+KO_names <- combn(c("CI", "CII", "CIII", "CIV", "CV", "PDH"), m = 3)
+
+for(i in 1:ncol(KO_inds)){
+  mm.KO <- optimizeProb(mm, react = c(KO_inds[1,i], KO_inds[2,i], KO_inds[3,i]), lb = c(0,0,0), ub = c(0,0,0), lpdir = "max")
+
+  # Fetch the flux distribution
+  mm.KO.FD <- data.frame(x=getFluxDist(mm.KO))
+  names(mm.KO.FD) <- "Flux (µM/min/gDW)"
+
+  # Extract the data
+  these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i], KO_names[3,i],sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), TCA = t(mm.KO.FD[TCA_inds[1],]))
+
+  d2 <- rbind(d2, these_data)
+}
+
+# Do quadruple knockouts
+KO_inds  <- combn(c(ETC_inds,TCA_inds[1]), m=4)
+KO_names <- combn(c("CI", "CII", "CIII", "CIV", "CV", "PDH"), m = 4)
+
+for(i in 1:ncol(KO_inds)){
+  mm.KO <- optimizeProb(mm, react = c(KO_inds[1,i], KO_inds[2,i], KO_inds[3,i], KO_inds[4,i]), lb = c(0,0,0,0), ub = c(0,0,0,0), lpdir = "max")
+
+  # Fetch the flux distribution
+  mm.KO.FD <- data.frame(x=getFluxDist(mm.KO))
+  names(mm.KO.FD) <- "Flux (µM/min/gDW)"
+
+  # Extract the data
+  these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i], KO_names[3,i], KO_names[4,i], sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), TCA = t(mm.KO.FD[TCA_inds[1],]))
+
+  d2 <- rbind(d2, these_data)
+}
+
+names(d2) <- c("KO","EX_O2","MAX_ATP","CI","CII","CIII","CIV","CV","PDH")
+
+print(d2)
+
+# Print to file
+filename <- "triple-quadruple-KO-MAX_ATP-no-restriction.csv"
+write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = d2, row.names = F)
+
+
 ######## Repeat with a O2 restricted model
-# Make a data frame to keep track of what's KOed, and the fluxes at each complex of (primary) interest (thus far, at least)
-d2 <- data.frame(KO = NULL, EX_O2 = NULL, MAX_ATP = NULL, ETC = NULL, TCA = NULL)
 
 # Get baseline for anoxic case (10% the oxygen availability required by the basecase (it is negative, hence signs)
 o20 <- mm.FD[EX_o2,]
@@ -118,7 +150,8 @@ names(mm.FD) <- "Flux (µM/min/gDW)"
 # Extract the data
 these_data <- data.frame(KO="NONE", EX_O2 = round(mm.FD[EX_o2,],4), MAX_ATP = mm.FD[OBJ_inds[1],], ETC = t(mm.FD[ETC_inds,]), TCA = t(mm.FD[TCA_inds[1],]))
 
-d2 <- rbind(d2, these_data)
+d3 <- rbind(d3, these_data)
+d4 <- rbind(d4, these_data)
 
 KO_inds <- c(ETC_inds, TCA_inds[1])
 KO_names <- c("CI", "CII", "CIII", "CIV", "CV", "PDH")
@@ -134,7 +167,7 @@ for(i in 1:length(KO_inds)){
   # Extract the data
   these_data <- data.frame(KO=KO_names[i], EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), TCA = t(mm.KO.FD[TCA_inds[1],]))
 
-  d2 <- rbind(d2, these_data)
+  d3 <- rbind(d3, these_data)
 }
 
 # Do double knockouts
@@ -150,29 +183,55 @@ for(i in 1:ncol(KO_inds)){
   # Extract the data
   these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i],sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), TCA = t(mm.KO.FD[TCA_inds[1],]))
 
-  d2 <- rbind(d2, these_data)
+  d3 <- rbind(d3, these_data)
 }
 
-# Do triple knockouts
-#KO_inds  <- combn(c(ETC_inds,TCA_inds[1]), m=3)
-#KO_names <- combn(c("CI", "CII", "CIII", "CIV", "CV", "PDH"), m = 3)
+names(d3) <- c("KO","EX_O2","MAX_ATP","CI","CII","CIII","CIV","CV","PDH")
 
-#for(i in 1:ncol(KO_inds)){
-#  mm.KO <- optimizeProb(mm, react = c(EX_o2, KO_inds[1,i], KO_inds[2,i], KO_inds[3,i]), lb = c(o20/10,0,0,0), ub = c(-o20/10,0,0,0), lpdir = "max")
-
-#  # Fetch the flux distribution
-#  mm.KO.FD <- data.frame(x=getFluxDist(mm.KO))
-#  names(mm.KO.FD) <- "Flux (µM/min/gDW)"
-
-#  # Extract the data
-#  these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i], KO_names[3,i],sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = #t(mm.KO.FD[ETC_inds,]), TCA = t(mm.KO.FD[TCA_inds[1],]))
-
-#  d2 <- rbind(d2, these_data)
-#}
-names(d2) <- c("KO","EX_O2","MAX_ATP","CI","CII","CIII","CIV","CV","PDH")
-
-print(d2)
+print(d3)
 
 # Print to file
-filename <- "MAX_ATP-oxygen-restriction.csv"
-write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = d2, row.names = F)
+filename <- "single-double-KO-MAX_ATP-oxygen-restriction.csv"
+write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = d3, row.names = F)
+
+# Do triple knockouts
+KO_inds  <- combn(c(ETC_inds,TCA_inds[1]), m=3)
+KO_names <- combn(c("CI", "CII", "CIII", "CIV", "CV", "PDH"), m = 3)
+
+for(i in 1:ncol(KO_inds)){
+  mm.KO <- optimizeProb(mm, react = c(EX_o2, KO_inds[1,i], KO_inds[2,i], KO_inds[3,i]), lb = c(o20/10,0,0,0), ub = c(-o20/10,0,0,0), lpdir = "max")
+
+  # Fetch the flux distribution
+  mm.KO.FD <- data.frame(x=getFluxDist(mm.KO))
+  names(mm.KO.FD) <- "Flux (µM/min/gDW)"
+
+  # Extract the data
+  these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i], KO_names[3,i],sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), TCA = t(mm.KO.FD[TCA_inds[1],]))
+
+  d4 <- rbind(d4, these_data)
+}
+
+# Do quadruple knockouts
+KO_inds  <- combn(c(ETC_inds,TCA_inds[1]), m=4)
+KO_names <- combn(c("CI", "CII", "CIII", "CIV", "CV", "PDH"), m = 4)
+
+for(i in 1:ncol(KO_inds)){
+  mm.KO <- optimizeProb(mm, react = c(EX_o2, KO_inds[1,i], KO_inds[2,i], KO_inds[3,i], KO_inds[4,i]), lb = c(o20/10,0,0,0,0), ub = c(-o20,0,0,0,0), lpdir = "max")
+
+  # Fetch the flux distribution
+  mm.KO.FD <- data.frame(x=getFluxDist(mm.KO))
+  names(mm.KO.FD) <- "Flux (µM/min/gDW)"
+
+  # Extract the data
+  these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i], KO_names[3,i], KO_names[4,i], sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), TCA = t(mm.KO.FD[TCA_inds[1],]))
+
+  d4 <- rbind(d4, these_data)
+}
+
+names(d4) <- c("KO","EX_O2","MAX_ATP","CI","CII","CIII","CIV","CV","PDH")
+
+print(d4)
+
+# Print to file
+filename <- "triple-quadruple-KO-MAX_ATP-oxygen-restriction.csv"
+write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = d4, row.names = F)
