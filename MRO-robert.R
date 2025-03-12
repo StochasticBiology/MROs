@@ -88,11 +88,16 @@ print(g.pathways)
 dev.off()
 
 fba.mod = readSBMLmod("FBA/MitoMammal/MitoMammal.xml")
-optimizeProb(fba.mod)
-etc.rs = grep("COMPLEX",fba.mod@react_name)
+etc.inds <- c(108:112)
+etc.rs = fba.mod@react_name[etc.inds]
+
+#cat("Reactions are...")
+#print(etc.rs)
+#cat("END\n\n")
+
 atp.obj = rep(0, length(fba.mod@react_name))
 atp.obj[71] = 1
-res.df = data.frame()
+res.df = data.frame(name = NULL, ko.val = NULL, ko.atp.val = NULL, ko.val.hypoxia = NULL, ko.atp.val.hypoxia = NULL)
 for(ko in 1:length(fba.mod@react_name)) {
   tmp.mod = fba.mod
   tmp.mod@lowbnd[ko] = 0
@@ -119,27 +124,26 @@ res.df = rbind(res.df, data.frame(name="full model",
                                   ko.val=soln@lp_obj, ko.atp.val=soln.atp@lp_obj,
                                   ko.val.hypoxia=soln.hypoxia@lp_obj,
                                   ko.atp.val.hypoxia=soln.atp.hypoxia@lp_obj))
-write.csv(res.df, "fba-res.csv")
-res.df$class = ""
-res.df$class[etc.rs] = res.df$name[etc.rs]
-ggplot(res.df, aes(x=ko.atp.val, y=ko.atp.val.hypoxia, label=factor(class))) + geom_point() + geom_text()
+
 
 res.df = read.csv("fba-res.csv")
 res.df$label = ""
-res.df$label[grep("COMPLEX I ", res.df$name)] = "CI"
-res.df$label[grep("COMPLEX II ", res.df$name)] = "CII"
-res.df$label[grep("COMPLEX III ", res.df$name)] = "CIII"
-res.df$label[grep("COMPLEX IV ", res.df$name)] = "CIV"
-res.df$label[grep("ATP SYNTHASE ", res.df$name)] = "CV"
+res.df$label[108] = "CI"
+res.df$label[109] = "CII"
+res.df$label[110] = "CIII"
+res.df$label[111] = "CIV"
+res.df$label[112] = "CV"
 
-res.df$name[grep("Pyruvate", res.df$name)]
-res.df$name[grep("Acetyl-CoA", res.df$name)]
+write.csv(res.df, "fba-res.csv")
+ggplot(res.df, aes(x=ko.atp.val, y=ko.atp.val.hypoxia, label=label)) + geom_point() + ggrepel::geom_text_repel()
+
 ggplot(res.df, aes(x=ko.val, y=ko.val.hypoxia, label=label)) + 
   geom_point() + 
   ggrepel::geom_text_repel()
 
 first.steps = parallelised.runs[[1]]$routes[,1]
 first.df = res.df[res.df$label!="",]
+print(first.df)
 first.df$propn = 0
 for(i in 1:nrow(first.df)) {
   ref = which(featurenames == first.df$label[i])-1
