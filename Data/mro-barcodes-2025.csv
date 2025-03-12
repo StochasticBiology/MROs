@@ -1,19 +1,18 @@
 Organism,CI,CII,CIII,CIV,CV,PDH,DNA,TCA,Fe-S
 Acanthamoeba castellanii,1,1,1,1,1,1,1,1,1
 Aduncisulcus paluster,0,0,0,0,0,0,0,0,1
-Amoebophrya ceratii,0,1,0j,1,1,1,1,1,1
+Amoebophrya ceratii,0,1,0,1,1,1,1,1,1
 Ancora sagittata,1,0,0,0,0,0,0,0,1
 Ascaris suum,1,1,1,1,1,1,1,1,1
 Blastocystis sp.,1,1,0,0,0,1,1,0,1
 Brevimastigomonas motovehiculus,1,1,0,0,1,1,1,1,1
-Brevimastigomonas sp. RG-2016a,1,1,1e,1e,1,1,1,1,1
 Carpediemonas membranifera,1,0,0,0,0,0,0,0,1
-Cantina marsupialis,0,1,0,0,0,0,0,1e,1
+Cantina marsupialis,0,1,0,0,0,0,0,0,1
 Cephaloidophora communis,1,1,0,0,0,0,0,1,1
 Chilodonella uncinata,1,1,1,1,1,1,1,1,1
 Chilomastix cuspidata,1,0,0,0,0,0,0,0,1
 Chlamydomonas reinhardtii,1,1,1,1,1,1,1,1,1
-Chromera velia,1,1,0,1,1,1,1,1g,1
+Chromera velia,1,1,0,1,1,1,1,1,1
 Cryptosporidium andersoni,1,1,0,0,1,0,0,1,1
 Cryptosporidium hominis,0,0,0,0,0,0,0,0,1
 Cryptosporidium muris,1,1,0,0,1,0,0,0,1
@@ -28,7 +27,7 @@ Fasciola hepatica,1,1,0,0,1,1,1,0,1
 Giardia intestinalis,0,0,0,0,0,0,0,0,1
 Giardia lamblia,0,0,0,0,0,0,0,0,1
 Gregarina niphandrodes,1,1,0,0,0,0,0,1,1
-Henneguya salminicola,0,1*,0,0,1,0,0,1,1
+Henneguya salminicola,0,1,0,0,1,0,0,1,1
 Homo sapiens,1,1,1,1,1,1,1,1,1
 Heliospora caprellae,1,1,0,0,0,0,0,1,1
 Heterometopus sp. CSS,1,1,1,1,0,1,1,0,1
@@ -39,7 +38,7 @@ Leishmania tropica,1,1,1,1,1,1,1,1,1
 Mastigamoeba balamuthi,0,1,0,0,0,0,0,0,1
 Metopid sp. SK,1,1,1,1,0,1,1,0,1
 Metopus contortus,1,1,1,0,0,1,1,0,1
-Metopus laminarius,1,1,1,0,0,1,0 [38*],0,1
+Metopus laminarius,1,1,1,0,0,1,0,0,1
 Mikrocytos mackini,0,0,0,0,0,0,0,0,1
 Mitosporidium sp.,0,1,1,1,1,1,1,1,1
 Monocercomonoides exilis,0,0,0,0,0,0,0,0,0

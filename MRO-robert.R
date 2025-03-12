@@ -3,20 +3,25 @@
 library(phytools)
 library(parallel)
 library(sybilSBML)
+library(ggplot2)
 
+# IGJ March 2025 -- updated this file
 source("hypertraps.R")
 
 # read data
-tree = read.tree("List-species.nwk")
+tree = read.tree("Data/list-species.nwk")
 #tree = read.tree("Data/mro-ncbi-tree.phy")
 df = read.csv("Data/mro-barcodes-2025.csv")
 
 # harmonise labels across tree and barcode data
+# IGJ March 2025 -- think I added something here
 df$Organism = gsub("_", " ", df$Organism)
+
 tree$tip.label = gsub("'", "", tree$tip.label)
+tree$tip.label = gsub("_", " ", tree$tip.label)
 
 # ancestral state reconstruction and transition gathering
-data.ncbi = curate.tree(tree, df, losses=TRUE)|
+data.ncbi = curate.tree(tree, df, losses=TRUE)
 
 # wrapper function for HyperTraPS analysis
 parallel.fn = function(seed, src.data, featurenames) {
@@ -82,11 +87,11 @@ png("mro-pathways.png", width=600*sf, height=600*sf, res=72*sf)
 print(g.pathways)
 dev.off()
 
-fba.mod = readSBMLmod("12918_2011_715_MOESM4_ESM.XML")
+fba.mod = readSBMLmod("FBA/MitoMammal/MitoMammal.xml")
 optimizeProb(fba.mod)
 etc.rs = grep("COMPLEX",fba.mod@react_name)
 atp.obj = rep(0, length(fba.mod@react_name))
-atp.obj[420] = 1
+atp.obj[71] = 1
 res.df = data.frame()
 for(ko in 1:length(fba.mod@react_name)) {
   tmp.mod = fba.mod
@@ -94,8 +99,8 @@ for(ko in 1:length(fba.mod@react_name)) {
   tmp.mod@uppbnd[ko] = 0
   soln = optimizeProb(tmp.mod)
   soln.atp = optimizeProb(tmp.mod, obj_coef = atp.obj)
-  tmp.mod@lowbnd[345] = 0
-  tmp.mod@uppbnd[345] = 1
+  tmp.mod@lowbnd[50] = 0
+  tmp.mod@uppbnd[50] = 1
   soln.hypoxia = optimizeProb(tmp.mod)
   soln.atp.hypoxia = optimizeProb(tmp.mod, obj_coef = atp.obj)
   res.df = rbind(res.df, data.frame(name=fba.mod@react_name[ko], 
@@ -106,8 +111,8 @@ for(ko in 1:length(fba.mod@react_name)) {
 tmp.mod = fba.mod
 soln = optimizeProb(tmp.mod)
 soln.atp = optimizeProb(tmp.mod, obj_coef = atp.obj)
-tmp.mod@lowbnd[345] = 0
-tmp.mod@uppbnd[345] = 1
+tmp.mod@lowbnd[50] = 0
+tmp.mod@uppbnd[50] = 1
 soln.hypoxia = optimizeProb(tmp.mod)
 soln.atp.hypoxia = optimizeProb(tmp.mod, obj_coef = atp.obj)
 res.df = rbind(res.df, data.frame(name="full model", 
@@ -131,7 +136,7 @@ res.df$name[grep("Pyruvate", res.df$name)]
 res.df$name[grep("Acetyl-CoA", res.df$name)]
 ggplot(res.df, aes(x=ko.val, y=ko.val.hypoxia, label=label)) + 
   geom_point() + 
-  geom_text_repel()
+  ggrepel::geom_text_repel()
 
 first.steps = parallelised.runs[[1]]$routes[,1]
 first.df = res.df[res.df$label!="",]
@@ -143,7 +148,7 @@ for(i in 1:nrow(first.df)) {
 }
 g.normoxic = ggplot(first.df, aes(x=ko.atp.val, y=propn, label=label)) + 
   geom_point() + geom_smooth(method="lm", color="#AAAAFF", fill="#AAAAFF") + 
-  geom_text_repel() + theme_light() +
+  ggrepel::geom_text_repel() + theme_light() +
   labs(x = "ATP objective on KO", y = "First loss probability")
 
 g.normoxic
