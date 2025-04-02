@@ -1,7 +1,10 @@
 #!/usr/bin/env Rscript
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 args = commandArgs(trailingOnly = T)
 
 # test if there is at least one argument: if not, return an error
@@ -9,12 +12,16 @@ if (length(args)!=2) {
   stop("Need two arguments, a Phyllip or Newick tree and barcodes of loss patterns.\n", call.=FALSE)
 }
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 library(phytools)
 library(parallel)
 library(sybilSBML)
 library(ggplot2)
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 # IGJ March 2025 -- updated this file
 source("hypertraps.R")
@@ -24,6 +31,8 @@ tree = read.tree("Data/list-species.nwk")
 #tree = read.tree("Data/mro-ncbi-tree.phy")
 df = read.csv("Data/mro-barcodes-2025.csv")
 =======
+=======
+>>>>>>> Stashed changes
 treefile <- as.character(args[1])
 datafile <- as.character(args[2])
 
@@ -35,6 +44,9 @@ source("hypertraps.R")
 
 #tree = read.tree("Data/mro-ncbi-tree-2025.phy")
 #df = read.csv("Data/mro-barcodes-2025.csv")
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 # harmonise labels across tree and barcode data
@@ -52,7 +64,11 @@ parallel.fn = function(seed, src.data, featurenames) {
   return(HyperTraPS(src.data$dests, initialstates = src.data$srcs, 
                     losses = 1, length = 5, kernel = 6,
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     seed = seed, samplegap = 10, penalty = 0.,
+=======
+                    seed = seed, samplegap = 100, penalty = 0.,
+>>>>>>> Stashed changes
 =======
                     seed = seed, samplegap = 100, penalty = 0.,
 >>>>>>> Stashed changes
@@ -61,7 +77,11 @@ parallel.fn = function(seed, src.data, featurenames) {
 
 # run these experiments in parallel. should take a few core minutes each
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 n.seed = 3
+=======
+n.seed = 5
+>>>>>>> Stashed changes
 =======
 n.seed = 5
 >>>>>>> Stashed changes
@@ -74,6 +94,10 @@ parallelised.runs <- mcmapply(parallel.fn, seed=1:n.seed,
 
 g.data = plotHypercube.curated.tree(data.ncbi, scale.fn=geom_blank(), names=TRUE)
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+g.blurb = plotHypercube.summary(parallelised.runs[[1]]) + theme(legend.position="none")
+>>>>>>> Stashed changes
 =======
 g.blurb = plotHypercube.summary(parallelised.runs[[1]]) + theme(legend.position="none")
 >>>>>>> Stashed changes
@@ -88,10 +112,13 @@ g.sg.1 = plotHypercube.sampledgraph2(parallelised.runs[[1]],
 
 # compare outputs and check convergence
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 ggarrange(g.data, ggarrange(g.bub.1,g.bub.2,g.bub.3,nrow=3), nrow=1)
 # dynamics
 g.sg.1
 =======
+=======
+>>>>>>> Stashed changes
 sf = 2
 png("Results/HyperTraPS/mro-convergence.png", width = 700*sf, height = 600*sf, res = 72*sf)
 print(ggarrange(g.data, ggarrange(g.bub.1,g.bub.2,g.bub.3,nrow=3), nrow=1))
@@ -105,21 +132,30 @@ dev.off()
 
 # dynamics
 #g.sg.1
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 # summary plot
 g.summary = ggarrange(g.data, ggarrange(g.bub.1, g.sg.1, ncol=1, 
                                         heights=c(1,2), labels=c("B", "C")), 
                       nrow=1, widths=c(1.25,1), labels=c("A",""))
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 g.summary
 
 sf = 2
 png("mro-summary.png", width=700*sf, height=600*sf, res=72*sf)
 =======
+=======
+>>>>>>> Stashed changes
 #g.summary
 
 sf = 2
 png("Results/HyperTraPS/mro-summary.png", width=700*sf, height=600*sf, res=72*sf)
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 print(g.summary)
 dev.off()
@@ -143,7 +179,11 @@ g.pathways = ggarrange(plotHypercube.motifs(parallelised.runs[[1]])+theme(legend
 
 sf = 2
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 png("mro-pathways.png", width=600*sf, height=600*sf, res=72*sf)
+=======
+png("Results/HyperTraPS/mro-pathways.png", width=600*sf, height=600*sf, res=72*sf)
+>>>>>>> Stashed changes
 =======
 png("Results/HyperTraPS/mro-pathways.png", width=600*sf, height=600*sf, res=72*sf)
 >>>>>>> Stashed changes
@@ -154,6 +194,10 @@ fba.mod = readSBMLmod("FBA/MitoMammal/MitoMammal.xml")
 etc.inds <- c(108:112)
 etc.rs = fba.mod@react_name[etc.inds]
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+EX_o2 <- 50
+>>>>>>> Stashed changes
 =======
 EX_o2 <- 50
 >>>>>>> Stashed changes
@@ -172,8 +216,13 @@ for(ko in 1:length(fba.mod@react_name)) {
   soln = optimizeProb(tmp.mod)
   soln.atp = optimizeProb(tmp.mod, obj_coef = atp.obj)
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   tmp.mod@lowbnd[50] = 0
   tmp.mod@uppbnd[50] = 1
+=======
+  tmp.mod@lowbnd[EX_o2] = 0
+  tmp.mod@uppbnd[EX_o2] = 1
+>>>>>>> Stashed changes
 =======
   tmp.mod@lowbnd[EX_o2] = 0
   tmp.mod@uppbnd[EX_o2] = 1
@@ -189,8 +238,13 @@ tmp.mod = fba.mod
 soln = optimizeProb(tmp.mod)
 soln.atp = optimizeProb(tmp.mod, obj_coef = atp.obj)
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 tmp.mod@lowbnd[50] = 0
 tmp.mod@uppbnd[50] = 1
+=======
+tmp.mod@lowbnd[EX_o2] = 0
+tmp.mod@uppbnd[EX_o2] = 1
+>>>>>>> Stashed changes
 =======
 tmp.mod@lowbnd[EX_o2] = 0
 tmp.mod@uppbnd[EX_o2] = 1
@@ -203,7 +257,11 @@ res.df = rbind(res.df, data.frame(name="full model",
                                   ko.atp.val.hypoxia=soln.atp.hypoxia@lp_obj))
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
+=======
+write.csv(res.df, "fba-res.csv")
+>>>>>>> Stashed changes
 =======
 write.csv(res.df, "fba-res.csv")
 >>>>>>> Stashed changes
@@ -216,7 +274,11 @@ res.df$label[111] = "CIV"
 res.df$label[112] = "CV"
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 write.csv(res.df, "fba-res.csv")
+=======
+
+>>>>>>> Stashed changes
 =======
 
 >>>>>>> Stashed changes
@@ -228,7 +290,11 @@ ggplot(res.df, aes(x=ko.val, y=ko.val.hypoxia, label=label)) +
 
 first.steps = parallelised.runs[[1]]$routes[,1]
 first.df = res.df[res.df$label!="",]
+<<<<<<< Updated upstream
 print(first.df)
+=======
+#print(first.df)
+>>>>>>> Stashed changes
 first.df$propn = 0
 for(i in 1:nrow(first.df)) {
   ref = which(featurenames == first.df$label[i])-1
@@ -247,13 +313,20 @@ cs = fit.lm$coefficients
 tstr = sprintf("Slope %.1e +- %.1e, p=%.2e", cs[2,1], cs[2,2], cs[2,4])
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 png("mro-first-fba.png", width=300*sf, height=300*sf, res=72*sf)
 print(g.normoxic + ggtitle(tstr))
 dev.off()
 =======
+=======
+>>>>>>> Stashed changes
 png("Results/HyperTraPS/mro-first-fba.png", width=300*sf, height=300*sf, res=72*sf)
 print(g.normoxic + ggtitle(tstr))
 dev.off()
 
+<<<<<<< Updated upstream
+save.image("Results/HyperTraPS/mro-save.RData")
+>>>>>>> Stashed changes
+=======
 save.image("Results/HyperTraPS/mro-save.RData")
 >>>>>>> Stashed changes

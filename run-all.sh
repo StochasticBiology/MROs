@@ -1,3 +1,7 @@
+<<<<<<< Updated upstream
+=======
+#!/bin/bash
+>>>>>>> Stashed changes
 
 # Runs classical HyperTraPS on the full NCBI tree (without timings)
 MRO-robert.R mro-ncbi-tree-2025.phy mro-barcodes-2025.csv

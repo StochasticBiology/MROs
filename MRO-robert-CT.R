@@ -20,8 +20,11 @@ datafile <- as.character(args[2])
 tree <- read.tree(paste("Data/",treefile,sep =""))
 df <- read.csv(paste("Data/",datafile, sep = ""))
 
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
 source("hypertraps.R")
 
 # read data
@@ -179,7 +182,11 @@ ggplot(res.df, aes(x=ko.val, y=ko.val.hypoxia, label=label)) +
 
 first.steps = parallelised.CT.runs[[1]]$routes[,1]
 first.df = res.df[res.df$label!="",]
+<<<<<<< Updated upstream
 print(first.df)
+=======
+#print(first.df)
+>>>>>>> Stashed changes
 first.df$propn = 0
 for(i in 1:nrow(first.df)) {
   ref = which(featurenames == first.df$label[i])-1
