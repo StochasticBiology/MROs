@@ -1,0 +1,102 @@
+(
+'Amoebophrya ceratii':4,
+'Brevimastigomonas motovehiculus':4,
+'Stygiella incarcerata':4,
+'Pygsuia biforma':4,
+(
+'Muranothrix gubernata':4,
+Parablepharisma:4,
+'Chilodonella uncinata':4,
+(
+(
+'Heterometopus sp. CSS':4,
+(
+'Metopus contortus':4,
+'Metopus laminarius':4
+)Metopus:4
+)Metopidae:4,
+'Nyctotherus ovalis':4
+)Armophorea:4,
+'Plagiopyla frontata':4,
+'Anaerocyclidium porcatum':4
+)Ciliophora:4,
+(
+'Henneguya salminicola':4,
+'Homo sapiens':4,
+'Ascaris suum':4,
+'Fasciola hepatica':4
+)Metazoa:4,
+(
+'Plasmodium falciparum':4,
+(
+(
+'Selenidium pygospionis':4,
+'Selenidium serpulae':4
+)Selenidium:4,
+(
+'Polyplicarium translucidae':4,
+'Heliospora caprellae':4,
+'Cephaloidophora communis':4,
+'Pterospora schizosoma':4,
+(
+'Polyrhabdina sp.':4,
+'Ancora sagittata':4,
+'Lankesteria metandrocarpae':4,
+'Trichotokara eunicae':4,
+'Lecudina tuzetae':4
+)Lecudinidae:4,
+'Gregarina niphandrodes':4,
+'Monocystis agilis':4
+)Eugregarinorida:4,
+(
+'Toxoplasma gondii':4,
+(
+'Cryptosporidium hominis':4,
+'Cryptosporidium andersoni':4,
+'Cryptosporidium muris':4,
+'Cryptosporidium parvum':4
+)Cryptosporidium:4
+)Eucoccidiorida:4
+)Conoidasida:4
+)Apicomplexa:4,
+(
+'Dysnectes brevis':4,
+'Carpediemonas membranifera':4,
+(
+'Trepomonas sp.':4,
+'Spironucleus salmonicida':4,
+'Giardia intestinalis':4
+)Hexamitidae:4
+)Fornicata:4,
+'Trichomonas vaginalis':4,
+(
+Rozella:4,
+(
+'Nematocida parisii':4,
+'Encephalitozoon cuniculi':4
+)Microsporidia:4,
+(
+'Saccharomyces cerevisiae':4,
+'Schizosaccharomyces pombe':4
+)Ascomycota:4,
+(
+'Orpinomyces sp.':4,
+'Piromyces sp.':4,
+(
+'Neocallimastix sp.':4,
+'Neocallimastix frontalis':4
+)Neocallimastix:4
+)Neocallimastigaceae:4
+)Fungi:4,
+(
+'Viscum album':4,
+'Chlamydomonas reinhardtii':4
+)Viridiplantae:4,
+(
+(
+'Trypanosoma brucei':4,
+'Leishmania tropica':4
+)Trypanosomatidae:4,
+'Euglena gracilis':4
+)Euglenozoa:4
+)root;
