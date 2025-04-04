@@ -833,7 +833,9 @@ prob.by.time = function(my.post, tau) {
   return(df)
 }
 
-curate.tree = function(tree.src, data.src, losses = FALSE, data.header=TRUE) {
+curate.tree = function(tree.src, data.src, 
+                       losses = FALSE, data.header=TRUE,
+                       enforce.root = TRUE) {
   if(is.character(tree.src)) {
     # read in Newick tree and root
     my.tree = read.tree(tree.src)
@@ -877,6 +879,7 @@ curate.tree = function(tree.src, data.src, losses = FALSE, data.header=TRUE) {
   
   # initialise "recursive" algorithm
   change = T
+  my.data[,1] = as.character(my.data[,1])
   new.row = my.data[1,]
   changes = data.frame()
   
@@ -891,7 +894,6 @@ curate.tree = function(tree.src, data.src, losses = FALSE, data.header=TRUE) {
         # if not, check to see if its children are all characterised
         descendant.refs = Children(tree, tree.ref)
         if(all(tree.labels[descendant.refs] %in% my.data$label)) {
-          
           ## ancestral state reconstruction
           # pull the rows in our barcode dataset corresponding to children of this node
           descendant.rows = which(my.data$label %in% tree.labels[descendant.refs])
@@ -907,7 +909,7 @@ curate.tree = function(tree.src, data.src, losses = FALSE, data.header=TRUE) {
           new.data$label[1] = this.label
           new.data[1,2:ncol(new.data)] = new.barcode
           my.data = rbind(my.data, new.data)
-          
+                  
           ## adding transitions to our observation set
           # loop through children
           for(d.ref in descendant.refs) {
@@ -927,6 +929,33 @@ curate.tree = function(tree.src, data.src, losses = FALSE, data.header=TRUE) {
           change = T
         }
       }
+    }
+  }
+  if(enforce.root == TRUE) {
+    if(losses == TRUE) {
+      initial_state = 1
+    } else {
+      initial_state = 0
+    }
+    root_node <- findMRCA(tree, tree$tip.label, type="node")
+    root_state = my.data[my.data$label == tree.labels[root_node],]
+    to.fix = FALSE
+    if(losses == FALSE & sum(root_state[2:ncol(root_state)]) != 0) {
+      message("Root state not implied to be 0^L... adding that transition")
+      to.fix = TRUE
+    }
+    if(losses == TRUE & sum(1-root_state[2:ncol(root_state)]) != 0) {
+      message("Root state not implied to be 1^L... adding that transition")
+      to.fix = TRUE
+    }
+    if(to.fix == TRUE) {
+      changes = rbind(changes, 
+                      data.frame(from=paste0(root_state[2:ncol(root_state)]*0 + initial_state, collapse=""),
+                               to=paste0(root_state[2:ncol(root_state)], collapse=""),
+                               time=1,
+                               from.node=-1,
+                               to.node=root_node,
+                               stringsAsFactors = FALSE))
     }
   }
   srcs = matrix(as.numeric(unlist(lapply(changes$from, strsplit, split=""))), byrow=TRUE, ncol=ncol(new.data)-1)

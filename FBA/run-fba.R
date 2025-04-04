@@ -14,6 +14,7 @@ mm <- readSBMLmod("MitoMammal/MitoMammal.xml")
 # Read reactions
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 reacts <- read.csv("MitoMammal/MitoMammal-reactions.txt")
 
 names <- reacts[,2]
@@ -24,6 +25,8 @@ OBJ_names <- c("OF_ATP_MitoCore","OF_HEME_MitoCore","OF_LIPID_MitoCore","OF_PROT
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 reacts <- mm@react_name #read.csv("MitoMammal/MitoMammal-reactions.txt")
 
 names <- reacts
@@ -32,6 +35,9 @@ names <- reacts
 OBJ_inds <- c(71:74)
 OBJ_names <- names[OBJ_inds]
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -46,6 +52,7 @@ EX_o2 <- 50
 TCA_inds <- c(98:107)
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 TCA_names <- c("pyruvate dehydrogenase","citrate synthase","Aconitate hydratase","Isocitrate dehydrogenase (NAD+)","Isocitrate dehydrogenase (NADP+), mitochondrial",
 	       "2-oxoglutarate dehydrogenase complex", "Succinate--CoA ligase (GDP-forming)", "Succinate--CoA ligase (ADP-forming)", "fumarate hydratase",
 	       "malate dehydrogenase 2, NAD (mitochondrial)")
@@ -57,6 +64,8 @@ ETC_names <- c("NADH dehydrogenase", "succinate dehydrogenase", "cytochrome c re
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 TCA_names <- names[TCA_inds]
 #cat(paste(c(names[TCA_inds],"\n")))
 
@@ -65,6 +74,9 @@ ETC_inds <- c(108:112)
 ETC_names <- names[ETC_inds]
 #cat(paste(c(names[ETC_inds],"\n")))
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -74,11 +86,17 @@ d <- data.frame(KO = NULL, EX_O2 = NULL, MAX_ATP = NULL, ETC = NULL, TCA = NULL)
 d2 <- data.frame(KO = NULL, EX_O2 = NULL, MAX_ATP = NULL, ETC = NULL, TCA = NULL)
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 d3 <- data.frame(KO = NULL, EX_O2 = NULL, MAX_ATP = NULL, ETC = NULL, TCA = NULL)
 d4 <- data.frame(KO = NULL, EX_O2 = NULL, MAX_ATP = NULL, ETC = NULL, TCA = NULL)
 
 
 # Get a baseline with MitoMammal across all cases, because we have a "full" set of mitochondrial functions
+=======
+
+
+# Get a baseline with MitoMammal, because we have a "full" set of mitochondrial functions
+>>>>>>> Stashed changes
 =======
 
 
@@ -99,7 +117,10 @@ these_data <- data.frame(KO="NONE", EX_O2 = round(mm.FD[EX_o2,],4), MAX_ATP = mm
 d <- rbind(d, these_data)
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 d2 <- rbind(d2, these_data)
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -142,7 +163,11 @@ names(d) <- c("KO","EX_O2","MAX_ATP","CI","CII","CIII","CIV","CV","PDH")
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 print(d)
+=======
+#print(d)
+>>>>>>> Stashed changes
 =======
 #print(d)
 >>>>>>> Stashed changes
@@ -154,6 +179,7 @@ print(d)
 filename <- "single-double-KO-MAX_ATP-no-restriction.csv"
 write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = d, row.names = F)
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 # Do triple knockouts
@@ -205,11 +231,16 @@ write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = d2, row.names
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 
 ######## Repeat with a O2 restricted model
 
 # Get baseline for hypoxic case (10% the oxygen availability required by the basecase (it is negative, hence signs))
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -223,8 +254,12 @@ these_data <- data.frame(KO="NONE", EX_O2 = round(mm.FD[EX_o2,],4), MAX_ATP = mm
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 d3 <- rbind(d3, these_data)
 d4 <- rbind(d4, these_data)
+=======
+d2 <- rbind(d2, these_data)
+>>>>>>> Stashed changes
 =======
 d2 <- rbind(d2, these_data)
 >>>>>>> Stashed changes
@@ -248,7 +283,11 @@ for(i in 1:length(KO_inds)){
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   d3 <- rbind(d3, these_data)
+=======
+  d2 <- rbind(d2, these_data)
+>>>>>>> Stashed changes
 =======
   d2 <- rbind(d2, these_data)
 >>>>>>> Stashed changes
@@ -270,6 +309,7 @@ for(i in 1:ncol(KO_inds)){
   # Extract the data
   these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i],sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), TCA = t(mm.KO.FD[TCA_inds[1],]))
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
   d3 <- rbind(d3, these_data)
@@ -327,6 +367,8 @@ write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = d4, row.names
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
   d2 <- rbind(d2, these_data)
 }
 
@@ -349,6 +391,10 @@ d.norm[,i]<-d.norm[,i]/d.norm[1,i]
 
 print(d.norm)
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+print(d.anox)
+>>>>>>> Stashed changes
+=======
 print(d.anox)
 >>>>>>> Stashed changes
 =======

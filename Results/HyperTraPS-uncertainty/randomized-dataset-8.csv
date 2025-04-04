@@ -25,7 +25,11 @@
 "24","Euglena gracilis",1,1,1,1,1,1,1,1,1
 "25","Fasciola hepatica",1,1,0,0,1,1,1,0,1
 "26","Giardia intestinalis",0,0,0,0,0,0,0,0,1
+<<<<<<< Updated upstream
 "27","Giardia lamblia",1,1,1,1,1,1,1,1,0
+=======
+"27","Giardia lamblia",0,0,0,0,0,0,0,0,1
+>>>>>>> Stashed changes
 "28","Gregarina niphandrodes",1,1,0,0,0,0,0,1,1
 "29","Henneguya salminicola",0,1,0,0,1,0,0,1,1
 "30","Homo sapiens",1,1,1,1,1,1,1,1,1
@@ -39,17 +43,28 @@
 "38","Metopid sp. SK",1,1,1,1,0,1,1,0,1
 "39","Metopus contortus",1,1,1,0,0,1,1,0,1
 "40","Metopus laminarius",1,1,1,0,0,1,0,0,1
+<<<<<<< Updated upstream
 "41","Mikrocytos mackini",1,1,1,1,1,1,1,1,0
+=======
+"41","Mikrocytos mackini",0,0,0,0,0,0,0,0,1
+>>>>>>> Stashed changes
 "42","Mitosporidium sp.",0,1,1,1,1,1,1,1,1
 "43","Monocercomonoides exilis",0,0,0,0,0,0,0,0,0
 "44","Monocystis agilis",1,1,1,1,1,0,1,1,1
 "45","Muranothrix gubernata",1,1,1,0,1,1,1,0,1
 "46","Naegleria gruberi",1,1,1,1,1,1,1,1,1
 "47","Nematocida parisii",0,0,0,0,0,1,0,0,1
+<<<<<<< Updated upstream
 "48","Neocallimastix frontalis",1,1,1,1,1,1,1,1,0
 "49","Neocallimastix sp.",1,0,0,0,0,0,0,0,1
 "50","Nyctotherus ovalis",1,1,0,0,0,1,1,0,1
 "51","Orpinomyces sp.",1,0,1,1,0,1,0,1,0
+=======
+"48","Neocallimastix frontalis",0,0,0,0,0,0,0,0,1
+"49","Neocallimastix sp.",1,0,0,0,0,0,0,0,1
+"50","Nyctotherus ovalis",1,1,0,0,0,1,1,0,1
+"51","Orpinomyces sp.",0,1,0,0,1,0,1,0,1
+>>>>>>> Stashed changes
 "52","Parablepharisma",1,1,1,1,1,0,1,0,1
 "53","Paratrimastix pyriformis",0,0,0,0,0,0,0,0,1
 "54","Piromyces sp.",0,1,1,1,1,0,0,1,1
@@ -59,17 +74,28 @@
 "58","Polyplicarium translucidae",1,1,0,0,0,0,0,1,1
 "59","Polyrhabdina sp.",0,0,0,0,0,0,0,0,1
 "60","Psalteriomonas lanterna",0,0,0,0,0,0,0,0,0
+<<<<<<< Updated upstream
 "61","Pterospora schizosoma",1,1,1,1,1,1,1,1,0
 "62","Pygsuia biforma",1,1,0,0,0,0,0,0,1
 "63","Rozella",1,0,0,0,0,0,0,0,0
+=======
+"61","Pterospora schizosoma",0,0,0,0,0,0,0,0,1
+"62","Pygsuia biforma",1,1,0,0,0,0,0,0,1
+"63","Rozella",0,1,1,1,1,1,1,1,1
+>>>>>>> Stashed changes
 "64","Saccharomyces cerevisiae",1,1,1,1,1,1,1,1,1
 "65","Sawyeria marylandensis",0,0,0,0,0,0,0,0,1
 "66","Schizosaccharomyces pombe",0,1,1,1,1,1,1,1,1
 "67","Selenidium pygospionis",0,1,1,1,1,0,1,1,1
 "68","Selenidium serpulae",1,1,1,1,1,0,0,1,1
 "69","Spironucleus salmonicida",0,0,0,0,0,0,0,0,1
+<<<<<<< Updated upstream
 "70","Stygiella incarcerata",0,1,1,1,1,1,1,1,0
 "71","Toxoplasma gondii",0,0,0,0,0,1,0,0,0
+=======
+"70","Stygiella incarcerata",1,0,0,0,0,0,0,0,1
+"71","Toxoplasma gondii",1,1,1,1,1,0,1,1,1
+>>>>>>> Stashed changes
 "72","Trepomonas sp.",0,0,0,0,0,0,0,0,1
 "73","Trichomonas vaginalis",0,0,0,0,0,0,0,0,1
 "74","Trichotokara eunicae",1,1,0,0,1,0,0,1,1

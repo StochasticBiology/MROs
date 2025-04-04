@@ -1,9 +1,15 @@
 "","Organism","CI","CII","CIII","CIV","CV","PDH","DNA","TCA","Fe.S"
 "1","Acanthamoeba castellanii",1,1,1,1,1,1,1,1,1
 "2","Aduncisulcus paluster",0,0,0,0,0,0,0,0,1
+<<<<<<< Updated upstream
 "3","Amoebophrya ceratii",1,0,1,0,0,0,0,0,0
 "4","Ancora sagittata",1,0,0,0,0,0,0,0,1
 "5","Ascaris suum",0,0,0,0,0,0,0,0,0
+=======
+"3","Amoebophrya ceratii",0,1,0,1,1,1,1,1,1
+"4","Ancora sagittata",1,0,0,0,0,0,0,0,1
+"5","Ascaris suum",1,1,1,1,1,1,1,1,1
+>>>>>>> Stashed changes
 "6","Blastocystis sp.",1,1,0,0,0,1,1,0,1
 "7","Brevimastigomonas motovehiculus",1,1,0,0,1,1,1,1,1
 "8","Carpediemonas membranifera",1,0,0,0,0,0,0,0,1
@@ -38,15 +44,24 @@
 "37","Mastigamoeba balamuthi",0,1,0,0,0,0,0,0,1
 "38","Metopid sp. SK",1,1,1,1,0,1,1,0,1
 "39","Metopus contortus",1,1,1,0,0,1,1,0,1
+<<<<<<< Updated upstream
 "40","Metopus laminarius",0,0,0,1,1,0,1,1,0
+=======
+"40","Metopus laminarius",1,1,1,0,0,1,0,0,1
+>>>>>>> Stashed changes
 "41","Mikrocytos mackini",0,0,0,0,0,0,0,0,1
 "42","Mitosporidium sp.",0,1,1,1,1,1,1,1,1
 "43","Monocercomonoides exilis",0,0,0,0,0,0,0,0,0
 "44","Monocystis agilis",1,1,1,1,1,0,1,1,1
 "45","Muranothrix gubernata",1,1,1,0,1,1,1,0,1
 "46","Naegleria gruberi",1,1,1,1,1,1,1,1,1
+<<<<<<< Updated upstream
 "47","Nematocida parisii",1,1,1,1,1,0,1,1,0
 "48","Neocallimastix frontalis",1,1,1,1,1,1,1,1,0
+=======
+"47","Nematocida parisii",0,0,0,0,0,1,0,0,1
+"48","Neocallimastix frontalis",0,0,0,0,0,0,0,0,1
+>>>>>>> Stashed changes
 "49","Neocallimastix sp.",1,0,0,0,0,0,0,0,1
 "50","Nyctotherus ovalis",1,1,0,0,0,1,1,0,1
 "51","Orpinomyces sp.",0,1,0,0,1,0,1,0,1
@@ -54,7 +69,11 @@
 "53","Paratrimastix pyriformis",0,0,0,0,0,0,0,0,1
 "54","Piromyces sp.",0,1,1,1,1,0,0,1,1
 "55","Plagiopyla frontata",0,0,0,0,0,1,0,0,1
+<<<<<<< Updated upstream
 "56","Plagiopyla cf. narasimhumartii",1,0,1,1,1,0,0,1,0
+=======
+"56","Plagiopyla cf. narasimhumartii",0,1,0,0,0,1,1,0,1
+>>>>>>> Stashed changes
 "57","Plasmodium falciparum",1,1,1,1,1,0,1,1,1
 "58","Polyplicarium translucidae",1,1,0,0,0,0,0,1,1
 "59","Polyrhabdina sp.",0,0,0,0,0,0,0,0,1
@@ -64,8 +83,13 @@
 "63","Rozella",0,1,1,1,1,1,1,1,1
 "64","Saccharomyces cerevisiae",1,1,1,1,1,1,1,1,1
 "65","Sawyeria marylandensis",0,0,0,0,0,0,0,0,1
+<<<<<<< Updated upstream
 "66","Schizosaccharomyces pombe",1,0,0,0,0,0,0,0,0
 "67","Selenidium pygospionis",1,0,0,0,0,1,0,0,0
+=======
+"66","Schizosaccharomyces pombe",0,1,1,1,1,1,1,1,1
+"67","Selenidium pygospionis",0,1,1,1,1,0,1,1,1
+>>>>>>> Stashed changes
 "68","Selenidium serpulae",1,1,1,1,1,0,0,1,1
 "69","Spironucleus salmonicida",0,0,0,0,0,0,0,0,1
 "70","Stygiella incarcerata",1,0,0,0,0,0,0,0,1

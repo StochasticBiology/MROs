@@ -4,9 +4,15 @@
 "3","Amoebophrya ceratii",0,1,0,1,1,1,1,1,1
 "4","Ancora sagittata",1,0,0,0,0,0,0,0,1
 "5","Ascaris suum",1,1,1,1,1,1,1,1,1
+<<<<<<< Updated upstream
 "6","Blastocystis sp.",0,0,1,1,1,0,0,1,0
 "7","Brevimastigomonas motovehiculus",1,1,0,0,1,1,1,1,1
 "8","Carpediemonas membranifera",0,1,1,1,1,1,1,1,0
+=======
+"6","Blastocystis sp.",1,1,0,0,0,1,1,0,1
+"7","Brevimastigomonas motovehiculus",1,1,0,0,1,1,1,1,1
+"8","Carpediemonas membranifera",1,0,0,0,0,0,0,0,1
+>>>>>>> Stashed changes
 "9","Cantina marsupialis",0,1,0,0,0,0,0,0,1
 "10","Cephaloidophora communis",1,1,0,0,0,0,0,1,1
 "11","Chilodonella uncinata",1,1,1,1,1,1,1,1,1
@@ -24,7 +30,11 @@
 "23","Ergobibamus cyprinoides",1,0,0,0,0,0,0,0,1
 "24","Euglena gracilis",1,1,1,1,1,1,1,1,1
 "25","Fasciola hepatica",1,1,0,0,1,1,1,0,1
+<<<<<<< Updated upstream
 "26","Giardia intestinalis",1,1,1,1,1,1,1,1,0
+=======
+"26","Giardia intestinalis",0,0,0,0,0,0,0,0,1
+>>>>>>> Stashed changes
 "27","Giardia lamblia",0,0,0,0,0,0,0,0,1
 "28","Gregarina niphandrodes",1,1,0,0,0,0,0,1,1
 "29","Henneguya salminicola",0,1,0,0,1,0,0,1,1
@@ -47,15 +57,26 @@
 "46","Naegleria gruberi",1,1,1,1,1,1,1,1,1
 "47","Nematocida parisii",0,0,0,0,0,1,0,0,1
 "48","Neocallimastix frontalis",0,0,0,0,0,0,0,0,1
+<<<<<<< Updated upstream
 "49","Neocallimastix sp.",0,1,1,1,1,1,1,1,0
 "50","Nyctotherus ovalis",1,1,0,0,0,1,1,0,1
 "51","Orpinomyces sp.",1,0,1,1,0,1,0,1,0
+=======
+"49","Neocallimastix sp.",1,0,0,0,0,0,0,0,1
+"50","Nyctotherus ovalis",1,1,0,0,0,1,1,0,1
+"51","Orpinomyces sp.",0,1,0,0,1,0,1,0,1
+>>>>>>> Stashed changes
 "52","Parablepharisma",1,1,1,1,1,0,1,0,1
 "53","Paratrimastix pyriformis",0,0,0,0,0,0,0,0,1
 "54","Piromyces sp.",0,1,1,1,1,0,0,1,1
 "55","Plagiopyla frontata",0,0,0,0,0,1,0,0,1
+<<<<<<< Updated upstream
 "56","Plagiopyla cf. narasimhumartii",1,0,1,1,1,0,0,1,0
 "57","Plasmodium falciparum",0,0,0,0,0,1,0,0,0
+=======
+"56","Plagiopyla cf. narasimhumartii",0,1,0,0,0,1,1,0,1
+"57","Plasmodium falciparum",1,1,1,1,1,0,1,1,1
+>>>>>>> Stashed changes
 "58","Polyplicarium translucidae",1,1,0,0,0,0,0,1,1
 "59","Polyrhabdina sp.",0,0,0,0,0,0,0,0,1
 "60","Psalteriomonas lanterna",0,0,0,0,0,0,0,0,0
@@ -73,7 +94,11 @@
 "72","Trepomonas sp.",0,0,0,0,0,0,0,0,1
 "73","Trichomonas vaginalis",0,0,0,0,0,0,0,0,1
 "74","Trichotokara eunicae",1,1,0,0,1,0,0,1,1
+<<<<<<< Updated upstream
 "75","Trimastix marina",1,1,1,1,1,1,1,1,0
+=======
+"75","Trimastix marina",0,0,0,0,0,0,0,0,1
+>>>>>>> Stashed changes
 "76","Trypanosoma brucei",1,1,1,1,1,1,1,1,1
 "77","Viscum album",0,1,1,1,1,1,1,1,1
 "78","Vitrella brassicaformis",1,1,1,1,1,1,1,1,1

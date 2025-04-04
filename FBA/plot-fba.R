@@ -12,6 +12,7 @@ d2 <- read.csv("MitoMammal/Results/single-double-KO-MAX_ATP-oxygen-restriction.c
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 # Import data for unrestricted oxygen case (base case) for single and double KOs
 d3 <- read.csv("MitoMammal/Results/triple-quadruple-KO-MAX_ATP-no-restriction.csv")
 
@@ -41,6 +42,8 @@ p4 <- ggplot(data = d4)+
 w <- 900
 h = 500
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 ## Import data for unrestricted oxygen case (base case) for triple and quadruple KOs
@@ -74,6 +77,9 @@ p2 <- ggplot(data = d2)+
 w <- 700
 h = 600
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -90,6 +96,7 @@ dev.off()
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 filename <- "triple-quadruple-MAX_ATP-no-restriction.png"
 png(file = paste("MitoMammal/Results/",filename,sep=""), width = w*res, height = h*res, res = 72*res)
 p3
@@ -99,6 +106,8 @@ filename <- "triple-quadruple-MAX_ATP-oxygen-restriction.png"
 png(file = paste("MitoMammal/Results/",filename,sep=""), width = w*res, height = h*res, res = 72*res)
 p4
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 #filename <- "triple-quadruple-MAX_ATP-no-restriction.png"
@@ -278,6 +287,9 @@ filename <- "KO-heatmap-oxygen-restriction.png"
 png(file = paste("MitoMammal/Results/",filename,sep=""), width = w*res, height = h*res, res = 72*res)
 p2
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes

@@ -21,8 +21,11 @@ tree <- read.tree(paste("Data/",treefile,sep =""))
 df <- read.csv(paste("Data/",datafile, sep = ""))
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 source("hypertraps.R")
@@ -33,7 +36,11 @@ source("hypertraps.R")
 
 # harmonise labels across tree and barcode data
 # IGJ March 2025 -- think I added something here
+<<<<<<< Updated upstream
 df$Organism = gsub("_", " ", df$Organism)
+=======
+# df$Organism = gsub("_", " ", df$Organism)
+>>>>>>> Stashed changes
 
 tree$tip.label = gsub("'", "", tree$tip.label)
 tree$tip.label = gsub("_", " ", tree$tip.label)
@@ -80,13 +87,21 @@ g.sg.1 = plotHypercube.sampledgraph2(parallelised.CT.runs[[1]],
 
 # compare outputs and check convergence
 sf = 2
+<<<<<<< Updated upstream
 png("Results/HyperTraPS-CT/mro-CT-convergence.png", width = 700*sf, height = 600*sf, res = 72*sf)
+=======
+png("Results/HyperTraPS-CT/mro-convergence.png", width = 700*sf, height = 600*sf, res = 72*sf)
+>>>>>>> Stashed changes
 print(ggarrange(g.data, ggarrange(g.bub.1,g.bub.2,g.bub.3,nrow=3), nrow=1))
 dev.off()
 
 # check summary
 sf = 2
+<<<<<<< Updated upstream
 png("Results/HyperTraPS-CT/mro-CT-trace.png", width = 700*sf, height = 600*sf, res = 72*sf)
+=======
+png("Results/HyperTraPS-CT/mro-trace.png", width = 700*sf, height = 600*sf, res = 72*sf)
+>>>>>>> Stashed changes
 print(g.blurb)
 dev.off()
 
@@ -99,10 +114,28 @@ g.summary = ggarrange(g.data, ggarrange(g.bub.1, g.sg.1, ncol=1,
 #g.summary
 
 sf = 2
+<<<<<<< Updated upstream
 png("Results/HyperTraPS-CT/mro-CT-summary.png", width=700*sf, height=600*sf, res=72*sf)
 print(g.summary)
 dev.off()
 
+=======
+png("Results/HyperTraPS-CT/mro-summary.png", width=700*sf, height=600*sf, res=72*sf)
+print(g.summary)
+dev.off()
+
+# Check influences
+g.influences <- plotHypercube.influences(parallelised.CT.runs[[1]])
+g.influencegraph <- plotHypercube.influencegraph(parallelised.CT.runs[[1]])
+
+g.infl <- ggarrange(g.influences, g.influencegraph, nrow = 1, labels=c("A","B"))
+
+sf = 2
+png("Results/HyperTraPS-CT/mro-influences.png", width=700*sf, height=600*sf, res=72*sf)
+print(g.infl)
+dev.off()
+
+>>>>>>> Stashed changes
 r = parallelised.CT.runs[[1]]$routes
 r.ci = r[r[,1]==0,]
 r.tca = r[r[,1]==7,]
@@ -121,7 +154,11 @@ g.pathways = ggarrange(plotHypercube.motifs(parallelised.CT.runs[[1]])+theme(leg
           ncol=1, labels=c("A", "B", "C", "D"))
 
 sf = 2
+<<<<<<< Updated upstream
 png("Results/HyperTraPS-CT/mro-CT-pathways.png", width=600*sf, height=600*sf, res=72*sf)
+=======
+png("Results/HyperTraPS-CT/mro-pathways.png", width=600*sf, height=600*sf, res=72*sf)
+>>>>>>> Stashed changes
 print(g.pathways)
 dev.off()
 
@@ -183,9 +220,15 @@ ggplot(res.df, aes(x=ko.val, y=ko.val.hypoxia, label=label)) +
 first.steps = parallelised.CT.runs[[1]]$routes[,1]
 first.df = res.df[res.df$label!="",]
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 print(first.df)
 =======
 #print(first.df)
+>>>>>>> Stashed changes
+=======
+#print(first.df)
+
+# First-loss probability vs metabolic impact from FBA in the normoxic case
 >>>>>>> Stashed changes
 first.df$propn = 0
 for(i in 1:nrow(first.df)) {
@@ -204,10 +247,39 @@ fit.lm = summary(lm(propn~ko.atp.val, data=first.df))
 cs = fit.lm$coefficients
 tstr = sprintf("Slope %.1e +- %.1e, p=%.2e", cs[2,1], cs[2,2], cs[2,4])
 
+<<<<<<< Updated upstream
 png("Results/HyperTraPS-CT/mro-CT-first-fba.png", width=300*sf, height=300*sf, res=72*sf)
 print(g.normoxic + ggtitle(tstr))
 dev.off()
 
+=======
+png("Results/HyperTraPS-CT/mro-first-fba-normoxic.png", width=300*sf, height=300*sf, res=72*sf)
+print(g.normoxic + ggtitle(tstr))
+dev.off()
+
+# First-loss probability vs metabolic impact from FBA in the anoxic case
+first.df$propn = 0
+for(i in 1:nrow(first.df)) {
+  ref = which(featurenames == first.df$label[i])-1
+  propn = sum(first.steps == ref) / length(first.steps)
+  first.df$propn[i] = propn
+}
+g.anoxic = ggplot(first.df, aes(x=ko.atp.val.hypoxia, y=propn, label=label)) + 
+  geom_point() + geom_smooth(method="lm", color="#AAAAFF", fill="#AAAAFF") + 
+  ggrepel::geom_text_repel() + theme_light() +
+  labs(x = "ATP objective on KO", y = "First loss probability")
+
+g.anoxic
+fit.lm = summary(lm(propn~ko.atp.val.hypoxia, data=first.df))
+
+cs = fit.lm$coefficients
+tstr = sprintf("Slope %.1e +- %.1e, p=%.2e", cs[2,1], cs[2,2], cs[2,4])
+
+png("Results/HyperTraPS-CT/mro-first-fba-anoxic.png", width=300*sf, height=300*sf, res=72*sf)
+print(g.anoxic + ggtitle(tstr))
+dev.off()
+
+>>>>>>> Stashed changes
 # Run again, but without time info
 
 # run these experiments in parallel. should take a few core minutes each
@@ -277,5 +349,21 @@ png("Results/HyperTraPS-CT/mro-discrete-pathways.png", width=600*sf, height=600*
 print(g.pathways)
 dev.off()
 
+<<<<<<< Updated upstream
 #### Save all data
 save.image("Results/HyperTraPS-CT/mro-CT-save.RData")
+=======
+# Check influences
+g.influences <- plotHypercube.influences(parallelised.discrete.runs[[1]])
+g.influencegraph <- plotHypercube.influencegraph(parallelised.discrete.runs[[1]])
+
+g.infl <- ggarrange(g.influences, g.influencegraph, nrow = 1, labels=c("A","B"))
+
+sf = 2
+png("Results/HyperTraPS-CT/mro-influences.png", width=700*sf, height=600*sf, res=72*sf)
+print(g.infl)
+dev.off()
+
+#### Save all data
+save.image("Results/HyperTraPS-CT/mro-save.RData")
+>>>>>>> Stashed changes

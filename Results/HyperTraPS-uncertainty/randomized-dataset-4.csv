@@ -1,6 +1,10 @@
 "","Organism","CI","CII","CIII","CIV","CV","PDH","DNA","TCA","Fe.S"
 "1","Acanthamoeba castellanii",1,1,1,1,1,1,1,1,1
+<<<<<<< Updated upstream
 "2","Aduncisulcus paluster",1,1,1,1,1,1,1,1,0
+=======
+"2","Aduncisulcus paluster",0,0,0,0,0,0,0,0,1
+>>>>>>> Stashed changes
 "3","Amoebophrya ceratii",0,1,0,1,1,1,1,1,1
 "4","Ancora sagittata",1,0,0,0,0,0,0,0,1
 "5","Ascaris suum",1,1,1,1,1,1,1,1,1
@@ -30,7 +34,11 @@
 "29","Henneguya salminicola",0,1,0,0,1,0,0,1,1
 "30","Homo sapiens",1,1,1,1,1,1,1,1,1
 "31","Heliospora caprellae",1,1,0,0,0,0,0,1,1
+<<<<<<< Updated upstream
 "32","Heterometopus sp. CSS",0,0,0,0,1,0,0,1,0
+=======
+"32","Heterometopus sp. CSS",1,1,1,1,0,1,1,0,1
+>>>>>>> Stashed changes
 "33","Kipferlia bialata",1,0,0,0,0,0,0,0,1
 "34","Lankesteria metandrocarpae",1,1,0,0,0,0,0,1,1
 "35","Lecudina tuzetae",1,1,0,0,0,0,0,1,1
@@ -39,20 +47,34 @@
 "38","Metopid sp. SK",1,1,1,1,0,1,1,0,1
 "39","Metopus contortus",1,1,1,0,0,1,1,0,1
 "40","Metopus laminarius",1,1,1,0,0,1,0,0,1
+<<<<<<< Updated upstream
 "41","Mikrocytos mackini",1,1,1,1,1,1,1,1,0
 "42","Mitosporidium sp.",1,0,0,0,0,0,0,0,0
 "43","Monocercomonoides exilis",1,1,1,1,1,1,1,1,1
+=======
+"41","Mikrocytos mackini",0,0,0,0,0,0,0,0,1
+"42","Mitosporidium sp.",0,1,1,1,1,1,1,1,1
+"43","Monocercomonoides exilis",0,0,0,0,0,0,0,0,0
+>>>>>>> Stashed changes
 "44","Monocystis agilis",1,1,1,1,1,0,1,1,1
 "45","Muranothrix gubernata",1,1,1,0,1,1,1,0,1
 "46","Naegleria gruberi",1,1,1,1,1,1,1,1,1
 "47","Nematocida parisii",0,0,0,0,0,1,0,0,1
 "48","Neocallimastix frontalis",0,0,0,0,0,0,0,0,1
+<<<<<<< Updated upstream
 "49","Neocallimastix sp.",0,1,1,1,1,1,1,1,0
+=======
+"49","Neocallimastix sp.",1,0,0,0,0,0,0,0,1
+>>>>>>> Stashed changes
 "50","Nyctotherus ovalis",1,1,0,0,0,1,1,0,1
 "51","Orpinomyces sp.",0,1,0,0,1,0,1,0,1
 "52","Parablepharisma",1,1,1,1,1,0,1,0,1
 "53","Paratrimastix pyriformis",0,0,0,0,0,0,0,0,1
+<<<<<<< Updated upstream
 "54","Piromyces sp.",1,0,0,0,0,1,1,0,0
+=======
+"54","Piromyces sp.",0,1,1,1,1,0,0,1,1
+>>>>>>> Stashed changes
 "55","Plagiopyla frontata",0,0,0,0,0,1,0,0,1
 "56","Plagiopyla cf. narasimhumartii",0,1,0,0,0,1,1,0,1
 "57","Plasmodium falciparum",1,1,1,1,1,0,1,1,1
@@ -70,7 +92,11 @@
 "69","Spironucleus salmonicida",0,0,0,0,0,0,0,0,1
 "70","Stygiella incarcerata",1,0,0,0,0,0,0,0,1
 "71","Toxoplasma gondii",1,1,1,1,1,0,1,1,1
+<<<<<<< Updated upstream
 "72","Trepomonas sp.",1,1,1,1,1,1,1,1,0
+=======
+"72","Trepomonas sp.",0,0,0,0,0,0,0,0,1
+>>>>>>> Stashed changes
 "73","Trichomonas vaginalis",0,0,0,0,0,0,0,0,1
 "74","Trichotokara eunicae",1,1,0,0,1,0,0,1,1
 "75","Trimastix marina",0,0,0,0,0,0,0,0,1

@@ -2,7 +2,10 @@
 
 #### Script to crossvalidate the findings from original HyperTraPS (note: not CT)
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 args = commandArgs(trailingOnly = T)
 
 # test if there is at least one argument: if not, return an error
@@ -10,12 +13,16 @@ if (length(args)!=2) {
   stop("Need two arguments, a Phyllip or Newick tree and barcodes of loss patterns.\n", call.=FALSE)
 }
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 library(phytools)
 library(parallel)
 library(sybilSBML)
 library(ggplot2)
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 #### Run HyperTraPS without timings on the NCBI tree 10 times with 10% of loss patterns associated with observations randomly changed ####
 ##   Save each of the data sets and all of the runs in RData files labelled according to the index of validation sets
@@ -112,6 +119,8 @@ png("mro-CV-pathways.png", width=600*sf, height=600*sf, res=72*sf)
 print(g.pathways)
 dev.off()
 =======
+=======
+>>>>>>> Stashed changes
 source("hypertraps.R")
 
 # Read data
@@ -130,6 +139,7 @@ set.seed(1234)
 for(k in 1:10){
   this_df <- df
 
+<<<<<<< Updated upstream
   # Change 10% of the observations to the opposite (0s to 1s and 1s to 0s)
   change <- sample(1:nrow(this_df), size = round(nrow(this_df)/10))
 
@@ -138,6 +148,19 @@ for(k in 1:10){
   tmp_df[this_df[change,] == 1] = 0
 
   this_df[change,] <- tmp_df
+=======
+  # Change an observation for 10% of the observations to the opposite (0s to 1s and 1s to 0s)
+  change <- sample(1:nrow(this_df), size = round(nrow(this_df)/10))
+
+  tmp_df <- this_df[change,]
+  for(i in 1:nrow(tmp_df)){
+    vec <- tmp_df[i,]
+    elem <- sample(2:length(vec), size = 1)
+    if(vec[elem] == 0)vec[elem] = 1
+    else vec[elem]= 0
+    tmp_df[i,] <- vec
+  }
+>>>>>>> Stashed changes
 
   # Save this_df
   write.csv(this_df, file = paste("Results/HyperTraPS-uncertainty/randomized-dataset-",k,".csv",sep = ""))
@@ -230,5 +253,9 @@ for(k in 1:10){
   k <- k + 1
 }
 
+<<<<<<< Updated upstream
+save.image("Results/HyperTraPS-uncertainty/mro-save-CV.RData")
+>>>>>>> Stashed changes
+=======
 save.image("Results/HyperTraPS-uncertainty/mro-save-CV.RData")
 >>>>>>> Stashed changes
