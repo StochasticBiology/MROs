@@ -4,7 +4,11 @@ args = commandArgs(trailingOnly = T)
 
 # test if there are exactly five arguments: if not, return an error
 if (length(args)!=5) {
+<<<<<<< Updated upstream
   stop("Need five arguments: a Phyllip or Newick tree, binary strings of loss patterns, an output folder, the penalty to employ (0/1), an whether the data is accompanied by timings (0/1).\n Usage: MRO-rcg.R [tree file] [barcodes] [output label] [penalty (0/1)] [with_timings (0/1)] \n", call.=FALSE)
+=======
+  stop("Need five arguments: a Phyllip or Newick tree, binary strings of loss patterns, an output folder, the penalty to employ (0/1), whether the data is accompanied by timings (0/1).\n Usage: MRO-rcg.R [tree file] [barcodes] [output label] [penalty (0/1)] [with_timings (0/1)]\n", call.=FALSE)
+>>>>>>> Stashed changes
 }
 
 library(phytools)
@@ -35,6 +39,7 @@ tree$tip.label = gsub("_", " ", tree$tip.label)
 # ancestral state reconstruction and transition gathering
 data.ncbi = curate.tree(tree, df, losses=TRUE)
 
+<<<<<<< Updated upstream
 # wrapper function for HyperTraPS analysis
 parallel.fn = function(seed, src.data, featurenames) {
   return(HyperTraPS(src.data$dests, initialstates = src.data$srcs, 
@@ -56,11 +61,28 @@ parallel.ct.fn = function(seed, src.data, featurenames) {
 n.seed = 5
 featurenames = colnames(df)[2:length(colnames(df))]
 if(with_timings == 0){
+=======
+print(data.ncbi$data)
+
+# run experiments in parallel. should take a few core minutes each
+n.seed = 5
+featurenames = colnames(df)[2:length(colnames(df))]
+
+if(with_timings == 0){
+  # wrapper function for HyperTraPS analysis
+  parallel.fn = function(seed, src.data, featurenames) {
+    return(HyperTraPS(src.data$dests, initialstates = src.data$srcs, 
+                      losses = 1, length = 5, kernel = 6,
+                      seed = seed, samplegap = 100, penalty = penalty,
+                      featurenames = featurenames))
+  }
+>>>>>>> Stashed changes
   parallelised.runs <- mcmapply(parallel.fn, seed=1:n.seed,
                                 MoreArgs = list(src.data=data.ncbi,
                                                 featurenames=featurenames),
                                 SIMPLIFY = FALSE,
                                 mc.cores = min(detectCores(), n.seed))
+<<<<<<< Updated upstream
 }else if(with_timings == 1){
   parallelised.ct.runs <- mcmapply(parallel.fn, seed=1:n.seed,
                                    MoreArgs = list(src.data=data.ncbi,
@@ -68,6 +90,28 @@ if(with_timings == 0){
                                    SIMPLIFY = FALSE,
                                    mc.cores = min(detectCores(), n.seed))
   parallelised.runs <- parallelised.ct.runs
+=======
+
+}else if(with_timings == 1){
+
+  # Run HyperTraPS-CT with
+
+  # wrapper function for continuous-time HyperTraPS analysis
+  parallel.ct.fn = function(seed, src.data, featurenames) {
+    return(HyperTraPS(src.data$dests, initialstates = src.data$srcs,
+  	  	      endtimes = src.data$times, starttimes = src.data$times,
+                      losses = 1, length = 5, kernel = 6,
+                      seed = seed, samplegap = 100, penalty = penalty,
+                      featurenames = featurenames))
+  }
+  
+  parallelised.runs <- mcmapply(parallel.ct.fn, seed=1:n.seed,
+                                MoreArgs = list(src.data=data.ncbi,
+                                                featurenames=featurenames),
+                                SIMPLIFY = FALSE,
+                                mc.cores = min(detectCores(), n.seed))
+
+>>>>>>> Stashed changes
 }else{
   stop("with_timings must be 0 (no) or 1 (yes).", call. = FALSE)
 }
@@ -85,13 +129,21 @@ g.sg.1 = plotHypercube.sampledgraph2(parallelised.runs[[1]],
 
 # compare outputs and check convergence
 sf = 2
+<<<<<<< Updated upstream
 png(paste(outfolder, "mro-convergence-", penalty, ".png", sep = ""), width = 700*sf, height = 600*sf, res = 72*sf)
+=======
+png(paste(outfolder, "mro-convergence-", penalty, "-instant", ".png", sep = ""), width = 700*sf, height = 600*sf, res = 72*sf)
+>>>>>>> Stashed changes
 print(ggarrange(g.data, ggarrange(g.bub.1,g.bub.2,g.bub.3,nrow=3), nrow=1))
 dev.off()
 
 # check summary
 sf = 2
+<<<<<<< Updated upstream
 png(paste(outfolder, "mro-trace-", penalty, ".png", sep = ""), width = 700*sf, height = 600*sf, res = 72*sf)
+=======
+png(paste(outfolder, "mro-trace-", penalty, "-instant", ".png", sep = ""), width = 700*sf, height = 600*sf, res = 72*sf)
+>>>>>>> Stashed changes
 print(g.blurb)
 dev.off()
 
@@ -104,7 +156,11 @@ g.summary = ggarrange(g.data, ggarrange(g.bub.1, g.sg.1, ncol=1,
 #g.summary
 
 sf = 2
+<<<<<<< Updated upstream
 png(paste(outfolder, "mro-summary-", penalty, ".png", sep = ""), width=700*sf, height=600*sf, res=72*sf)
+=======
+png(paste(outfolder, "mro-summary-", penalty, "-instant", ".png", sep = ""), width=700*sf, height=600*sf, res=72*sf)
+>>>>>>> Stashed changes
 print(g.summary)
 dev.off()
 
@@ -115,7 +171,11 @@ g.influencegraph <- plotHypercube.influencegraph(parallelised.runs[[1]])
 g.infl <- ggarrange(g.influences, g.influencegraph, nrow = 1, labels=c("A","B"))
 
 sf = 2
+<<<<<<< Updated upstream
 png(paste(outfolder, "mro-influences-", penalty, ".png", sep = ""), width=700*sf, height=600*sf, res=72*sf)
+=======
+png(paste(outfolder, "mro-influences-", penalty, "-instant", ".png", sep = ""), width=700*sf, height=600*sf, res=72*sf)
+>>>>>>> Stashed changes
 print(g.infl)
 dev.off()
 
@@ -140,7 +200,11 @@ g.pathways = ggarrange(plotHypercube.motifs(parallelised.runs[[1]])+theme(legend
           ncol=1, labels=c("A", "B", "C", "D", "E"))
 
 sf = 2
+<<<<<<< Updated upstream
 png(paste(outfolder, "mro-pathways-", penalty, ".png", sep = ""), width=600*sf, height=600*sf, res=72*sf)
+=======
+png(paste(outfolder, "mro-pathways-", penalty, "-instant", ".png", sep = ""), width=600*sf, height=600*sf, res=72*sf)
+>>>>>>> Stashed changes
 print(g.pathways)
 dev.off()
 
@@ -149,9 +213,12 @@ etc.inds <- c(98,108:112)
 etc.rs = fba.mod@react_name[etc.inds]
 EX_o2 <- 50
 
+<<<<<<< Updated upstream
 #cat("Reactions are...")
 #print(etc.rs)
 #cat("END\n\n")
+=======
+>>>>>>> Stashed changes
 
 atp.obj = rep(0, length(fba.mod@react_name))
 atp.obj[71] = 1
@@ -220,11 +287,19 @@ res.df$label[561] = "TCA"
 
 #print(res.df)
 
+<<<<<<< Updated upstream
 ggplot(res.df, aes(x=ko.atp.val, y=ko.atp.val.hypoxia, label=label)) + geom_point() + ggrepel::geom_text_repel()
 
 ggplot(res.df, aes(x=ko.val, y=ko.val.hypoxia, label=label)) + 
   geom_point() + 
   ggrepel::geom_text_repel()
+=======
+#ggplot(res.df, aes(x=ko.atp.val, y=ko.atp.val.hypoxia, label=label)) + geom_point() + ggrepel::geom_text_repel()
+
+#ggplot(res.df, aes(x=ko.val, y=ko.val.hypoxia, label=label)) + 
+#  geom_point() + 
+#  ggrepel::geom_text_repel()
+>>>>>>> Stashed changes
 
 first.steps = parallelised.runs[[1]]$routes[,1]
 first.df = res.df[res.df$label!="",]
@@ -240,13 +315,21 @@ g.normoxic = ggplot(first.df, aes(x=ko.atp.val, y=propn, label=label)) +
   ggrepel::geom_text_repel() + theme_light() +
   labs(x = "ATP objective on KO", y = "First loss probability")
 
+<<<<<<< Updated upstream
 g.normoxic
+=======
+#g.normoxic
+>>>>>>> Stashed changes
 fit.lm = summary(lm(propn~ko.atp.val, data=first.df))
 
 cs = fit.lm$coefficients
 tstr = sprintf("Slope %.1e +- %.1e, p=%.2e", cs[2,1], cs[2,2], cs[2,4])
 
+<<<<<<< Updated upstream
 png(paste(outfolder, "mro-first-fba-normoxic-", penalty, ".png", sep = ""), width=300*sf, height=300*sf, res=72*sf)
+=======
+png(paste(outfolder, "mro-first-fba-normoxic-", penalty, "-instant", ".png", sep = ""), width=300*sf, height=300*sf, res=72*sf)
+>>>>>>> Stashed changes
 print(g.normoxic + ggtitle(tstr))
 dev.off()
 
@@ -262,21 +345,41 @@ g.anoxic = ggplot(first.df, aes(x=ko.atp.val.hypoxia, y=propn, label=label)) +
   ggrepel::geom_text_repel() + theme_light() +
   labs(x = "ATP objective on KO", y = "First loss probability")
 
+<<<<<<< Updated upstream
 g.anoxic
+=======
+#g.anoxic
+>>>>>>> Stashed changes
 fit.lm = summary(lm(propn~ko.atp.val.hypoxia, data=first.df))
 
 cs = fit.lm$coefficients
 tstr = sprintf("Slope %.1e +- %.1e, p=%.2e", cs[2,1], cs[2,2], cs[2,4])
 
+<<<<<<< Updated upstream
 png(paste(outfolder, "mro-first-fba-anoxic-", penalty, ".png",sep = ""), width=300*sf, height=300*sf, res=72*sf)
+=======
+png(paste(outfolder, "mro-first-fba-anoxic-", penalty, "-instant", ".png",sep = ""), width=300*sf, height=300*sf, res=72*sf)
+>>>>>>> Stashed changes
 print(g.anoxic + ggtitle(tstr))
 dev.off()
 
 # If timings were passed, run HyperTraPS (without timings) on the same data
 if(with_timings){
+<<<<<<< Updated upstream
   # run these experiments in parallel. should take a few core minutes each
   n.seed = 5
   featurenames = colnames(df)[2:length(colnames(df))]
+=======
+
+  # wrapper function for HyperTraPS analysis
+  parallel.fn = function(seed, src.data, featurenames) {
+    return(HyperTraPS(src.data$dests, initialstates = src.data$srcs, 
+                      losses = 1, length = 5, kernel = 6,
+                      seed = seed, samplegap = 100, penalty = penalty,
+                      featurenames = featurenames))
+  }
+
+>>>>>>> Stashed changes
   parallelised.discrete.runs <- mcmapply(parallel.fn, seed=1:n.seed,
                                  MoreArgs = list(src.data=data.ncbi,
                                                  featurenames=featurenames),

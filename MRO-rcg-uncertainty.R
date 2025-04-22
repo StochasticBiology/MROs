@@ -2,9 +2,15 @@
 
 args = commandArgs(trailingOnly = T)
 
+<<<<<<< Updated upstream
 # test if there are exactly four arguments: if not, return an error
 if (length(args)!=4) {
   stop("Need four arguments: a Phyllip or Newick tree, binary strings of loss patterns, an output folder, and an integer tag.\n Usage: MRO-rcg-uncertainty.R [tree file] [barcodes] [output label] [tag (integer)] \n", call.=FALSE)
+=======
+# test if there are exactly three arguments: if not, return an error
+if (length(args)!=3) {
+  stop("Need four arguments: a Phyllip or Newick tree, binary strings of loss patterns, and an output folder.\n Usage: MRO-rcg-uncertainty.R [tree file] [barcodes] [output label] \n", call.=FALSE)
+>>>>>>> Stashed changes
 }
 
 library(phytools)
@@ -15,10 +21,16 @@ library(ggplot2)
 treefile <- as.character(args[1])
 datafile <- as.character(args[2])
 output <- as.character(args[3])
+<<<<<<< Updated upstream
 tag <- as.numeric(args[4])
 
 tree <- read.tree(paste("Data/",treefile,sep =""))
 df <- read.csv(paste("Data/RandomizedData/",datafile, sep = ""))
+=======
+
+tree <- read.tree(paste("Data/",treefile,sep =""))
+df <- read.csv(paste("Data/",datafile, sep = ""))
+>>>>>>> Stashed changes
 outfolder <- paste("Results/",output,"/", sep = "")
 
 # IGJ March 2025 -- updated this file
@@ -31,9 +43,12 @@ source("hypertraps.R")
 #tree$tip.label = gsub("'", "", tree$tip.label)
 tree$tip.label = gsub("_", " ", tree$tip.label)
 
+<<<<<<< Updated upstream
 # ancestral state reconstruction and transition gathering
 data.ncbi = curate.tree(tree, df, losses=TRUE)
 
+=======
+>>>>>>> Stashed changes
 # wrapper function for HyperTraPS analysis
 parallel.fn = function(seed, src.data, featurenames) {
   return(HyperTraPS(src.data$dests, initialstates = src.data$srcs, 
@@ -42,6 +57,7 @@ parallel.fn = function(seed, src.data, featurenames) {
                     featurenames = featurenames))
 }
 
+<<<<<<< Updated upstream
 # run these experiments in parallel. should take a few core minutes each
 n.seed = 5
 featurenames = colnames(df)[2:length(colnames(df))]
@@ -138,6 +154,130 @@ atp.obj = rep(0, length(fba.mod@react_name))
 atp.obj[71] = 1
 res.df = data.frame(name = NULL, ko.val = NULL, ko.atp.val = NULL, ko.val.hypoxia = NULL, ko.atp.val.hypoxia = NULL)
 for(ko in 1:length(fba.mod@react_name)) {
+=======
+# Set a seed
+set.seed(1234)
+
+# A list to save runs
+runs <- list()
+
+for(k in 1:10){
+
+  this_df <- df
+
+  # Change an observation for 10% of the observations to the opposite (0s to 1s and 1s to 0s)
+  change <- sample(1:nrow(this_df), size = round(nrow(this_df)/10))
+
+  tmp_df <- this_df[change,]
+  for(i in 1:nrow(tmp_df)){
+    vec <- tmp_df[i,]
+    elem <- sample(2:length(vec), size = 1)
+    if(vec[elem] == 0)vec[elem] = 1
+    else vec[elem]= 0
+    tmp_df[i,] <- vec
+  }
+
+  this_df[change,] = tmp_df
+
+  # Save this_df
+  write.csv(this_df, file = paste("Data/RandomizedData/randomized-dataset-",k,".csv",sep = ""), quote = F, row.names = F)
+
+  # ancestral state reconstruction and transition gathering
+  data.ncbi = curate.tree(tree, this_df, losses=TRUE)
+
+  # run these experiments in parallel. should take a few core minutes each
+  n.seed = 5
+  featurenames = colnames(df)[2:length(colnames(df))]
+  parallelised.runs <- mcmapply(parallel.fn, seed=1:n.seed,
+                                MoreArgs = list(src.data=data.ncbi,
+                                                featurenames=featurenames),
+                                SIMPLIFY = FALSE,
+                                mc.cores = min(detectCores(), n.seed))
+  
+  g.data = plotHypercube.curated.tree(data.ncbi, scale.fn=geom_blank(), names=TRUE)
+  g.blurb = plotHypercube.summary(parallelised.runs[[1]]) + theme(legend.position="none")
+  g.bub.1 = plotHypercube.bubbles(parallelised.runs[[1]]) + theme(legend.position="none")
+  g.bub.2 = plotHypercube.bubbles(parallelised.runs[[2]]) + theme(legend.position="none")
+  g.bub.3 = plotHypercube.bubbles(parallelised.runs[[3]]) + theme(legend.position="none")
+  g.sg.1 = plotHypercube.sampledgraph2(parallelised.runs[[1]], 
+                                       thresh=0.05, use.arc=FALSE, 
+                                       node.labels = FALSE,
+                                       edge.label.size=4, no.times=TRUE) + 
+    theme(legend.position="none") + expand_limits(x = c(-0.4, 1.4))
+  
+  # compare outputs and check convergence
+  sf = 2
+  png(paste(outfolder, "mro-convergence-", k, ".png", sep = ""), width = 700*sf, height = 600*sf, res = 72*sf)
+  print(ggarrange(g.data, ggarrange(g.bub.1,g.bub.2,g.bub.3,nrow=3), nrow=1))
+  dev.off()
+  
+  # check summary
+  sf = 2
+  png(paste(outfolder, "mro-trace-", k, ".png", sep = ""), width = 700*sf, height = 600*sf, res = 72*sf)
+  print(g.blurb)
+  dev.off()
+  
+  # dynamics
+  #g.sg.1
+  # summary plot
+  g.summary = ggarrange(g.data, ggarrange(g.bub.1, g.sg.1, ncol=1, 
+                                          heights=c(1,2), labels=c("B", "C")), 
+                        nrow=1, widths=c(1.25,1), labels=c("A",""))
+  #g.summary
+  
+  sf = 2
+  png(paste(outfolder, "mro-summary-", k, ".png", sep = ""), width=700*sf, height=600*sf, res=72*sf)
+  print(g.summary)
+  dev.off()
+  
+  # Check influences
+  g.influences <- plotHypercube.influences(parallelised.runs[[1]])
+  g.influencegraph <- plotHypercube.influencegraph(parallelised.runs[[1]])
+  
+  g.infl <- ggarrange(g.influences, g.influencegraph, nrow = 1, labels=c("A","B"))
+  
+  sf = 2
+  png(paste(outfolder, "mro-influences-", k, ".png", sep = ""), width=700*sf, height=600*sf, res=72*sf)
+  print(g.infl)
+  dev.off()
+  
+  r = parallelised.runs[[1]]$routes
+  r.ci = r[r[,1]==0,]
+  r.tca = r[r[,1]==7,]
+  r.c34 = r[r[,1]==2 | r[,1]==3,]
+  r.pdh = r[r[,1]==5,]
+  r.other = r[r[,1]!=0,]
+  
+  #save.image(paste(outfolder, "mro-save-", k, ".RData",sep = ""))
+  
+  tmp.ci = tmp.other = tmp.tca = tmp.c34 = tmp.pdh = parallelised.runs[[1]]
+  tmp.ci$routes = r.ci
+  tmp.tca$routes = r.tca
+  tmp.c34$routes = r.c34
+  tmp.pdh$routes = r.pdh
+  tmp.other$routes = r.other
+  g.pathways = ggarrange(plotHypercube.motifs(parallelised.runs[[1]])+theme(legend.position="none"),
+            plotHypercube.motifs(tmp.ci)+theme(legend.position="none"),
+            plotHypercube.motifs(tmp.tca)+theme(legend.position="none"),
+            plotHypercube.motifs(tmp.c34)+theme(legend.position="none"),
+            plotHypercube.motifs(tmp.pdh)+theme(legend.position="none"),
+            ncol=1, labels=c("A", "B", "C", "D", "E"))
+  
+  sf = 2
+  png(paste(outfolder, "mro-pathways-", k, ".png", sep = ""), width=600*sf, height=600*sf, res=72*sf)
+  print(g.pathways)
+  dev.off()
+  
+  fba.mod = readSBMLmod("FBA/MitoMammal/MitoMammal.xml")
+  etc.inds <- c(98,108:112)
+  etc.rs = fba.mod@react_name[etc.inds]
+  EX_o2 <- 50
+  
+  atp.obj = rep(0, length(fba.mod@react_name))
+  atp.obj[71] = 1
+  res.df = data.frame(name = NULL, ko.val = NULL, ko.atp.val = NULL, ko.val.hypoxia = NULL, ko.atp.val.hypoxia = NULL)
+  for(ko in 1:length(fba.mod@react_name)) {
+>>>>>>> Stashed changes
   tmp.mod = fba.mod
   tmp.mod@lowbnd[ko] = 0
   tmp.mod@uppbnd[ko] = 0
@@ -151,6 +291,7 @@ for(ko in 1:length(fba.mod@react_name)) {
                                     ko.val=soln@lp_obj, ko.atp.val=soln.atp@lp_obj,
                                     ko.val.hypoxia=soln.hypoxia@lp_obj,
                                     ko.atp.val.hypoxia=soln.atp.hypoxia@lp_obj))
+<<<<<<< Updated upstream
 }
 
 tmp.mod = fba.mod
@@ -159,6 +300,16 @@ tmp.mod@uppbnd[99:108] = 0
 soln = optimizeProb(tmp.mod)
 soln.atp = optimizeProb(tmp.mod, obj_coef = atp.obj)
 tmp.mod@lowbnd[EX_o2] = 0
+=======
+  }
+  
+  tmp.mod = fba.mod
+  tmp.mod@lowbnd[99:108] = 0
+  tmp.mod@uppbnd[99:108] = 0
+  soln = optimizeProb(tmp.mod)
+  soln.atp = optimizeProb(tmp.mod, obj_coef = atp.obj)
+  tmp.mod@lowbnd[EX_o2] = 0
+>>>>>>> Stashed changes
   tmp.mod@uppbnd[EX_o2] = 1
   soln.hypoxia = optimizeProb(tmp.mod)
   soln.atp.hypoxia = optimizeProb(tmp.mod, obj_coef = atp.obj)
@@ -166,6 +317,7 @@ tmp.mod@lowbnd[EX_o2] = 0
                                     ko.val=soln@lp_obj, ko.atp.val=soln.atp@lp_obj,
                                     ko.val.hypoxia=soln.hypoxia@lp_obj,
                                     ko.atp.val.hypoxia=soln.atp.hypoxia@lp_obj))
+<<<<<<< Updated upstream
 
 tmp.mod = fba.mod
 soln = optimizeProb(tmp.mod)
@@ -254,3 +406,92 @@ print(g.anoxic + ggtitle(tstr))
 dev.off()
 
 save.image(paste(outfolder, "mro-save-", tag, ".RData",sep = ""))
+=======
+  
+  tmp.mod = fba.mod
+  soln = optimizeProb(tmp.mod)
+  soln.atp = optimizeProb(tmp.mod, obj_coef = atp.obj)
+  tmp.mod@lowbnd[EX_o2] = 0
+  tmp.mod@uppbnd[EX_o2] = 1
+  soln.hypoxia = optimizeProb(tmp.mod)
+  soln.atp.hypoxia = optimizeProb(tmp.mod, obj_coef = atp.obj)
+  res.df = rbind(res.df, data.frame(name="full model", 
+                                    ko.val=soln@lp_obj, ko.atp.val=soln.atp@lp_obj,
+                                    ko.val.hypoxia=soln.hypoxia@lp_obj,
+                                    ko.atp.val.hypoxia=soln.atp.hypoxia@lp_obj))
+
+  write.csv(res.df, "fba-res.csv")
+  res.df = read.csv("fba-res.csv")
+  res.df$label = ""
+  res.df$label[98]  = "PDH"
+  #res.df$label[99]  = "CS"
+  #res.df$label[100]  = "ACONT"
+  #res.df$label[101]  = "ICDHx"
+  #res.df$label[102]  = "ICDHy"
+  #res.df$label[103]  = "AKGD"
+  #res.df$label[104]  = "SUCOAS1"
+  #res.df$label[105]  = "SUCOAS"
+  #res.df$label[106]  = "FUM"
+  #res.df$label[107]  = "MDH"
+  res.df$label[108] = "CI"
+  res.df$label[109] = "CII"
+  res.df$label[110] = "CIII"
+  res.df$label[111] = "CIV"
+  res.df$label[112] = "CV"
+  res.df$label[561] = "TCA"
+  
+  #ggplot(res.df, aes(x=ko.atp.val, y=ko.atp.val.hypoxia, label=label)) + geom_point() + ggrepel::geom_text_repel()
+  #ggplot(res.df, aes(x=ko.val, y=ko.val.hypoxia, label=label)) + 
+  #  geom_point() + 
+  #  ggrepel::geom_text_repel()
+  
+  first.steps = parallelised.runs[[1]]$routes[,1]
+  first.df = res.df[res.df$label!="",]
+  #print(first.df)
+  first.df$propn = 0
+  for(i in 1:nrow(first.df)) {
+    ref = which(featurenames == first.df$label[i])-1
+    propn = sum(first.steps == ref) / length(first.steps)
+    first.df$propn[i] = propn
+  }
+  g.normoxic = ggplot(first.df, aes(x=ko.atp.val, y=propn, label=label)) + 
+    geom_point() + geom_smooth(method="lm", color="#AAAAFF", fill="#AAAAFF") + 
+    ggrepel::geom_text_repel() + theme_light() +
+    labs(x = "ATP objective on KO", y = "First loss probability")
+  
+  fit.lm = summary(lm(propn~ko.atp.val, data=first.df))
+  
+  cs = fit.lm$coefficients
+  tstr = sprintf("Slope %.1e +- %.1e, p=%.2e", cs[2,1], cs[2,2], cs[2,4])
+  
+  png(paste(outfolder, "mro-first-fba-normoxic-", k, ".png", sep = ""), width=300*sf, height=300*sf, res=72*sf)
+  print(g.normoxic + ggtitle(tstr))
+  dev.off()
+
+  # First-loss probability vs metabolic impact from FBA in the anoxic case
+  first.df$propn = 0
+  for(i in 1:nrow(first.df)) {
+    ref = which(featurenames == first.df$label[i])-1
+    propn = sum(first.steps == ref) / length(first.steps)
+    first.df$propn[i] = propn
+  }
+  g.anoxic = ggplot(first.df, aes(x=ko.atp.val.hypoxia, y=propn, label=label)) + 
+    geom_point() + geom_smooth(method="lm", color="#AAAAFF", fill="#AAAAFF") + 
+    ggrepel::geom_text_repel() + theme_light() +
+    labs(x = "ATP objective on KO", y = "First loss probability")
+  
+  g.anoxic
+  fit.lm = summary(lm(propn~ko.atp.val.hypoxia, data=first.df))
+  
+  cs = fit.lm$coefficients
+  tstr = sprintf("Slope %.1e +- %.1e, p=%.2e", cs[2,1], cs[2,2], cs[2,4])
+  
+  png(paste(outfolder, "mro-first-fba-anoxic-", k, ".png",sep = ""), width=300*sf, height=300*sf, res=72*sf)
+  print(g.anoxic + ggtitle(tstr))
+  dev.off()
+  
+  runs[[k]] <- parallelised.runs
+}
+
+save.image(paste(outfolder, "mro-save.RData",sep = ""))
+>>>>>>> Stashed changes

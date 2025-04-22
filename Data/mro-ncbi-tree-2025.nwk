@@ -16,6 +16,17 @@ Cantina_marsupialis:4,
 Blastocystis_sp.:4
 )Bigyra:4,
 (
+<<<<<<< Updated upstream
+=======
+Holophrya_ovum:4,
+(
+(
+Apolagynus_sp.:4,
+Apolagynus_cf._cucumis:4
+)Apolagynus:4,
+Lagynus_cucumis:4
+)Lacrymariidae:4,
+>>>>>>> Stashed changes
 Muranothrix_gubernata:4,
 Parablepharisma:4,
 Chilodonella_uncinata:4,
@@ -29,11 +40,28 @@ Metopus_laminarius:4
 )Metopidae:4,
 Nyctotherus_ovalis:4
 )Armophorea:4,
+<<<<<<< Updated upstream
 Plagiopyla_frontata:4,
 Anaerocyclidium_porcatum:4
 )Ciliophora:4,
 (
 Henneguya_salminicola:4,
+=======
+(
+Plagiopyla_cf._narasimhamurtii:4,
+Plagiopyla_frontata:4
+)Plagiopyla:4,
+Anaerocyclidium_porcatum:4
+)Ciliophora:4,
+(
+(
+Kudoa:4,
+(
+Henneguya_salminicola:4,
+Myxobolus_squamalis:4
+)Myxobolidae:4
+)Myxozoa:4,
+>>>>>>> Stashed changes
 Homo_sapiens:4,
 Ascaris_suum:4,
 Fasciola_hepatica:4
@@ -100,6 +128,10 @@ Trichomonas_vaginalis:4,
 (
 Rozella:4,
 (
+<<<<<<< Updated upstream
+=======
+Mitosporidium_sp.:4,
+>>>>>>> Stashed changes
 Nematocida_parisii:4,
 Encephalitozoon_cuniculi:4
 )Microsporidia:4,
