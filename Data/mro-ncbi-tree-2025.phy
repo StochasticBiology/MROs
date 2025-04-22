@@ -1,5 +1,6 @@
 (
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 'Amoebophrya ceratii':4,
 'Brevimastigomonas motovehiculus':4,
 'Stygiella incarcerata':4,
@@ -57,6 +58,8 @@ Parablepharisma:4,
 'Cryptosporidium muris':4,
 'Cryptosporidium parvum':4
 =======
+=======
+>>>>>>> Stashed changes
 Amoebophrya_ceratii:4,
 Brevimastigomonas_motovehiculus:4,
 Stygiella_incarcerata:4,
@@ -142,12 +145,16 @@ Cryptosporidium_hominis:4,
 Cryptosporidium_andersoni:4,
 Cryptosporidium_muris:4,
 Cryptosporidium_parvum:4
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 )Cryptosporidium:4
 )Eucoccidiorida:4
 )Conoidasida:4
 )Apicomplexa:4,
 (
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 'Dysnectes brevis':4,
 'Carpediemonas membranifera':4,
@@ -175,6 +182,8 @@ Rozella:4,
 'Neocallimastix sp.':4,
 'Neocallimastix frontalis':4
 =======
+=======
+>>>>>>> Stashed changes
 (
 Sawyeria_marylandensis:4,
 Psalteriomonas_lanterna:4
@@ -217,11 +226,15 @@ Piromyces_sp.:4,
 (
 Neocallimastix_sp.:4,
 Neocallimastix_frontalis:4
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 )Neocallimastix:4
 )Neocallimastigaceae:4
 )Fungi:4,
 (
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 'Viscum album':4,
 'Chlamydomonas reinhardtii':4
@@ -233,6 +246,8 @@ Neocallimastix_frontalis:4
 )Trypanosomatidae:4,
 'Euglena gracilis':4
 =======
+=======
+>>>>>>> Stashed changes
 Viscum_album:4,
 Chlamydomonas_reinhardtii:4
 )Viridiplantae:4,
@@ -242,6 +257,9 @@ Trypanosoma_brucei:4,
 Leishmania_tropica:4
 )Trypanosomatidae:4,
 Euglena_gracilis:4
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 )Euglenozoa:4
 )root;

@@ -2,12 +2,18 @@ Acanthamoeba castellanii
 Aduncisulcus paluster
 Amoebophrya ceratii
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 Ancora sagittata
 =======
+=======
+>>>>>>> Stashed changes
 Anaerocyclidium porcatum
 Ancora sagittata
 Apolagynus cf. cucumis
 Apolagynus sp.
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 Ascaris suum
 Blastocystis sp.
@@ -24,7 +30,10 @@ Cryptosporidium hominis
 Cryptosporidium muris
 Cryptosporidium parvum
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 Cyclidium porcatum
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 Dysnectes brevis
@@ -35,6 +44,7 @@ Euglena gracilis
 Fasciola hepatica
 Giardia intestinalis
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 Giardia lamblia
 Gregarina niphandrodes
 Henneguya salminicola
@@ -43,6 +53,8 @@ Heliospora caprellae
 Heterometopus sp. CSS
 Kipferlia bialata
 =======
+=======
+>>>>>>> Stashed changes
 Gregarina niphandrodes
 Heliospora caprellae
 Henneguya salminicola
@@ -52,13 +64,19 @@ Homo sapiens
 Kipferlia bialata
 Kudoa
 Lagynus cucumis
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 Lankesteria metandrocarpae
 Lecudina tuzetae
 Leishmania tropica
 Mastigamoeba balamuthi
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 Metopid sp. SK
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 Metopus contortus
@@ -69,6 +87,10 @@ Monocercomonoides exilis
 Monocystis agilis
 Muranothrix gubernata
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+Myxobolus squamalis
+>>>>>>> Stashed changes
 =======
 Myxobolus squamalis
 >>>>>>> Stashed changes
@@ -83,7 +105,11 @@ Paratrimastix pyriformis
 Piromyces sp.
 Plagiopyla frontata
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 Plagiopyla cf. narasimhumartii
+=======
+Plagiopyla cf. narasimhamurtii
+>>>>>>> Stashed changes
 =======
 Plagiopyla cf. narasimhamurtii
 >>>>>>> Stashed changes

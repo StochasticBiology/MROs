@@ -35,7 +35,11 @@ for(k in 1:n){
 
   # Save this_df
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   write.csv(this_df, file = paste("Data/randomized/randomized-dataset-",k,".csv",sep = ""), quote = F, row.names = F)
+=======
+  write.csv(this_df, file = paste("Data/RandomizedData/randomized-dataset-",k,".csv",sep = ""), quote = F, row.names = F)
+>>>>>>> Stashed changes
 =======
   write.csv(this_df, file = paste("Data/RandomizedData/randomized-dataset-",k,".csv",sep = ""), quote = F, row.names = F)
 >>>>>>> Stashed changes

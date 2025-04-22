@@ -17,7 +17,10 @@ Blastocystis_sp.:4
 )Bigyra:4,
 (
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 Holophrya_ovum:4,
 (
 (
@@ -26,6 +29,9 @@ Apolagynus_cf._cucumis:4
 )Apolagynus:4,
 Lagynus_cucumis:4
 )Lacrymariidae:4,
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 Muranothrix_gubernata:4,
 Parablepharisma:4,
@@ -41,12 +47,15 @@ Metopus_laminarius:4
 Nyctotherus_ovalis:4
 )Armophorea:4,
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 Plagiopyla_frontata:4,
 Anaerocyclidium_porcatum:4
 )Ciliophora:4,
 (
 Henneguya_salminicola:4,
 =======
+=======
+>>>>>>> Stashed changes
 (
 Plagiopyla_cf._narasimhamurtii:4,
 Plagiopyla_frontata:4
@@ -61,6 +70,9 @@ Henneguya_salminicola:4,
 Myxobolus_squamalis:4
 )Myxobolidae:4
 )Myxozoa:4,
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 Homo_sapiens:4,
 Ascaris_suum:4,
@@ -129,6 +141,10 @@ Trichomonas_vaginalis:4,
 Rozella:4,
 (
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+Mitosporidium_sp.:4,
+>>>>>>> Stashed changes
 =======
 Mitosporidium_sp.:4,
 >>>>>>> Stashed changes

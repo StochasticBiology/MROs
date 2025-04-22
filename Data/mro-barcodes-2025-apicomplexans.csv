@@ -1,5 +1,6 @@
 Organism,CI,CII,CIII,CIV,CV,PDH,DNA,TCA,Fe-S
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 Ancora sagittata,1,0,0,0,0,0,0,0,1
 Cryptosporidium andersoni,1,1,0,0,1,0,0,1,1
 Cryptosporidium hominis,0,0,0,0,0,0,0,0,1
@@ -20,6 +21,8 @@ Selenidium serpulae,1,1,1,1,1,0,0,1,1
 Toxoplasma gondii,1,1,1,1,1,0,1,1,1
 Trichotokara eunicae,1,1,0,0,1,0,0,1,1
 =======
+=======
+>>>>>>> Stashed changes
 Ancora sagittata,0,0,0,0,0,0,0,0,1
 Cephaloidophora communis,0,1,0,0,0,0,0,1,1
 Cryptosporidium andersoni,0,1,0,0,1,0,0,1,1
@@ -39,4 +42,7 @@ Selenidium pygospionis,0,1,1,1,1,0,1,1,1
 Selenidium serpulae,0,1,1,1,1,0,0,1,1
 Toxoplasma gondii,0,1,1,1,1,0,1,1,1
 Trichotokara eunicae,0,1,0,0,1,0,0,1,1
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes

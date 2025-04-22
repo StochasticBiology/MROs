@@ -3,9 +3,15 @@
 args = commandArgs(trailingOnly = T)
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 # test if there are exactly four arguments: if not, return an error
 if (length(args)!=4) {
   stop("Need four arguments: a Phyllip or Newick tree, binary strings of loss patterns, an output folder, and an integer tag.\n Usage: MRO-rcg-uncertainty.R [tree file] [barcodes] [output label] [tag (integer)] \n", call.=FALSE)
+=======
+# test if there are exactly three arguments: if not, return an error
+if (length(args)!=3) {
+  stop("Need four arguments: a Phyllip or Newick tree, binary strings of loss patterns, and an output folder.\n Usage: MRO-rcg-uncertainty.R [tree file] [barcodes] [output label] \n", call.=FALSE)
+>>>>>>> Stashed changes
 =======
 # test if there are exactly three arguments: if not, return an error
 if (length(args)!=3) {
@@ -22,10 +28,16 @@ treefile <- as.character(args[1])
 datafile <- as.character(args[2])
 output <- as.character(args[3])
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 tag <- as.numeric(args[4])
 
 tree <- read.tree(paste("Data/",treefile,sep =""))
 df <- read.csv(paste("Data/RandomizedData/",datafile, sep = ""))
+=======
+
+tree <- read.tree(paste("Data/",treefile,sep =""))
+df <- read.csv(paste("Data/",datafile, sep = ""))
+>>>>>>> Stashed changes
 =======
 
 tree <- read.tree(paste("Data/",treefile,sep =""))
@@ -44,9 +56,12 @@ source("hypertraps.R")
 tree$tip.label = gsub("_", " ", tree$tip.label)
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 # ancestral state reconstruction and transition gathering
 data.ncbi = curate.tree(tree, df, losses=TRUE)
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 # wrapper function for HyperTraPS analysis
@@ -57,6 +72,7 @@ parallel.fn = function(seed, src.data, featurenames) {
                     featurenames = featurenames))
 }
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 # run these experiments in parallel. should take a few core minutes each
 n.seed = 5
@@ -155,6 +171,8 @@ atp.obj[71] = 1
 res.df = data.frame(name = NULL, ko.val = NULL, ko.atp.val = NULL, ko.val.hypoxia = NULL, ko.atp.val.hypoxia = NULL)
 for(ko in 1:length(fba.mod@react_name)) {
 =======
+=======
+>>>>>>> Stashed changes
 # Set a seed
 set.seed(1234)
 
@@ -277,6 +295,9 @@ for(k in 1:10){
   atp.obj[71] = 1
   res.df = data.frame(name = NULL, ko.val = NULL, ko.atp.val = NULL, ko.val.hypoxia = NULL, ko.atp.val.hypoxia = NULL)
   for(ko in 1:length(fba.mod@react_name)) {
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   tmp.mod = fba.mod
   tmp.mod@lowbnd[ko] = 0
@@ -292,6 +313,7 @@ for(k in 1:10){
                                     ko.val.hypoxia=soln.hypoxia@lp_obj,
                                     ko.atp.val.hypoxia=soln.atp.hypoxia@lp_obj))
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 }
 
 tmp.mod = fba.mod
@@ -301,6 +323,8 @@ soln = optimizeProb(tmp.mod)
 soln.atp = optimizeProb(tmp.mod, obj_coef = atp.obj)
 tmp.mod@lowbnd[EX_o2] = 0
 =======
+=======
+>>>>>>> Stashed changes
   }
   
   tmp.mod = fba.mod
@@ -309,6 +333,9 @@ tmp.mod@lowbnd[EX_o2] = 0
   soln = optimizeProb(tmp.mod)
   soln.atp = optimizeProb(tmp.mod, obj_coef = atp.obj)
   tmp.mod@lowbnd[EX_o2] = 0
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   tmp.mod@uppbnd[EX_o2] = 1
   soln.hypoxia = optimizeProb(tmp.mod)
@@ -317,6 +344,7 @@ tmp.mod@lowbnd[EX_o2] = 0
                                     ko.val=soln@lp_obj, ko.atp.val=soln.atp@lp_obj,
                                     ko.val.hypoxia=soln.hypoxia@lp_obj,
                                     ko.atp.val.hypoxia=soln.atp.hypoxia@lp_obj))
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 
 tmp.mod = fba.mod
@@ -407,6 +435,8 @@ dev.off()
 
 save.image(paste(outfolder, "mro-save-", tag, ".RData",sep = ""))
 =======
+=======
+>>>>>>> Stashed changes
   
   tmp.mod = fba.mod
   soln = optimizeProb(tmp.mod)
@@ -493,5 +523,9 @@ save.image(paste(outfolder, "mro-save-", tag, ".RData",sep = ""))
   runs[[k]] <- parallelised.runs
 }
 
+<<<<<<< Updated upstream
+save.image(paste(outfolder, "mro-save.RData",sep = ""))
+>>>>>>> Stashed changes
+=======
 save.image(paste(outfolder, "mro-save.RData",sep = ""))
 >>>>>>> Stashed changes

@@ -3,6 +3,7 @@ Acanthamoeba castellanii,1,1,1,1,1,1,1,1,1
 Aduncisulcus paluster,0,0,0,0,0,0,0,0,1
 Amoebophrya ceratii,0,1,0,1,1,1,1,1,1
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 Ascaris suum,1,1,1,1,1,1,1,1,1
 Blastocystis sp.,1,1,0,0,0,1,1,0,1
 Brevimastigomonas motovehiculus,1,1,0,0,1,1,1,1,1
@@ -54,6 +55,8 @@ Schizosaccharomyces pombe,0,1,1,1,1,1,1,1,1
 Spironucleus salmonicida,0,0,0,0,0,0,0,0,1
 Stygiella incarcerata,1,0,0,0,0,0,0,0,1
 =======
+=======
+>>>>>>> Stashed changes
 Anaerocyclidium porcatum,0,0,0,0,1,0,1,0,1
 Apolagynus cf. cucumis,0,1,0,0,0,1,1,1,1
 Apolagynus sp.,0,0,0,0,0,1,1,0,1
@@ -108,6 +111,9 @@ Sawyeria marylandensis,0,0,0,0,0,0,0,0,1
 Schizosaccharomyces pombe,0,1,1,1,1,1,1,1,1
 Spironucleus salmonicida,0,0,0,0,0,0,0,0,1
 Stygiella incarcerata,0,0,0,0,0,0,0,0,1
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 Trepomonas sp.,0,0,0,0,0,0,0,0,1
 Trichomonas vaginalis,0,0,0,0,0,0,0,0,1
@@ -115,7 +121,11 @@ Trimastix marina,0,0,0,0,0,0,0,0,1
 Trypanosoma brucei,1,1,1,1,1,1,1,1,1
 Viscum album,0,1,1,1,1,1,1,1,1
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 Vitrella brassicaformis,1,1,1,1,1,1,1,1,1
+=======
+Vitrella brassicaformis,0,1,1,1,1,1,1,1,1
+>>>>>>> Stashed changes
 =======
 Vitrella brassicaformis,0,1,1,1,1,1,1,1,1
 >>>>>>> Stashed changes

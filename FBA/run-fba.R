@@ -17,6 +17,7 @@ mm <- readSBMLmod("MitoMammal/MitoMammal.xml")
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 reacts <- read.csv("MitoMammal/MitoMammal-reactions.txt")
 
 names <- reacts[,2]
@@ -25,6 +26,8 @@ names <- reacts[,2]
 OBJ_inds <- c(71:74)
 OBJ_names <- c("OF_ATP_MitoCore","OF_HEME_MitoCore","OF_LIPID_MitoCore","OF_PROTEIN_MitoCore")
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -44,6 +47,9 @@ OBJ_names <- names[OBJ_inds]
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -62,6 +68,7 @@ EX_o2 <- 50
 
 # Tricarboxylic acid cycle complexes
 TCA_inds <- c(98:107)
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -87,10 +94,14 @@ TCA_names <- c("PDH","CS","ACONT","ICDHx","ICDHy", "AKGD", "SUCOAS1", "SUCOAS", 
 =======
 TCA_names <- c("PDH","CS","ACONT","ICDHx","ICDHy", "AKGD", "SUCOAS1", "SUCOAS", "FUM", "MDH")#names[TCA_inds]
 >>>>>>> Stashed changes
+=======
+TCA_names <- c("PDH","CS","ACONT","ICDHx","ICDHy", "AKGD", "SUCOAS1", "SUCOAS", "FUM", "MDH")#names[TCA_inds]
+>>>>>>> Stashed changes
 #cat(paste(c(names[TCA_inds],"\n")))
 
 # Electron transport chain complexes I-V
 ETC_inds <- c(108:112)
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 ETC_names <- names[ETC_inds]
@@ -132,6 +143,8 @@ d4 <- data.frame(KO = NULL, EX_O2 = NULL, MAX_ATP = NULL, ETC = NULL, TCA = NULL
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 ETC_names <- c("CI","CII","CIII","CIV","CV")#names[ETC_inds]
 #cat(paste(c(names[ETC_inds],"\n")))
 
@@ -142,6 +155,9 @@ d2 <- data.frame(KO = NULL, EX_O2 = NULL, MAX_ATP = NULL, ETC = NULL, PDH = NULL
 
 # Get a baseline with MitoMammal, because we have a "full" set of mitochondrial functions
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -150,6 +166,7 @@ mm.FD <- data.frame(x = getFluxDist(mm.base))
 names(mm.FD) <- "Flux (µM/min/gDW)"
 
 # Extract the data
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 these_data <- data.frame(KO="NONE", EX_O2 = round(mm.FD[EX_o2,],4), MAX_ATP = mm.FD[OBJ_inds[1],], ETC = t(mm.FD[ETC_inds,]), TCA = t(mm.FD[TCA_inds[1],]))
@@ -171,6 +188,8 @@ KO_names <- c("CI", "CII", "CIII", "CIV", "CV", "PDH")
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 these_data <- data.frame(KO="NONE", EX_O2 = round(mm.FD[EX_o2,],4), MAX_ATP = mm.FD[OBJ_inds[1],], ETC = t(mm.FD[ETC_inds,]), PDH = t(mm.FD[TCA_inds[1],]))
 
 d <- rbind(d, these_data)
@@ -178,6 +197,9 @@ d <- rbind(d, these_data)
 KO_inds <- c(ETC_inds, TCA_inds[1])
 KO_names <- c(ETC_names,TCA_names[1])
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -193,7 +215,11 @@ for(i in 1:length(KO_inds)){
   # Extract the data
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   these_data <- data.frame(KO=KO_names[i], EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), TCA = t(mm.KO.FD[TCA_inds[1],]))
+=======
+  these_data <- data.frame(KO=KO_names[i], EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]),PDH = t(mm.KO.FD[TCA_inds[1],]))
+>>>>>>> Stashed changes
 =======
   these_data <- data.frame(KO=KO_names[i], EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]),PDH = t(mm.KO.FD[TCA_inds[1],]))
 >>>>>>> Stashed changes
@@ -208,7 +234,11 @@ for(i in 1:length(KO_inds)){
 KO_inds  <- combn(c(ETC_inds,TCA_inds[1]), m = 2) 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 KO_names <- combn(c("CI", "CII", "CIII", "CIV", "CV", "PDH"), m = 2)
+=======
+KO_names <- combn(c(ETC_names, TCA_names[1]), m = 2)
+>>>>>>> Stashed changes
 =======
 KO_names <- combn(c(ETC_names, TCA_names[1]), m = 2)
 >>>>>>> Stashed changes
@@ -225,7 +255,11 @@ for(i in 1:ncol(KO_inds)){
   # Extract the data
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i],sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), TCA = t(mm.KO.FD[TCA_inds[1],]))
+=======
+  these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i],sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), PDH = t(mm.KO.FD[TCA_inds[1],]))
+>>>>>>> Stashed changes
 =======
   these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i],sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), PDH = t(mm.KO.FD[TCA_inds[1],]))
 >>>>>>> Stashed changes
@@ -236,6 +270,7 @@ for(i in 1:ncol(KO_inds)){
   d <- rbind(d, these_data)
 }
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 names(d) <- c("KO","EX_O2","MAX_ATP","CI","CII","CIII","CIV","CV","PDH")
@@ -315,6 +350,8 @@ write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = d2, row.names
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 names(d) <- c("KO","EX_O2","MAX_ATP",ETC_names,TCA_names[1])
 
 #print(d)
@@ -324,6 +361,9 @@ filename <- "single-double-KO-MAX_ATP-normoxic.csv"
 write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = d, row.names = F)
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -335,6 +375,9 @@ write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = d, row.names 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -350,6 +393,7 @@ mm.FD <- data.frame(x = getFluxDist(mm.base))
 names(mm.FD) <- "Flux (µM/min/gDW)"
 
 # Extract the data
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 these_data <- data.frame(KO="NONE", EX_O2 = round(mm.FD[EX_o2,],4), MAX_ATP = mm.FD[OBJ_inds[1],], ETC = t(mm.FD[ETC_inds,]), TCA = t(mm.FD[TCA_inds[1],]))
@@ -374,6 +418,8 @@ KO_names <- c("CI", "CII", "CIII", "CIV", "CV", "PDH")
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 these_data <- data.frame(KO="NONE", EX_O2 = round(mm.FD[EX_o2,],4), MAX_ATP = mm.FD[OBJ_inds[1],], ETC = t(mm.FD[ETC_inds,]), PDH = t(mm.FD[TCA_inds[1],]))
 
 d2 <- rbind(d2, these_data)
@@ -381,6 +427,9 @@ d2 <- rbind(d2, these_data)
 KO_inds <- c(ETC_inds, TCA_inds[1])
 KO_names <- c(ETC_names, TCA_names[1])
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -394,6 +443,7 @@ for(i in 1:length(KO_inds)){
   names(mm.KO.FD) <- "Flux (µM/min/gDW)"
 
   # Extract the data
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
   these_data <- data.frame(KO=KO_names[i], EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), TCA = t(mm.KO.FD[TCA_inds[1],]))
@@ -421,13 +471,22 @@ for(i in 1:length(KO_inds)){
 
   d2 <- rbind(d2, these_data)
 >>>>>>> Stashed changes
+=======
+  these_data <- data.frame(KO=KO_names[i], EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), PDH = t(mm.KO.FD[TCA_inds[1],]))
+
+  d2 <- rbind(d2, these_data)
+>>>>>>> Stashed changes
 }
 
 # Do double knockouts
 KO_inds  <- combn(c(ETC_inds,TCA_inds[1]), m = 2) 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 KO_names <- combn(c("CI", "CII", "CIII", "CIV", "CV", "PDH"), m = 2)
+=======
+KO_names <- combn(c(ETC_names, TCA_names[1]), m = 2)
+>>>>>>> Stashed changes
 =======
 KO_names <- combn(c(ETC_names, TCA_names[1]), m = 2)
 >>>>>>> Stashed changes
@@ -442,6 +501,7 @@ for(i in 1:ncol(KO_inds)){
   names(mm.KO.FD) <- "Flux (µM/min/gDW)"
 
   # Extract the data
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
   these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i],sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), TCA = t(mm.KO.FD[TCA_inds[1],]))
@@ -513,6 +573,8 @@ names(d2) <- c("KO","EX_O2","MAX_ATP","CI","CII","CIII","CIV","CV","PDH")
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
   these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i],sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), PDH = t(mm.KO.FD[TCA_inds[1],]))
 
   d2 <- rbind(d2, these_data)
@@ -520,6 +582,9 @@ names(d2) <- c("KO","EX_O2","MAX_ATP","CI","CII","CIII","CIV","CV","PDH")
 
 names(d2) <- c("KO","EX_O2","MAX_ATP",ETC_names,TCA_names[1])
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -527,6 +592,7 @@ names(d2) <- c("KO","EX_O2","MAX_ATP",ETC_names,TCA_names[1])
 #print(d2)
 
 # Print to file
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 filename <- "single-double-KO-MAX_ATP-oxygen-restriction.csv"
@@ -551,6 +617,10 @@ print(d.anox)
 >>>>>>> Stashed changes
 =======
 print(d.anox)
+>>>>>>> Stashed changes
+=======
+filename <- "single-double-KO-MAX_ATP-anoxic.csv"
+write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = d2, row.names = F)
 >>>>>>> Stashed changes
 =======
 filename <- "single-double-KO-MAX_ATP-anoxic.csv"

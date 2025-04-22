@@ -2,6 +2,7 @@ Organism,CI,CII,CIII,CIV,CV,PDH,DNA,TCA,Fe.S
 Acanthamoeba castellanii,1,1,1,1,1,1,1,1,1
 Aduncisulcus paluster,0,0,0,0,0,0,0,0,1
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 Amoebophrya ceratii,0,1,0,1,0,1,1,1,1
 Ancora sagittata,1,0,0,0,0,0,0,0,1
 Ascaris suum,1,1,1,1,1,1,1,1,1
@@ -79,6 +80,8 @@ Trypanosoma brucei,1,1,1,1,1,1,1,1,1
 Viscum album,0,1,1,1,1,1,1,1,1
 Vitrella brassicaformis,1,1,1,1,1,1,1,1,1
 =======
+=======
+>>>>>>> Stashed changes
 Amoebophrya ceratii,0,1,0,1,1,1,1,1,1
 Anaerocyclidium porcatum,0,0,0,0,1,0,1,0,1
 Ancora sagittata,0,0,0,0,0,0,0,0,1
@@ -159,4 +162,7 @@ Trimastix marina,0,0,0,0,0,0,0,1,1
 Trypanosoma brucei,1,1,1,1,1,1,1,1,1
 Viscum album,0,1,1,1,1,1,1,1,1
 Vitrella brassicaformis,0,1,1,1,1,1,1,1,1
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
