@@ -41,9 +41,6 @@ parallel.fn = function(seed, src.data, featurenames) {
                     featurenames = featurenames))
 }
 
-# Set a seed
-set.seed(1234)
-
 # ancestral state reconstruction and transition gathering
 data.ncbi = curate.tree(tree, df, losses=TRUE)
 
@@ -56,77 +53,4 @@ parallelised.runs <- mcmapply(parallel.fn, seed=1:n.seed,
                               SIMPLIFY = FALSE,
                               mc.cores = min(detectCores(), n.seed))
 
-g.data = plotHypercube.curated.tree(data.ncbi, scale.fn=geom_blank(), names=TRUE)
-g.blurb = plotHypercube.summary(parallelised.runs[[1]]) + theme(legend.position="none")
-g.bub.1 = plotHypercube.bubbles(parallelised.runs[[1]]) + theme(legend.position="none")
-g.bub.2 = plotHypercube.bubbles(parallelised.runs[[2]]) + theme(legend.position="none")
-g.bub.3 = plotHypercube.bubbles(parallelised.runs[[3]]) + theme(legend.position="none")
-g.sg.1 = plotHypercube.sampledgraph2(parallelised.runs[[1]], 
-                                     thresh=0.05, use.arc=FALSE, 
-                                     node.labels = FALSE,
-                                     edge.label.size=4, no.times=TRUE) + 
-  theme(legend.position="none") + expand_limits(x = c(-0.4, 1.4))
- 
-# compare outputs and check convergence
-sf = 2
-png(paste(outfolder, "mro-convergence-", tag, ".png", sep = ""), width = 700*sf, height = 600*sf, res = 72*sf)
-print(ggarrange(g.data, ggarrange(g.bub.1,g.bub.2,g.bub.3,nrow=3), nrow=1))
-dev.off()
-
-# check summary
-sf = 2
-png(paste(outfolder, "mro-trace-", tag, ".png", sep = ""), width = 700*sf, height = 600*sf, res = 72*sf)
-print(g.blurb)
-dev.off()
-
-# dynamics
-#g.sg.1
-# summary plot
-g.summary = ggarrange(g.data, ggarrange(g.bub.1, g.sg.1, ncol=1, 
-                                        heights=c(1,2), labels=c("B", "C")), 
-                      nrow=1, widths=c(1.25,1), labels=c("A",""))
-#g.summary
-
-sf = 2
-png(paste(outfolder, "mro-summary-", tag, ".png", sep = ""), width=700*sf, height=600*sf, res=72*sf)
-print(g.summary)
-dev.off()
-
-# Check influences
-g.influences <- plotHypercube.influences(parallelised.runs[[1]])
-g.influencegraph <- plotHypercube.influencegraph(parallelised.runs[[1]])
-
-g.infl <- ggarrange(g.influences, g.influencegraph, nrow = 1, labels=c("A","B"))
-
-sf = 2
-png(paste(outfolder, "mro-influences-", tag, ".png", sep = ""), width=700*sf, height=600*sf, res=72*sf)
-print(g.infl)
-dev.off()
-
-r = parallelised.runs[[1]]$routes
-r.ci = r[r[,1]==0,]
-r.tca = r[r[,1]==7,]
-r.c34 = r[r[,1]==2 | r[,1]==3,]
-r.pdh = r[r[,1]==5,]
-r.other = r[r[,1]!=0,]
-
-#save.image(paste(outfolder, "mro-save-", tag, ".RData",sep = ""))
-
-tmp.ci = tmp.other = tmp.tca = tmp.c34 = tmp.pdh = parallelised.runs[[1]]
-tmp.ci$routes = r.ci
-tmp.tca$routes = r.tca
-tmp.c34$routes = r.c34
-tmp.pdh$routes = r.pdh
-tmp.other$routes = r.other
-g.pathways = ggarrange(plotHypercube.motifs(parallelised.runs[[1]])+theme(legend.position="none"),
-          plotHypercube.motifs(tmp.ci)+theme(legend.position="none"),
-          plotHypercube.motifs(tmp.tca)+theme(legend.position="none"),
-          plotHypercube.motifs(tmp.c34)+theme(legend.position="none"),
-          plotHypercube.motifs(tmp.pdh)+theme(legend.position="none"),
-          ncol=1, labels=c("A", "B", "C", "D", "E"))
-
-sf = 2
-png(paste(outfolder, "mro-pathways-", tag, ".png", sep = ""), width=600*sf, height=600*sf, res=72*sf)
-print(g.pathways)
-dev.off()
-
+save.image(paste(outfolder, "mro-save-", tag, "-0.RData",sep = ""))
