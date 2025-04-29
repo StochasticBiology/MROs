@@ -196,8 +196,8 @@ fig.5.top = ggplot()+
 	      labs(x = "KO", y = "Normoxic max ATP or\n (scaled) PMR generation")+
 	      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + theme(legend.position="none")
 fig.5.bot = ggplot()+
-              geom_col(data = fig.5.atp, aes(x = fct_inorder(KO), y = 3.737*max_obj_hypoxic), fill = "#FF000050")+
-              geom_col(data = fig.5.pmf, aes(x = fct_inorder(KO), y = max_obj_hypoxic), fill = "#0000FF50")+
+              geom_col(data = fig.5.atp, aes(x = fct_inorder(KO), y = max_obj_hypoxic), fill = "#FF000050")+
+              geom_col(data = fig.5.pmf, aes(x = fct_inorder(KO), y = max_obj_hypoxic/3.737), fill = "#0000FF50")+
 	      labs(x = "KO", y = "Hypoxic max ATP or\n (scaled) PMR generation")+
 	      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + theme(legend.position="none")
 
