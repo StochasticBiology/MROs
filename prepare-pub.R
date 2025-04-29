@@ -13,6 +13,7 @@ library(ggraph)
 library(ggtree)
 library(ggtreeExtra)
 library(ggpubr)
+library(forcats)
 source("hypertraps.R")
 
 mytag = as.character(args[1])
@@ -94,6 +95,24 @@ png("Results/fig-3.png", width=800*sf, height=600*sf, res=72*sf)
 print(fig.3)
 dev.off()
 
+#### Fig. 4
+fig.4.dots = read.csv("FBA/MitoMammal/Results/MAX_ATP/single-double.csv")
+fig.4.bars = read.csv("FBA/MitoMammal/Results/MAX_ATP/single-double-AOX.csv")
+
+fig.4.dots = fig.4.dots[fig.4.dots$OBJ == "MAX_ATP",]
+fig.4.bars = fig.4.bars[fig.4.bars$OBJ == "MAX_ATP",]
+
+fig.4 = ggplot()+
+         geom_col(data = fig.4.bars, aes(x = fct_inorder(KO), y = max_obj_normoxic), fill = "#4A4A4A", color = "white")+
+         geom_point(data = fig.4.dots, aes(x = fct_inorder(KO), y = max_obj_normoxic), color = "#D9D9D9", size = 2)+
+	 labs(x = "Knockout", y = "Modelled ATP production")+
+         theme_minimal() 
+
+sf = 2
+png("Results/fig-4.png", width = 800*sf, height = 600*sf, res = 72*sf)
+fig.4 + theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + theme(legend.position="none")
+dev.off()
+
 #### SI Fig 1: HyperTraPS-CT inference
 load(paste("Results/HyperTraPS-CT-", mytag, "/mro-save-0-1.RData",sep = ""))
 
@@ -120,7 +139,7 @@ summary.plot = ggarrange(igj.plot.2a +
                    nrow=1, widths=c(1.,1), labels=c("A", ""))
 
 sf = 2
-png(paste("Results/SI-fig-1.png", sep = ""), width=800*sf, height=600*sf, res=72*sf)
+png("Results/SI-fig-1.png", width=800*sf, height=600*sf, res=72*sf)
 print(summary.plot)
 dev.off()
 
@@ -139,7 +158,7 @@ png("Results/SI-fig-2.png", width = 800*sf, height = 600*sf, res = 72*sf)
 raw.plot + scale_fill_viridis_d(option="magma") + scale_y_continuous(breaks = 0:(length(f.names)-1), labels = f.names)
 dev.off()
 
-# SI fig. 3: Iain
+# SI fig. 3:
 
 
 # SI fig. 4: 
@@ -164,4 +183,27 @@ timingplot <- ggplot(times.df, aes(x=step, ymin=means-sds, ymax=means+sds, color
 sf = 2
 png("Results/SI-fig-4.png", width=300*sf,height=200*sf,res=72*sf)
 timingplot
+dev.off()
+
+#### SI fig. 5:
+fig.5.data = read.csv("FBA/MitoMammal/Results/MAX_ATP/single-double-AOX-NDH2.csv")
+fig.5.atp = fig.5.data[fig.5.data$OBJ == "MAX_ATP",]
+fig.5.pmf = fig.5.data[fig.5.data$OBJ == "MAX_PMF",]
+
+fig.5.top = ggplot()+
+              geom_col(data = fig.5.atp, aes(x = fct_inorder(KO), y = max_obj_normoxic), fill = "#FF000050")+
+              geom_col(data = fig.5.pmf, aes(x = fct_inorder(KO), y = max_obj_normoxic/3.737), fill = "#0000FF50")+
+	      labs(x = "KO", y = "Normoxic max ATP or\n (scaled) PMR generation")+
+	      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + theme(legend.position="none")
+fig.5.bot = ggplot()+
+              geom_col(data = fig.5.atp, aes(x = fct_inorder(KO), y = 3.737*max_obj_hypoxic), fill = "#FF000050")+
+              geom_col(data = fig.5.pmf, aes(x = fct_inorder(KO), y = max_obj_hypoxic), fill = "#0000FF50")+
+	      labs(x = "KO", y = "Hypoxic max ATP or\n (scaled) PMR generation")+
+	      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + theme(legend.position="none")
+
+g.fig.5 = ggarrange(fig.5.top,fig.5.bot,nrow =2)
+
+sf = 2
+png("Results/SI-fig-5.png", width = 800*sf, height = 600*sf, res = 72*sf)
+print(g.fig.5)
 dev.off()
