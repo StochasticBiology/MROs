@@ -43,5 +43,7 @@ cd FBA
 
 wait
 
+cd ..
+
 # Plot results from HyperTraPS uncertainty analysis and produce other figures (still needs the fba figures from FBA/MitoMammal/Results/MAX_ATP/single-double-AOX-NDH2.csv, but everything else should work now, as well as the missing figures fig-4, SI-fig-3, and SI-fig-5)
 ./prepare-pub.R 2 .7
