@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# make everything executable
+chmod +x *.R
+chmod +x FBA/*.R
+
 # get the HyperTraPS-CT source code, and put the essential code into this directory
 git clone https://github.com/StochasticBiology/hypertraps-ct
 cp hypertraps-ct/hypertraps* .
