@@ -50,8 +50,8 @@ fba.mod <- readSBMLmod("MitoMammal/MitoMammal.xml")
 
 # Add AOX, NDH2, setting flux lb=ub=0
 fba.mod <- addReact(fba.mod, id = "AOX", met = c("q10h2[m]","o2[m]","q10[m]","h2o[m]"), Scoef = c(-2,-1,2,2), reversible = F, lb = 0, ub = 0)
-fba.mod <- addReact(fba.mod, id = "NDH2", met = c("h[m]","nadh[m]","q10[m]","nad[m]","q10h2[m]"),
-                    Scoef = c(-1,-1,-.999,1,.999), reversible = F, lb = 0, ub = 0)
+fba.mod <- addReact(fba.mod, id = "NDH2", met = c("h[m]","nadh[m]","q10[m]","o2[m]","nad[m]","q10h2[m]","o2s[m]"),
+                    Scoef = c(-1,-1,-.999,-.002,1,.999,.002), reversible = F, lb = 0, ub = 0)
 
 obj = rep(0,length(fba.mod@react_name))
 if(obj.name == "MAX_ATP"){
