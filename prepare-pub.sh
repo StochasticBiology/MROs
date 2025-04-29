@@ -47,6 +47,9 @@ wait
 wait
 
 cd FBA
+# Use: run-fba.R [objective name] [output label], where objective name = {MAX_ATP, MAX_PROTEIN, MAX_LIPID} and output label = {"", AOX, AOX-NDH2}
+./run-fba.R MAX_ATP ""
+./run-fba.R MAX_ATP AOX
 ./run-fba.R MAX_ATP AOX-NDH2
 
 wait
