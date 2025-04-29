@@ -100,7 +100,7 @@ tmp.mod = fba.mod
 soln = optimizeProb(tmp.mod)
 soln.obj = optimizeProb(tmp.mod, obj_coef = obj)
 f.o2.u <- -getFluxDist(soln)[EX_o2]/10
-f.o2.l <- -f.o2.u/10
+f.o2.l <- -f.o2.u
 #print(f.o2.u)
 # Use 10% of oxygen exchange in optimal conditions for anoxic conditions
 tmp.mod@lowbnd[EX_o2] = f.o2.l
@@ -312,26 +312,13 @@ for(ko in 1:nrow(KOs)){
 tmp.mod = fba.mod
 tmp.mod@lowbnd[ETC_inds[c(1,3:4)]] = 0
 tmp.mod@uppbnd[ETC_inds[c(1,3:4)]] = 0
-soln = optimizeProb(tmp.mod)
-soln.obj = optimizeProb(tmp.mod, obj_coef = obj)
-tmp.mod@lowbnd[EX_o2] = f.o2.l
-tmp.mod@uppbnd[EX_o2] = f.o2.u
-soln.hypoxia = optimizeProb(tmp.mod)
-soln.obj.hypoxia = optimizeProb(tmp.mod, obj_coef = obj)
-df = rbind(df, data.frame(KO="CI,CII,CV", OBJ = obj.name,
-			  max_obj_normoxic = soln@lp_obj, max_obj_normoxic2 = soln.obj@lp_obj,
-  			  max_obj_hypoxic = soln.hypoxia@lp_obj, max_obj_hypoxic2 = soln.obj.hypoxia@lp_obj))
 
-fd.normoxic <- getFluxDist(soln)
-fd.hypoxic  <- getFluxDist(soln.hypoxia)
-df.alts <- rbind(df.alts, data.frame(KO="CI,CII,CV", OBJ = obj.name,
-                                     AOX.normoxic = fd.normoxic[AOX_ind], AOX.hypoxic = fd.hypoxic[AOX_ind],
-                                     NDH2.normoxic = fd.normoxic[NDH2_ind], NDH2.hypoxic = fd.hypoxic[NDH2_ind],
-                                     ETC.normoxic = t(fd.normoxic[ETC_inds]), ETC.hypoxic = t(fd.hypoxic[ETC_inds])))
+# CI and CIII are KOed; add NDH2 and AOX
+tmp.mod@lowbnd[NDH2_ind] = ndh2.lowbnd
+tmp.mod@uppbnd[NDH2_ind] = ndh2.uppbnd
+tmp.mod@lowbnd[AOX_ind] = aox.lowbnd
+tmp.mod@uppbnd[AOX_ind] = aox.uppbnd
 
-tmp.mod = fba.mod
-tmp.mod@lowbnd[ETC_inds[c(1:2,5)]] = 0
-tmp.mod@uppbnd[ETC_inds[c(1:2,5)]] = 0
 soln = optimizeProb(tmp.mod)
 soln.obj = optimizeProb(tmp.mod, obj_coef = obj)
 tmp.mod@lowbnd[EX_o2] = f.o2.l
@@ -350,8 +337,40 @@ df.alts <- rbind(df.alts, data.frame(KO="CI,CIII,CIV", OBJ = obj.name,
                                      ETC.normoxic = t(fd.normoxic[ETC_inds]), ETC.hypoxic = t(fd.hypoxic[ETC_inds])))
 
 tmp.mod = fba.mod
+tmp.mod@lowbnd[ETC_inds[c(1:2,5)]] = 0
+tmp.mod@uppbnd[ETC_inds[c(1:2,5)]] = 0
+
+# CI is KOed; add NDH2
+tmp.mod@lowbnd[NDH2_ind] = ndh2.lowbnd
+tmp.mod@uppbnd[NDH2_ind] = ndh2.uppbnd
+
+soln = optimizeProb(tmp.mod)
+soln.obj = optimizeProb(tmp.mod, obj_coef = obj)
+tmp.mod@lowbnd[EX_o2] = f.o2.l
+tmp.mod@uppbnd[EX_o2] = f.o2.u
+soln.hypoxia = optimizeProb(tmp.mod)
+soln.obj.hypoxia = optimizeProb(tmp.mod, obj_coef = obj)
+df = rbind(df, data.frame(KO="CI,CII,CV", OBJ = obj.name,
+			  max_obj_normoxic = soln@lp_obj, max_obj_normoxic2 = soln.obj@lp_obj,
+  			  max_obj_hypoxic = soln.hypoxia@lp_obj, max_obj_hypoxic2 = soln.obj.hypoxia@lp_obj))
+
+fd.normoxic <- getFluxDist(soln)
+fd.hypoxic  <- getFluxDist(soln.hypoxia)
+df.alts <- rbind(df.alts, data.frame(KO="CI,CII,CV", OBJ = obj.name,
+                                     AOX.normoxic = fd.normoxic[AOX_ind], AOX.hypoxic = fd.hypoxic[AOX_ind],
+                                     NDH2.normoxic = fd.normoxic[NDH2_ind], NDH2.hypoxic = fd.hypoxic[NDH2_ind],
+                                     ETC.normoxic = t(fd.normoxic[ETC_inds]), ETC.hypoxic = t(fd.hypoxic[ETC_inds])))
+
+tmp.mod = fba.mod
 tmp.mod@lowbnd[ETC_inds] = 0
 tmp.mod@uppbnd[ETC_inds] = 0
+
+# CI and CIII are KOed; add NDH2 and AOX
+tmp.mod@lowbnd[NDH2_ind] = ndh2.lowbnd
+tmp.mod@uppbnd[NDH2_ind] = ndh2.uppbnd
+tmp.mod@lowbnd[AOX_ind] = aox.lowbnd
+tmp.mod@uppbnd[AOX_ind] = aox.uppbnd
+
 soln = optimizeProb(tmp.mod)
 soln.obj = optimizeProb(tmp.mod, obj_coef = obj)
 tmp.mod@lowbnd[EX_o2] = f.o2.l
@@ -375,14 +394,14 @@ pmf.obj = rep(0,length(fba.mod@react_name))
 pmf.obj[c(108,110,111)] = 4
 pmf.obj[112] = -2.97
 
-fba.mod <- changeObjFunc(fba.mod, react = c(obj.ind,108,110,111,112), obj_coef = c(1,4,4,4,-2.97))
+fba.mod <- changeObjFunc(fba.mod, react = c(108,110,111,112), obj_coef = c(4,4,4,-2.97))
 
 # Get a baseline with the full set of mitochondrial functions and save the oxygen exchange for optimal conditions
 tmp.mod = fba.mod
 soln = optimizeProb(tmp.mod)
 soln.pmf = optimizeProb(tmp.mod, obj_coef = pmf.obj)
 f.o2.u <- -getFluxDist(soln)[EX_o2]/10
-f.o2.l = -f.o2.u/10
+f.o2.l = -f.o2.u
 # Use 10% of oxygen exchange in optimal conditions for anoxic conditions
 tmp.mod@lowbnd[EX_o2] = f.o2.l
 tmp.mod@uppbnd[EX_o2] = f.o2.u
@@ -593,32 +612,19 @@ for(ko in 1:nrow(KOs)){
 tmp.mod = fba.mod
 tmp.mod@lowbnd[ETC_inds[c(1,3:4)]] = 0
 tmp.mod@uppbnd[ETC_inds[c(1,3:4)]] = 0
+
+# CI and CIII are KOed; add NDH2 and AOX
+tmp.mod@lowbnd[NDH2_ind] = ndh2.lowbnd
+tmp.mod@uppbnd[NDH2_ind] = ndh2.uppbnd
+tmp.mod@lowbnd[AOX_ind] = aox.lowbnd
+tmp.mod@uppbnd[AOX_ind] = aox.uppbnd
+
 soln = optimizeProb(tmp.mod)
 soln.pmf = optimizeProb(tmp.mod, obj_coef = pmf.obj)
 tmp.mod@lowbnd[EX_o2] = f.o2.l
 tmp.mod@uppbnd[EX_o2] = f.o2.u
 soln.hypoxia = optimizeProb(tmp.mod)
 soln.pmf.hypoxia = optimizeProb(tmp.mod, obj_coef = pmf.obj)
-df = rbind(df, data.frame(KO="CI,CII,CV", OBJ = obj.name.pmf,
-			  max_obj_normoxic = soln@lp_obj, max_obj_normoxic2 = soln.pmf@lp_obj,
-  			  max_obj_hypoxic = soln.hypoxia@lp_obj, max_obj_hypoxic2 = soln.pmf.hypoxia@lp_obj))
-
-fd.normoxic <- getFluxDist(soln)
-fd.hypoxic  <- getFluxDist(soln.hypoxia)
-df.alts <- rbind(df.alts, data.frame(KO="CI,CII,CV", OBJ = obj.name.pmf,
-                                     AOX.normoxic = fd.normoxic[AOX_ind], AOX.hypoxic = fd.hypoxic[AOX_ind],
-                                     NDH2.normoxic = fd.normoxic[NDH2_ind], NDH2.hypoxic = fd.hypoxic[NDH2_ind],
-                                     ETC.normoxic = t(fd.normoxic[ETC_inds]), ETC.hypoxic = t(fd.hypoxic[ETC_inds])))
-
-tmp.mod = fba.mod
-tmp.mod@lowbnd[ETC_inds[c(1:2,5)]] = 0
-tmp.mod@uppbnd[ETC_inds[c(1:2,5)]] = 0
-soln = optimizeProb(tmp.mod)
-soln.pmf = optimizeProb(tmp.mod, obj_coef = pmf.obj)
-tmp.mod@lowbnd[EX_o2] = f.o2.l
-tmp.mod@uppbnd[EX_o2] = f.o2.u
-soln.hypoxia = optimizeProb(tmp.mod)
-soln.opmf.hypoxia = optimizeProb(tmp.mod, obj_coef = pmf.obj)
 df = rbind(df, data.frame(KO="CI,CIII,CIV", OBJ = obj.name.pmf,
 			  max_obj_normoxic = soln@lp_obj, max_obj_normoxic2 = soln.pmf@lp_obj,
   			  max_obj_hypoxic = soln.hypoxia@lp_obj, max_obj_hypoxic2 = soln.pmf.hypoxia@lp_obj))
@@ -631,8 +637,40 @@ df.alts <- rbind(df.alts, data.frame(KO="CI,CIII,CIV", OBJ = obj.name.pmf,
                                      ETC.normoxic = t(fd.normoxic[ETC_inds]), ETC.hypoxic = t(fd.hypoxic[ETC_inds])))
 
 tmp.mod = fba.mod
+tmp.mod@lowbnd[ETC_inds[c(1:2,5)]] = 0
+tmp.mod@uppbnd[ETC_inds[c(1:2,5)]] = 0
+
+# CI and CIII are KOed; add NDH2
+tmp.mod@lowbnd[NDH2_ind] = ndh2.lowbnd
+tmp.mod@uppbnd[NDH2_ind] = ndh2.uppbnd
+
+soln = optimizeProb(tmp.mod)
+soln.pmf = optimizeProb(tmp.mod, obj_coef = pmf.obj)
+tmp.mod@lowbnd[EX_o2] = f.o2.l
+tmp.mod@uppbnd[EX_o2] = f.o2.u
+soln.hypoxia = optimizeProb(tmp.mod)
+soln.opmf.hypoxia = optimizeProb(tmp.mod, obj_coef = pmf.obj)
+df = rbind(df, data.frame(KO="CI,CII,CV", OBJ = obj.name.pmf,
+			  max_obj_normoxic = soln@lp_obj, max_obj_normoxic2 = soln.pmf@lp_obj,
+  			  max_obj_hypoxic = soln.hypoxia@lp_obj, max_obj_hypoxic2 = soln.pmf.hypoxia@lp_obj))
+
+fd.normoxic <- getFluxDist(soln)
+fd.hypoxic  <- getFluxDist(soln.hypoxia)
+df.alts <- rbind(df.alts, data.frame(KO="CI,CII,CV", OBJ = obj.name.pmf,
+                                     AOX.normoxic = fd.normoxic[AOX_ind], AOX.hypoxic = fd.hypoxic[AOX_ind],
+                                     NDH2.normoxic = fd.normoxic[NDH2_ind], NDH2.hypoxic = fd.hypoxic[NDH2_ind],
+                                     ETC.normoxic = t(fd.normoxic[ETC_inds]), ETC.hypoxic = t(fd.hypoxic[ETC_inds])))
+
+tmp.mod = fba.mod
 tmp.mod@lowbnd[ETC_inds] = 0
 tmp.mod@uppbnd[ETC_inds] = 0
+
+# CI and CIII are KOed; add NDH2 and AOX
+tmp.mod@lowbnd[NDH2_ind] = ndh2.lowbnd
+tmp.mod@uppbnd[NDH2_ind] = ndh2.uppbnd
+tmp.mod@lowbnd[AOX_ind] = aox.lowbnd
+tmp.mod@uppbnd[AOX_ind] = aox.uppbnd
+
 soln = optimizeProb(tmp.mod)
 soln.pmf = optimizeProb(tmp.mod, obj_coef = pmf.obj)
 tmp.mod@lowbnd[EX_o2] = f.o2.l
