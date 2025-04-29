@@ -9,7 +9,6 @@ if (length(args)!=5) {
 
 require(phytools)
 require(parallel)
-require(sybilSBML)
 require(ggplot2)
 
 treefile <- as.character(args[1])
