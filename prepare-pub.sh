@@ -13,7 +13,7 @@
 # Runs HyperTraPS on the Apicomplexans
 ./runHyperTraPS-inference.R mro-ncbi-tree-2025-apicomplexans.nwk mro-barcodes-2025-apicomplexans-2.csv Apicomplexans-2 0 0 &
 
-# Runs HyperTraPS on the ciliophora (check)
+# Runs HyperTraPS on the ciliophora
 ./runHyperTraPS-inference.R mro-ncbi-tree-2025-ciliophora.nwk mro-barcodes-2025-ciliophora-2.csv Ciliophora-2 0 0 &
 
 # Make ten datasets with one observation changed
@@ -38,5 +38,10 @@ wait
 
 wait
 
-# Plot results from HyperTraPS uncertainty analysis and produce other figures
+cd FBA
+./run-fba.R
+
+wait
+
+# Plot results from HyperTraPS uncertainty analysis and produce other figures (still needs the fba figures from FBA/MitoMammal/Results/MAX_ATP/single-double-AOX-NDH2.csv, but everything else should work now, as well as the missing figures fig-4, SI-fig-3, and SI-fig-5)
 ./prepare-pub.R 2 .7
