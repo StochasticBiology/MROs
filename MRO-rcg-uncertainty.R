@@ -45,7 +45,7 @@ set.seed(1234)
 data.ncbi = curate.tree(tree, df, losses=TRUE)
 
 # run these experiments in parallel. should take a few core minutes each
-n.seed = 1
+n.seed = 3
 featurenames = colnames(df)[2:length(colnames(df))]
 parallelised.runs <- mcmapply(parallel.fn, seed=1:n.seed,
                               MoreArgs = list(src.data=data.ncbi,
