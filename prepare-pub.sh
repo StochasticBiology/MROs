@@ -43,7 +43,7 @@ wait
 wait
 
 cd FBA
-./run-fba.R
+./run-fba.R MAX_ATP output
 
 wait
 
