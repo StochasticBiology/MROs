@@ -2,10 +2,10 @@ Organism,CI,CII,CIII,CIV,CV,PDH,DNA,TCA,Fe-S
 Ancora sagittata,0,0,0,0,0,0,0,0,1
 Cephaloidophora communis,0,1,0,0,0,0,0,1,1
 Cryptosporidium andersoni,0,1,0,0,1,0,0,1,1
-Cryptosporidium hominis,0,0,0,0,0,0,0,0,1
+Cryptosporidium hominis,0,0,0,0,1,0,0,0,1
 Cryptosporidium muris,0,1,0,0,1,0,0,1,1
-Cryptosporidium parvum,0,0,0,0,0,0,0,0,1
-Gregarina niphandrodes,0,1,0,0,0,0,0,1,1
+Cryptosporidium parvum,0,0,0,0,1,0,0,0,1
+Gregarina niphandrodes,0,1,0,0,0,0,0,0,1
 Heliospora caprellae,0,1,0,0,0,0,0,1,1
 Lankesteria metandrocarpae,0,1,0,0,0,0,0,0,1
 Lecudina tuzetae,0,1,0,0,0,0,0,0,1

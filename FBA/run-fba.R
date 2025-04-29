@@ -1,5 +1,12 @@
 #!/usr/bin/env Rscript
 
+args = commandArgs(trailingOnly = T)
+
+# test if there's exactly two arguments; if not, return an error
+if (length(args)!=2) {
+  stop("Need two arguments: an output folder, and an output label.\n Usage: run-fba.R [output folder] [output label]\n", call.=FALSE)
+}
+
 # This is the working directory
 require(libSBML)
 require(sybilSBML) # Loads sybil
@@ -8,625 +15,603 @@ require(glpkAPI)
 require(Rglpk)
 require(combinat)
 
+obj.name = as.character(args[1])
+outfolder = as.character(args[1])
+outfolder = paste(outfolder,"/",sep="")
+outlabel = as.character(args[2])
+if(outlabel != "") outlabel = paste("-", outlabel, sep = "")
+
 # Load up the MitoMammal GEM
-mm <- readSBMLmod("MitoMammal/MitoMammal.xml")
+fba.mod <- readSBMLmod("MitoMammal/MitoMammal.xml")
 
-# Read reactions
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-reacts <- read.csv("MitoMammal/MitoMammal-reactions.txt")
+# Add AOX, NDH2, setting flux lb=ub=0
+fba.mod <- addReact(fba.mod, id = "AOX", met = c("q10h2[m]","o2[m]","q10[m]","h2o[m]"), Scoef = c(-2,-1,2,2), reversible = F, lb = 0, ub = 0)
+fba.mod <- addReact(fba.mod, id = "NDH2", met = c("h[m]","nadh[m]","q10[m]","nad[m]","q10h2[m]"),
+                    Scoef = c(-1,-1,-.999,1,.999), reversible = F, lb = 0, ub = 0)
 
-names <- reacts[,2]
+ndh2.lowbnd <- 0
+ndh2.uppbnd <- 1000
+aox.lowbnd <- 0
+aox.uppbnd <- 1000
 
-# Objective indices
-OBJ_inds <- c(71:74)
-OBJ_names <- c("OF_ATP_MitoCore","OF_HEME_MitoCore","OF_LIPID_MitoCore","OF_PROTEIN_MitoCore")
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-reacts <- mm@react_name #read.csv("MitoMammal/MitoMammal-reactions.txt")
+# Function to check whether CIII or CIV is among KOs
+#knockoutComplex <- function(KOname1, KOname2){
+#  if(KOname1 == "CIII" | KOname1 == "CIV" | KOname2 == "CIII" | KOname2 == "CIV"){
+#    return(T)
+#  }
+#  else{
+#    return(F)
+#  }
+#}
 
-names <- reacts
+#checkReactId(fba.mod, c("AOX","NDH2")) # OK
+#deadEndMetabolites(fba.mod) # No dead-end metabolites
 
-# Objective indices
-OBJ_inds <- c(71:74)
-OBJ_names <- names[OBJ_inds]
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+# Prints metabolites along with their stoichiometries (too check reactions are correctly added to the model)
+#for(i in 1:length(fba.mod@met_name)){
+#  printMetabolite(fba.mod,i)
+#}
+
+obj = rep(0,length(fba.mod@react_name))
+if(obj.name == "MAX_ATP"){
+  obj.ind = 71 #checkReactId(fba.mod, "OF_ATP_MitoCore")
+}else if(obj.name == "MAX_LIPID"){
+  obj.ind = 73 #checkReactId(fba.mod, "OF_LIPID_MitoCore")
+}else if(obj.name == "MAX_PROTEIN"){
+  obj.ind = 74 #checkReactId(fba.mod, "OF_PROTEIN_MitoCore")
+}else{
+  stop("Need input label: MAX_ATP, MAX_LIPID, or MAX_PROTEIN", call. = FALSE)
+}
+fba.mod = changeObjFunc(fba.mod, react = obj.ind)
+obj[obj.ind] = 1
 
 # Oxygen exchange:
 EX_o2 <- 50
 
+# AOX and NDH2
+AOX_ind =  561 #checkReactId(fba.mod, "AOX")[1]
+NDH2_ind =  561 #checkReactId(fba.mod, "NDH2")[1]
+
 # Test that it's really oxygen (check)
-# changeObjFunc(mm, react = EX_o2)
+# changeObjFunc(fba.mod, react = EX_o2)
 
 # Tricarboxylic acid cycle complexes
 TCA_inds <- c(98:107)
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-TCA_names <- c("pyruvate dehydrogenase","citrate synthase","Aconitate hydratase","Isocitrate dehydrogenase (NAD+)","Isocitrate dehydrogenase (NADP+), mitochondrial",
-	       "2-oxoglutarate dehydrogenase complex", "Succinate--CoA ligase (GDP-forming)", "Succinate--CoA ligase (ADP-forming)", "fumarate hydratase",
-	       "malate dehydrogenase 2, NAD (mitochondrial)")
-
+TCA_names <- c("PDH","CS","ACONT","ICDHx","ICDHy", "AKGD", "SUCOAS1", "SUCOAS", "FUM", "MDH")
 
 # Electron transport chain complexes I-V
 ETC_inds <- c(108:112)
-ETC_names <- c("NADH dehydrogenase", "succinate dehydrogenase", "cytochrome c reductase", "cytochrome c oxidase", "ATP synthase")
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-TCA_names <- names[TCA_inds]
-=======
-TCA_names <- c("PDH","CS","ACONT","ICDHx","ICDHy", "AKGD", "SUCOAS1", "SUCOAS", "FUM", "MDH")#names[TCA_inds]
->>>>>>> Stashed changes
-=======
-TCA_names <- c("PDH","CS","ACONT","ICDHx","ICDHy", "AKGD", "SUCOAS1", "SUCOAS", "FUM", "MDH")#names[TCA_inds]
->>>>>>> Stashed changes
-=======
-TCA_names <- c("PDH","CS","ACONT","ICDHx","ICDHy", "AKGD", "SUCOAS1", "SUCOAS", "FUM", "MDH")#names[TCA_inds]
->>>>>>> Stashed changes
-#cat(paste(c(names[TCA_inds],"\n")))
+ETC_names <- c("CI","CII","CIII","CIV","CV")
 
-# Electron transport chain complexes I-V
-ETC_inds <- c(108:112)
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-ETC_names <- names[ETC_inds]
-#cat(paste(c(names[ETC_inds],"\n")))
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+# Make data frames to keep track of what's KOed, and the fluxes at each complex of (primary) interest (thus far, at least)
+df <- data.frame(KO = NULL, OBJ = NULL,
+			  max_obj_normoxic =  NULL, max_obj_normoxic2 = NULL,
+			  max_obj_hypoxic = NULL, max_obj_hypoxic2 = NULL)
 
-# Make a data frame to keep track of what's KOed, and the fluxes at each complex of (primary) interest (thus far, at least)
-d <- data.frame(KO = NULL, EX_O2 = NULL, MAX_ATP = NULL, ETC = NULL, TCA = NULL)
-d2 <- data.frame(KO = NULL, EX_O2 = NULL, MAX_ATP = NULL, ETC = NULL, TCA = NULL)
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-d3 <- data.frame(KO = NULL, EX_O2 = NULL, MAX_ATP = NULL, ETC = NULL, TCA = NULL)
-d4 <- data.frame(KO = NULL, EX_O2 = NULL, MAX_ATP = NULL, ETC = NULL, TCA = NULL)
+# Keep track of fluxes through introduced reactions
+df.alts <- data.frame(KO = NULL, OBJ = NULL,
+                      AOX.normoxic = NULL, AOX.hypoxic = NULL,
+                      NDH2.normoxic = NULL, NDH2.hypoxic = NULL,
+                      ETC.normoxic = NULL, ETC.hypoxic = NULL)
 
+# Get a baseline with the full set of mitochondrial functions and save the oxygen exchange for optimal conditions
+tmp.mod = fba.mod
+soln = optimizeProb(tmp.mod)
+soln.obj = optimizeProb(tmp.mod, obj_coef = obj)
+f.o2.u <- -getFluxDist(soln)[EX_o2]/10
+f.o2.l <- -f.o2.u/10
+#print(f.o2.u)
+# Use 10% of oxygen exchange in optimal conditions for anoxic conditions
+tmp.mod@lowbnd[EX_o2] = f.o2.l
+tmp.mod@uppbnd[EX_o2] = f.o2.u
+soln.hypoxia = optimizeProb(tmp.mod)
+soln.obj.hypoxia = optimizeProb(tmp.mod, obj_coef = obj)
+df = rbind(df, data.frame(KO="None", OBJ = obj.name,
+			  max_obj_normoxic = soln@lp_obj, max_obj_normoxic2 = soln.obj@lp_obj,
+			  max_obj_hypoxic = soln.hypoxia@lp_obj, max_obj_hypoxic2 = soln.obj.hypoxia@lp_obj))
 
-# Get a baseline with MitoMammal across all cases, because we have a "full" set of mitochondrial functions
-=======
+fd.normoxic <- getFluxDist(soln)
+fd.hypoxic  <- getFluxDist(soln.hypoxia)
+df.alts <- rbind(df.alts, data.frame(KO = "None", OBJ = obj.name,
+                                     AOX.normoxic = fd.normoxic[AOX_ind], AOX.hypoxic = fd.hypoxic[AOX_ind],
+                                     NDH2.normoxic = fd.normoxic[NDH2_ind], NDH2.hypoxic = fd.hypoxic[NDH2_ind],
+                                     ETC.normoxic = t(fd.normoxic[ETC_inds]), ETC.hypoxic = t(fd.hypoxic[ETC_inds])))
 
-
-# Get a baseline with MitoMammal, because we have a "full" set of mitochondrial functions
->>>>>>> Stashed changes
-=======
-
-
-# Get a baseline with MitoMammal, because we have a "full" set of mitochondrial functions
->>>>>>> Stashed changes
-=======
-
-
-# Get a baseline with MitoMammal, because we have a "full" set of mitochondrial functions
->>>>>>> Stashed changes
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-ETC_names <- c("CI","CII","CIII","CIV","CV")#names[ETC_inds]
-#cat(paste(c(names[ETC_inds],"\n")))
-
-# Make a data frame to keep track of what's KOed, and the fluxes at each complex of (primary) interest (thus far, at least)
-d <- data.frame(KO = NULL, EX_O2 = NULL, MAX_ATP = NULL, ETC = NULL, PDH = NULL)
-d2 <- data.frame(KO = NULL, EX_O2 = NULL, MAX_ATP = NULL, ETC = NULL, PDH = NULL)
-
-
-# Get a baseline with MitoMammal, because we have a "full" set of mitochondrial functions
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-mm.base <- optimizeProb(mm, lpdir = "max")
-mm.FD <- data.frame(x = getFluxDist(mm.base))
-names(mm.FD) <- "Flux (µM/min/gDW)"
-
-# Extract the data
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-these_data <- data.frame(KO="NONE", EX_O2 = round(mm.FD[EX_o2,],4), MAX_ATP = mm.FD[OBJ_inds[1],], ETC = t(mm.FD[ETC_inds,]), TCA = t(mm.FD[TCA_inds[1],]))
-
-d <- rbind(d, these_data)
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-d2 <- rbind(d2, these_data)
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-
-KO_inds <- c(ETC_inds, TCA_inds[1])
-KO_names <- c("CI", "CII", "CIII", "CIV", "CV", "PDH")
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-these_data <- data.frame(KO="NONE", EX_O2 = round(mm.FD[EX_o2,],4), MAX_ATP = mm.FD[OBJ_inds[1],], ETC = t(mm.FD[ETC_inds,]), PDH = t(mm.FD[TCA_inds[1],]))
-
-d <- rbind(d, these_data)
-
-KO_inds <- c(ETC_inds, TCA_inds[1])
-KO_names <- c(ETC_names,TCA_names[1])
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+# Setup for single KOs of the ETCs
+KOs <- data.frame(ind = c(ETC_inds),
+                  name = c(ETC_names))
 
 # Do the single knockouts
-for(i in 1:length(KO_inds)){
-  mm.KO <- optimizeProb(mm, react = KO_inds[i], lb = 0, ub = 0, lpdir = "max")
 
-  # Fetch the flux distribution
-  mm.KO.FD <- data.frame(x=getFluxDist(mm.KO))
-  names(mm.KO.FD) <- "Flux (µM/min/gDW)"
-
-  # Extract the data
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  these_data <- data.frame(KO=KO_names[i], EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), TCA = t(mm.KO.FD[TCA_inds[1],]))
-=======
-  these_data <- data.frame(KO=KO_names[i], EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]),PDH = t(mm.KO.FD[TCA_inds[1],]))
->>>>>>> Stashed changes
-=======
-  these_data <- data.frame(KO=KO_names[i], EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]),PDH = t(mm.KO.FD[TCA_inds[1],]))
->>>>>>> Stashed changes
-=======
-  these_data <- data.frame(KO=KO_names[i], EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]),PDH = t(mm.KO.FD[TCA_inds[1],]))
->>>>>>> Stashed changes
-
-  d <- rbind(d, these_data)
+for(ko in 1:nrow(KOs)){
+  tmp.mod = fba.mod
+  
+  # Do the KO
+  KOind = KOs$ind[ko]
+  KOname = KOs$name[ko]
+  tmp.mod@lowbnd[KOind] = 0
+  tmp.mod@uppbnd[KOind] = 0
+  
+  # If CI is KOed, add NDH2
+  if(KOname == "CI"){
+   #print(KOname)
+   tmp.mod@lowbnd[NDH2_ind] = ndh2.lowbnd
+   tmp.mod@uppbnd[NDH2_ind] = ndh2.uppbnd
+  }
+  
+  # If CIII (the fourth KO) or CIV (the fifth), add AOX
+  if(KOname == "CIII" | KOname == "CIV"){
+   #print(KOname)
+   tmp.mod@lowbnd[AOX_ind] = aox.lowbnd
+   tmp.mod@uppbnd[AOX_ind] = aox.uppbnd
+  }
+  
+  soln = optimizeProb(tmp.mod)
+  soln.obj = optimizeProb(tmp.mod, obj_coef = obj)
+  tmp.mod@lowbnd[EX_o2] = f.o2.l
+  tmp.mod@uppbnd[EX_o2] = f.o2.u
+  soln.hypoxia = optimizeProb(tmp.mod)
+  soln.obj.hypoxia = optimizeProb(tmp.mod, obj_coef = obj)
+  df = rbind(df, data.frame(KO=KOname, OBJ = obj.name,
+			    max_obj_normoxic = soln@lp_obj, max_obj_normoxic2 = soln.obj@lp_obj,
+			    max_obj_hypoxic = soln.hypoxia@lp_obj, max_obj_hypoxic2 = soln.obj.hypoxia@lp_obj))
+  
+  fd.normoxic <- getFluxDist(soln)
+  fd.hypoxic  <- getFluxDist(soln.hypoxia)
+  df.alts <- rbind(df.alts, data.frame(KO = KOname, OBJ = obj.name,
+                                       AOX.normoxic = fd.normoxic[AOX_ind], AOX.hypoxic = fd.hypoxic[AOX_ind],
+                                       NDH2.normoxic = fd.normoxic[NDH2_ind], NDH2.hypoxic = fd.hypoxic[NDH2_ind],
+                                       ETC.normoxic = t(fd.normoxic[ETC_inds]), ETC.hypoxic = t(fd.hypoxic[ETC_inds])))
 }
+
+# Add single TCA KOs to single KOs
+for(ko in 1:length(TCA_inds)){
+  tmp.mod = fba.mod
+  tmp.mod@lowbnd[TCA_inds[ko]] = 0
+  tmp.mod@uppbnd[TCA_inds[ko]] = 0
+  KOname = TCA_names[ko]
+  soln = optimizeProb(tmp.mod)
+  soln.obj = optimizeProb(tmp.mod, obj_coef = obj)
+  tmp.mod@lowbnd[EX_o2] = f.o2.l
+  tmp.mod@uppbnd[EX_o2] = f.o2.u
+  soln.hypoxia = optimizeProb(tmp.mod)
+  soln.obj.hypoxia = optimizeProb(tmp.mod, obj_coef = obj)
+  df = rbind(df, data.frame(KO=paste("Single TCA", KOname, sep=":"), OBJ = obj.name, 
+			    max_obj_normoxic = soln@lp_obj, max_obj_normoxic2 = soln.obj@lp_obj,
+			    max_obj_hypoxic = soln.hypoxia@lp_obj, max_obj_hypoxic2 = soln.obj.hypoxia@lp_obj))
+  
+  fd.normoxic <- getFluxDist(soln)
+  fd.hypoxic  <- getFluxDist(soln.hypoxia)
+  df.alts <- rbind(df.alts, data.frame(KO=paste("Single TCA", KOname, sep=":"), OBJ = obj.name,
+                                       AOX.normoxic = fd.normoxic[AOX_ind], AOX.hypoxic = fd.hypoxic[AOX_ind],
+                                       NDH2.normoxic = fd.normoxic[NDH2_ind], NDH2.hypoxic = fd.hypoxic[NDH2_ind],
+                                       ETC.normoxic = t(fd.normoxic[ETC_inds]), ETC.hypoxic = t(fd.hypoxic[ETC_inds])))
+}
+
+# Add full TCA to single KOs (Note: TCA includes PDH in MitoMammal's annotation)
+tmp.mod = fba.mod
+tmp.mod@lowbnd[TCA_inds] = 0
+tmp.mod@uppbnd[TCA_inds] = 0
+soln = optimizeProb(tmp.mod)
+soln.obj = optimizeProb(tmp.mod, obj_coef = obj)
+tmp.mod@lowbnd[EX_o2] = f.o2.l
+tmp.mod@uppbnd[EX_o2] = f.o2.u
+soln.hypoxia = optimizeProb(tmp.mod)
+soln.obj.hypoxia = optimizeProb(tmp.mod, obj_coef = obj)
+df = rbind(df, data.frame(KO="Full TCA", OBJ = obj.name,
+			  max_obj_normoxic = soln@lp_obj, max_obj_normoxic2 = soln.obj@lp_obj,
+  			  max_obj_hypoxic = soln.hypoxia@lp_obj, max_obj_hypoxic2 = soln.obj.hypoxia@lp_obj))
+
+fd.normoxic <- getFluxDist(soln)
+fd.hypoxic  <- getFluxDist(soln.hypoxia)
+df.alts <- rbind(df.alts, data.frame(KO="Full TCA", OBJ = obj.name,
+                                     AOX.normoxic = fd.normoxic[AOX_ind], AOX.hypoxic = fd.hypoxic[AOX_ind],
+                                     NDH2.normoxic = fd.normoxic[NDH2_ind], NDH2.hypoxic = fd.hypoxic[NDH2_ind],
+                                     ETC.normoxic = t(fd.normoxic[ETC_inds]), ETC.hypoxic = t(fd.hypoxic[ETC_inds])))
 
 # Do double knockouts
-KO_inds  <- combn(c(ETC_inds,TCA_inds[1]), m = 2) 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-KO_names <- combn(c("CI", "CII", "CIII", "CIV", "CV", "PDH"), m = 2)
-=======
-KO_names <- combn(c(ETC_names, TCA_names[1]), m = 2)
->>>>>>> Stashed changes
-=======
-KO_names <- combn(c(ETC_names, TCA_names[1]), m = 2)
->>>>>>> Stashed changes
-=======
-KO_names <- combn(c(ETC_names, TCA_names[1]), m = 2)
->>>>>>> Stashed changes
-for(i in 1:ncol(KO_inds)){
-  mm.KO <- optimizeProb(mm, react = c(KO_inds[1,i], KO_inds[2,i]), lb = c(0,0), ub = c(0,0), lpdir = "max")
-
-  # Fetch the flux distribution
-  mm.KO.FD <- data.frame(x=getFluxDist(mm.KO))
-  names(mm.KO.FD) <- "Flux (µM/min/gDW)"
-
-  # Extract the data
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i],sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), TCA = t(mm.KO.FD[TCA_inds[1],]))
-=======
-  these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i],sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), PDH = t(mm.KO.FD[TCA_inds[1],]))
->>>>>>> Stashed changes
-=======
-  these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i],sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), PDH = t(mm.KO.FD[TCA_inds[1],]))
->>>>>>> Stashed changes
-=======
-  these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i],sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), PDH = t(mm.KO.FD[TCA_inds[1],]))
->>>>>>> Stashed changes
-
-  d <- rbind(d, these_data)
+KOs <- data.frame(ind1 = c(rep(ETC_inds[1],5), rep(ETC_inds[2],4), rep(ETC_inds[3],3), rep(ETC_inds[4],2), ETC_inds[5]),
+                  ind2 = c(c(TCA_inds[1], ETC_inds[2:5]),
+                           c(TCA_inds[1], ETC_inds[3:5]),
+                           c(TCA_inds[1], ETC_inds[4:5]),
+                           c(TCA_inds[1], ETC_inds[5]),
+                           TCA_inds[1]),
+                  name1 = c(rep(ETC_names[1],5), rep(ETC_names[2],4), rep(ETC_names[3],3), rep(ETC_names[4],2), ETC_names[5]),
+                  name2 = c(c(TCA_names[1], ETC_names[2:5]),
+                            c(TCA_names[1], ETC_names[3:5]),
+                            c(TCA_names[1], ETC_names[4:5]),
+                            c(TCA_names[1], ETC_names[5]),
+                            TCA_names[1]))
+for(ko in 1:nrow(KOs)){
+  tmp.mod = fba.mod
+  
+  # Do the KOs
+  KOind1 = KOs$ind1[ko]
+  KOind2 = KOs$ind2[ko]
+  KOname1 = KOs$name1[ko]
+  KOname2 = KOs$name2[ko]
+  tmp.mod@lowbnd[c(KOind1,KOind2)] = 0
+  tmp.mod@uppbnd[c(KOind1,KOind2)] = 0
+  
+  # If CI is KOed, add NDH2
+  if(KOname1 == "CI" | KOname2 == "CI"){
+   #print(paste(KOname1,KOname2,sep =","))
+   tmp.mod@lowbnd[NDH2_ind] = ndh2.lowbnd
+   tmp.mod@uppbnd[NDH2_ind] = ndh2.uppbnd
+  }
+  
+  # If CIII or CIV is KOed, add AOX
+  if(KOname1 == "CIII" | KOname1 == "CIV" | KOname2 == "CIII" | KOname2 == "CIV"){
+    #print(paste(KOname1,KOname2,sep =","))
+    tmp.mod@lowbnd[AOX_ind] = aox.lowbnd
+    tmp.mod@uppbnd[AOX_ind] = aox.uppbnd
+  }
+  soln = optimizeProb(tmp.mod)
+  soln.obj = optimizeProb(tmp.mod, obj_coef = obj)
+  tmp.mod@lowbnd[EX_o2] = f.o2.l
+  tmp.mod@uppbnd[EX_o2] = f.o2.u
+  soln.hypoxia = optimizeProb(tmp.mod)
+  soln.obj.hypoxia = optimizeProb(tmp.mod, obj_coef = obj)
+  df = rbind(df, data.frame(KO=paste(KOname1, KOname2, sep = ","), OBJ = obj.name,
+			    max_obj_normoxic = soln@lp_obj, max_obj_normoxic2 = soln.obj@lp_obj,
+  			    max_obj_hypoxic = soln.hypoxia@lp_obj, max_obj_hypoxic2 = soln.obj.hypoxia@lp_obj))
+  
+  fd.normoxic <- getFluxDist(soln)
+  fd.hypoxic  <- getFluxDist(soln.hypoxia)
+  df.alts <- rbind(df.alts, data.frame(KO=paste(KOname1, KOname2, sep = ","), OBJ = obj.name,
+                                       AOX.normoxic = fd.normoxic[AOX_ind], AOX.hypoxic = fd.hypoxic[AOX_ind],
+                                       NDH2.normoxic = fd.normoxic[NDH2_ind], NDH2.hypoxic = fd.hypoxic[NDH2_ind],
+                                       ETC.normoxic = t(fd.normoxic[ETC_inds]), ETC.hypoxic = t(fd.hypoxic[ETC_inds])))
 }
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-names(d) <- c("KO","EX_O2","MAX_ATP","CI","CII","CIII","CIV","CV","PDH")
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-print(d)
-=======
-#print(d)
->>>>>>> Stashed changes
-=======
-#print(d)
->>>>>>> Stashed changes
-=======
-#print(d)
->>>>>>> Stashed changes
-
-# Print to file
-filename <- "single-double-KO-MAX_ATP-no-restriction.csv"
-write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = d, row.names = F)
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-# Do triple knockouts
-KO_inds  <- combn(c(ETC_inds,TCA_inds[1]), m=3)
-KO_names <- combn(c("CI", "CII", "CIII", "CIV", "CV", "PDH"), m = 3)
-
-for(i in 1:ncol(KO_inds)){
-  mm.KO <- optimizeProb(mm, react = c(KO_inds[1,i], KO_inds[2,i], KO_inds[3,i]), lb = c(0,0,0), ub = c(0,0,0), lpdir = "max")
-
-  # Fetch the flux distribution
-  mm.KO.FD <- data.frame(x=getFluxDist(mm.KO))
-  names(mm.KO.FD) <- "Flux (µM/min/gDW)"
-
-  # Extract the data
-  these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i], KO_names[3,i],sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), TCA = t(mm.KO.FD[TCA_inds[1],]))
-
-  d2 <- rbind(d2, these_data)
+# KO each ETC with TCA
+KOs <- data.frame(ind = ETC_inds,
+                  name1 = ETC_names,
+                  name2 = rep("TCA",5))
+for(ko in 1:nrow(KOs)){
+  tmp.mod = fba.mod
+  
+  # Do the KOs
+  KOind1 = KOs$ind[ko]
+  KOind2 = TCA_inds
+  KOname1 = KOs$name1[ko]
+  KOname2 = "TCA"
+  tmp.mod@lowbnd[c(KOind1,KOind2)] = 0
+  tmp.mod@uppbnd[c(KOind1,KOind2)] = 0
+  
+  # If CI is KOed, add NDH2
+  if(KOname1 == "CI"){
+   #print(paste(KOname1,KOname2,sep =","))
+   tmp.mod@lowbnd[NDH2_ind] = ndh2.lowbnd
+   tmp.mod@uppbnd[NDH2_ind] = ndh2.uppbnd
+  }
+  
+  # If CIII or CIV is KOed, add AOX
+  if(KOname1 == "CIII" | KOname1 == "CIV"){
+    #print(paste(KOname1,KOname2,sep =","))
+    tmp.mod@lowbnd[AOX_ind] = aox.lowbnd
+    tmp.mod@uppbnd[AOX_ind] = aox.uppbnd
+  }
+  
+  soln = optimizeProb(tmp.mod)
+  soln.obj = optimizeProb(tmp.mod, obj_coef = obj)
+  tmp.mod@lowbnd[EX_o2] = f.o2.l
+  tmp.mod@uppbnd[EX_o2] = f.o2.u
+  soln.hypoxia = optimizeProb(tmp.mod)
+  soln.obj.hypoxia = optimizeProb(tmp.mod, obj_coef = obj)
+  df = rbind(df, data.frame(KO=paste(KOname1, KOname2, sep = ","), OBJ = obj.name, 
+			    max_obj_normoxic = soln@lp_obj, max_obj_normoxic2 = soln.obj@lp_obj,
+  			    max_obj_hypoxic = soln.hypoxia@lp_obj, max_obj_hypoxic2 = soln.obj.hypoxia@lp_obj))
+  
+  fd.normoxic <- getFluxDist(soln)
+  fd.hypoxic  <- getFluxDist(soln.hypoxia)
+  df.alts <- rbind(df.alts, data.frame(KO=paste(KOname1, KOname2, sep = ","), OBJ = obj.name,
+                                       AOX.normoxic = fd.normoxic[AOX_ind], AOX.hypoxic = fd.hypoxic[AOX_ind],
+                                       NDH2.normoxic = fd.normoxic[NDH2_ind], NDH2.hypoxic = fd.hypoxic[NDH2_ind],
+                                       ETC.normoxic = t(fd.normoxic[ETC_inds]), ETC.hypoxic = t(fd.hypoxic[ETC_inds])))
 }
 
-# Do quadruple knockouts
-KO_inds  <- combn(c(ETC_inds,TCA_inds[1]), m=4)
-KO_names <- combn(c("CI", "CII", "CIII", "CIV", "CV", "PDH"), m = 4)
+# Add {CI,CII,CV}, {CIII,CIV,CV}, and entire ETC
+tmp.mod = fba.mod
+tmp.mod@lowbnd[ETC_inds[c(1,3:4)]] = 0
+tmp.mod@uppbnd[ETC_inds[c(1,3:4)]] = 0
+soln = optimizeProb(tmp.mod)
+soln.obj = optimizeProb(tmp.mod, obj_coef = obj)
+tmp.mod@lowbnd[EX_o2] = f.o2.l
+tmp.mod@uppbnd[EX_o2] = f.o2.u
+soln.hypoxia = optimizeProb(tmp.mod)
+soln.obj.hypoxia = optimizeProb(tmp.mod, obj_coef = obj)
+df = rbind(df, data.frame(KO="CI,CII,CV", OBJ = obj.name,
+			  max_obj_normoxic = soln@lp_obj, max_obj_normoxic2 = soln.obj@lp_obj,
+  			  max_obj_hypoxic = soln.hypoxia@lp_obj, max_obj_hypoxic2 = soln.obj.hypoxia@lp_obj))
 
-for(i in 1:ncol(KO_inds)){
-  mm.KO <- optimizeProb(mm, react = c(KO_inds[1,i], KO_inds[2,i], KO_inds[3,i], KO_inds[4,i]), lb = c(0,0,0,0), ub = c(0,0,0,0), lpdir = "max")
+fd.normoxic <- getFluxDist(soln)
+fd.hypoxic  <- getFluxDist(soln.hypoxia)
+df.alts <- rbind(df.alts, data.frame(KO="CI,CII,CV", OBJ = obj.name,
+                                     AOX.normoxic = fd.normoxic[AOX_ind], AOX.hypoxic = fd.hypoxic[AOX_ind],
+                                     NDH2.normoxic = fd.normoxic[NDH2_ind], NDH2.hypoxic = fd.hypoxic[NDH2_ind],
+                                     ETC.normoxic = t(fd.normoxic[ETC_inds]), ETC.hypoxic = t(fd.hypoxic[ETC_inds])))
 
-  # Fetch the flux distribution
-  mm.KO.FD <- data.frame(x=getFluxDist(mm.KO))
-  names(mm.KO.FD) <- "Flux (µM/min/gDW)"
+tmp.mod = fba.mod
+tmp.mod@lowbnd[ETC_inds[c(1:2,5)]] = 0
+tmp.mod@uppbnd[ETC_inds[c(1:2,5)]] = 0
+soln = optimizeProb(tmp.mod)
+soln.obj = optimizeProb(tmp.mod, obj_coef = obj)
+tmp.mod@lowbnd[EX_o2] = f.o2.l
+tmp.mod@uppbnd[EX_o2] = f.o2.u
+soln.hypoxia = optimizeProb(tmp.mod)
+soln.obj.hypoxia = optimizeProb(tmp.mod, obj_coef = obj)
+df = rbind(df, data.frame(KO="CI,CIII,CIV", OBJ = obj.name,
+			  max_obj_normoxic = soln@lp_obj, max_obj_normoxic2 = soln.obj@lp_obj,
+  			  max_obj_hypoxic = soln.hypoxia@lp_obj, max_obj_hypoxic2 = soln.obj.hypoxia@lp_obj))
 
-  # Extract the data
-  these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i], KO_names[3,i], KO_names[4,i], sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), TCA = t(mm.KO.FD[TCA_inds[1],]))
+fd.normoxic <- getFluxDist(soln)
+fd.hypoxic  <- getFluxDist(soln.hypoxia)
+df.alts <- rbind(df.alts, data.frame(KO="CI,CIII,CIV", OBJ = obj.name,
+                                     AOX.normoxic = fd.normoxic[AOX_ind], AOX.hypoxic = fd.hypoxic[AOX_ind],
+                                     NDH2.normoxic = fd.normoxic[NDH2_ind], NDH2.hypoxic = fd.hypoxic[NDH2_ind],
+                                     ETC.normoxic = t(fd.normoxic[ETC_inds]), ETC.hypoxic = t(fd.hypoxic[ETC_inds])))
 
-  d2 <- rbind(d2, these_data)
+tmp.mod = fba.mod
+tmp.mod@lowbnd[ETC_inds] = 0
+tmp.mod@uppbnd[ETC_inds] = 0
+soln = optimizeProb(tmp.mod)
+soln.obj = optimizeProb(tmp.mod, obj_coef = obj)
+tmp.mod@lowbnd[EX_o2] = f.o2.l
+tmp.mod@uppbnd[EX_o2] = f.o2.u
+soln.hypoxia = optimizeProb(tmp.mod)
+soln.obj.hypoxia = optimizeProb(tmp.mod, obj_coef = obj)
+df = rbind(df, data.frame(KO="Full ETC", OBJ = obj.name,
+			  max_obj_normoxic = soln@lp_obj, max_obj_normoxic2 = soln.obj@lp_obj,
+  			  max_obj_hypoxic = soln.hypoxia@lp_obj, max_obj_hypoxic2 = soln.obj.hypoxia@lp_obj))
+
+fd.normoxic <- getFluxDist(soln)
+fd.hypoxic  <- getFluxDist(soln.hypoxia)
+df.alts <- rbind(df.alts, data.frame(KO="Full ETC", OBJ = obj.name,
+                                     AOX.normoxic = fd.normoxic[AOX_ind], AOX.hypoxic = fd.hypoxic[AOX_ind],
+                                     NDH2.normoxic = fd.normoxic[NDH2_ind], NDH2.hypoxic = fd.hypoxic[NDH2_ind],
+                                     ETC.normoxic = t(fd.normoxic[ETC_inds]), ETC.hypoxic = t(fd.hypoxic[ETC_inds])))
+
+# Set up for MAX PMF AND OBJ
+pmf.obj = rep(0,length(fba.mod@react_name))
+pmf.obj[c(108,110,111)] = 4
+pmf.obj[112] = -2.97
+
+fba.mod <- changeObjFunc(fba.mod, react = c(obj.ind,108,110,111,112), obj_coef = c(1,4,4,4,-2.97))
+
+# Get a baseline with the full set of mitochondrial functions and save the oxygen exchange for optimal conditions
+tmp.mod = fba.mod
+soln = optimizeProb(tmp.mod)
+soln.pmf = optimizeProb(tmp.mod, obj_coef = pmf.obj)
+f.o2.u <- -getFluxDist(soln)[EX_o2]/10
+f.o2.l = -f.o2.u/10
+# Use 10% of oxygen exchange in optimal conditions for anoxic conditions
+tmp.mod@lowbnd[EX_o2] = f.o2.l
+tmp.mod@uppbnd[EX_o2] = f.o2.u
+soln.hypoxia = optimizeProb(tmp.mod)
+soln.pmf.hypoxia = optimizeProb(tmp.mod, obj_coef = pmf.obj)
+df = rbind(df, data.frame(KO="None", OBJ = "MAX_PMF",
+			  max_obj_normoxic = soln@lp_obj, max_obj_normoxic2 = soln.pmf@lp_obj,
+  			  max_obj_hypoxic = soln.hypoxia@lp_obj, max_obj_hypoxic2 = soln.pmf.hypoxia@lp_obj))
+
+fd.normoxic <- getFluxDist(soln)
+fd.hypoxic  <- getFluxDist(soln.hypoxia)
+df.alts <- rbind(df.alts, data.frame(KO = KOname, OBJ = "MAX_PMF",
+                                     AOX.normoxic = fd.normoxic[AOX_ind], AOX.hypoxic = fd.hypoxic[AOX_ind],
+                                     NDH2.normoxic = fd.normoxic[NDH2_ind], NDH2.hypoxic = fd.hypoxic[NDH2_ind],
+                                     ETC.normoxic = t(fd.normoxic[ETC_inds]), ETC.hypoxic = t(fd.hypoxic[ETC_inds])))
+
+# Setup for single KOs of the ETCs
+KOs <- data.frame(ind = c(ETC_inds),
+                  name = c(ETC_names))
+
+# Do the single knockouts
+
+for(ko in 1:nrow(KOs)){
+  tmp.mod = fba.mod
+  
+  # Do the KO
+  KOind = KOs$ind[ko]
+  KOname = KOs$name[ko]
+  tmp.mod@lowbnd[KOind] = 0
+  tmp.mod@uppbnd[KOind] = 0
+  
+  # If CI is KOed, add NDH2
+  if(KOname == "CI"){
+   #print(KOname)
+   tmp.mod@lowbnd[NDH2_ind] = ndh2.lowbnd
+   tmp.mod@uppbnd[NDH2_ind] = ndh2.uppbnd
+  }
+  
+  # If CIII (the fourth KO) or CIV (the fifth), add AOX
+  if(KOname == "CIII" | KOname == "CIV"){
+    #print(KOname)
+    tmp.mod@lowbnd[AOX_ind] = aox.lowbnd
+    tmp.mod@uppbnd[AOX_ind] = aox.uppbnd
+  }
+  
+  soln = optimizeProb(tmp.mod)
+  soln.pmf = optimizeProb(tmp.mod, obj_coef = pmf.obj)
+  tmp.mod@lowbnd[EX_o2] = f.o2.l
+  tmp.mod@uppbnd[EX_o2] = f.o2.u
+  soln.hypoxia = optimizeProb(tmp.mod)
+  soln.pmf.hypoxia = optimizeProb(tmp.mod, obj_coef = pmf.obj)
+  df = rbind(df, data.frame(KO=KOname, OBJ = "MAX_PMF",
+			    max_obj_normoxic = soln@lp_obj, max_obj_normoxic2 = soln.pmf@lp_obj,
+  			    max_obj_hypoxic = soln.hypoxia@lp_obj, max_obj_hypoxic2 = soln.pmf.hypoxia@lp_obj))
+  
+  fd.normoxic <- getFluxDist(soln)
+  fd.hypoxic  <- getFluxDist(soln.hypoxia)
+  df.alts <- rbind(df.alts, data.frame(KO = KOname, OBJ = "MAX_PMF",
+                                       AOX.normoxic = fd.normoxic[AOX_ind], AOX.hypoxic = fd.hypoxic[AOX_ind],
+                                       NDH2.normoxic = fd.normoxic[NDH2_ind], NDH2.hypoxic = fd.hypoxic[NDH2_ind],
+                                       ETC.normoxic = t(fd.normoxic[ETC_inds]), ETC.hypoxic = t(fd.hypoxic[ETC_inds])))
 }
 
-names(d2) <- c("KO","EX_O2","MAX_ATP","CI","CII","CIII","CIV","CV","PDH")
-
-print(d2)
-
-# Print to file
-filename <- "triple-quadruple-KO-MAX_ATP-no-restriction.csv"
-write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = d2, row.names = F)
-
-
-######## Repeat with a O2 restricted model
-
-# Get baseline for anoxic case (10% the oxygen availability required by the basecase (it is negative, hence signs)
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-names(d) <- c("KO","EX_O2","MAX_ATP",ETC_names,TCA_names[1])
-
-#print(d)
-
-# Print to file
-filename <- "single-double-KO-MAX_ATP-normoxic.csv"
-write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = d, row.names = F)
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-
-######## Repeat with a O2 restricted model
-
-# Get baseline for hypoxic case (10% the oxygen availability required by the basecase (it is negative, hence signs))
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-o20 <- mm.FD[EX_o2,]
-mm.base <- optimizeProb(mm, react = EX_o2, lb = o20/10, ub = -o20/10, lpdir = "max")
-mm.FD <- data.frame(x = getFluxDist(mm.base))
-names(mm.FD) <- "Flux (µM/min/gDW)"
-
-# Extract the data
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-these_data <- data.frame(KO="NONE", EX_O2 = round(mm.FD[EX_o2,],4), MAX_ATP = mm.FD[OBJ_inds[1],], ETC = t(mm.FD[ETC_inds,]), TCA = t(mm.FD[TCA_inds[1],]))
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-d3 <- rbind(d3, these_data)
-d4 <- rbind(d4, these_data)
-=======
-d2 <- rbind(d2, these_data)
->>>>>>> Stashed changes
-=======
-d2 <- rbind(d2, these_data)
->>>>>>> Stashed changes
-=======
-d2 <- rbind(d2, these_data)
->>>>>>> Stashed changes
-
-KO_inds <- c(ETC_inds, TCA_inds[1])
-KO_names <- c("CI", "CII", "CIII", "CIV", "CV", "PDH")
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-these_data <- data.frame(KO="NONE", EX_O2 = round(mm.FD[EX_o2,],4), MAX_ATP = mm.FD[OBJ_inds[1],], ETC = t(mm.FD[ETC_inds,]), PDH = t(mm.FD[TCA_inds[1],]))
-
-d2 <- rbind(d2, these_data)
-
-KO_inds <- c(ETC_inds, TCA_inds[1])
-KO_names <- c(ETC_names, TCA_names[1])
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-
-# Do single knockouts
-for(i in 1:length(KO_inds)){
-  mm.KO <- optimizeProb(mm, react = c(EX_o2,KO_inds[i]), lb = c(o20/10,0), ub = c(-o20/10,0), lpdir = "max")
-
-  # Fetch the flux distribution
-  mm.KO.FD <- data.frame(x=getFluxDist(mm.KO))
-  names(mm.KO.FD) <- "Flux (µM/min/gDW)"
-
-  # Extract the data
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  these_data <- data.frame(KO=KO_names[i], EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), TCA = t(mm.KO.FD[TCA_inds[1],]))
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  d3 <- rbind(d3, these_data)
-=======
-  d2 <- rbind(d2, these_data)
->>>>>>> Stashed changes
-=======
-  d2 <- rbind(d2, these_data)
->>>>>>> Stashed changes
-=======
-  d2 <- rbind(d2, these_data)
->>>>>>> Stashed changes
-=======
-  these_data <- data.frame(KO=KO_names[i], EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), PDH = t(mm.KO.FD[TCA_inds[1],]))
-
-  d2 <- rbind(d2, these_data)
->>>>>>> Stashed changes
-=======
-  these_data <- data.frame(KO=KO_names[i], EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), PDH = t(mm.KO.FD[TCA_inds[1],]))
-
-  d2 <- rbind(d2, these_data)
->>>>>>> Stashed changes
-=======
-  these_data <- data.frame(KO=KO_names[i], EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), PDH = t(mm.KO.FD[TCA_inds[1],]))
-
-  d2 <- rbind(d2, these_data)
->>>>>>> Stashed changes
+# Add single TCA KOs to single KOs
+for(ko in 1:length(TCA_inds)){
+  tmp.mod = fba.mod
+  tmp.mod@lowbnd[TCA_inds[ko]] = 0
+  tmp.mod@uppbnd[TCA_inds[ko]] = 0
+  KOname = TCA_names[ko]
+  
+  soln = optimizeProb(tmp.mod)
+  soln.pmf = optimizeProb(tmp.mod, obj_coef = pmf.obj)
+  tmp.mod@lowbnd[EX_o2] = f.o2.l
+  tmp.mod@uppbnd[EX_o2] = f.o2.u
+  soln.hypoxia = optimizeProb(tmp.mod)
+  soln.pmf.hypoxia = optimizeProb(tmp.mod, obj_coef = pmf.obj)
+  df = rbind(df, data.frame(KO=paste("Single TCA", KOname, sep=":"), OBJ = "MAX_PMF",
+			    max_obj_normoxic = soln@lp_obj, max_obj_normoxic2 = soln.pmf@lp_obj,
+  			    max_obj_hypoxic = soln.hypoxia@lp_obj, max_obj_hypoxic2 = soln.pmf.hypoxia@lp_obj))
+  
+  fd.normoxic <- getFluxDist(soln)
+  fd.hypoxic  <- getFluxDist(soln.hypoxia)
+  df.alts <- rbind(df.alts, data.frame(KO=paste("Single TCA", KOname, sep=":"), OBJ = "MAX_PMF",
+                                       AOX.normoxic = fd.normoxic[AOX_ind], AOX.hypoxic = fd.hypoxic[AOX_ind],
+                                       NDH2.normoxic = fd.normoxic[NDH2_ind], NDH2.hypoxic = fd.hypoxic[NDH2_ind],
+                                       ETC.normoxic = t(fd.normoxic[ETC_inds]), ETC.hypoxic = t(fd.hypoxic[ETC_inds])))
 }
+
+# Add full TCA to single KOs (Note: TCA includes PDH in MitoMammal's annotation)
+tmp.mod = fba.mod
+tmp.mod@lowbnd[TCA_inds] = 0
+tmp.mod@uppbnd[TCA_inds] = 0
+soln = optimizeProb(tmp.mod)
+soln.pmf = optimizeProb(tmp.mod, obj_coef = pmf.obj)
+tmp.mod@lowbnd[EX_o2] = f.o2.l
+tmp.mod@uppbnd[EX_o2] = f.o2.u
+soln.hypoxia = optimizeProb(tmp.mod)
+soln.pmf.hypoxia = optimizeProb(tmp.mod, obj_coef = pmf.obj)
+df = rbind(df, data.frame(KO="Full TCA", OBJ = "MAX_PMF",
+			  max_obj_normoxic = soln@lp_obj, max_obj_normoxic2 = soln.pmf@lp_obj,
+  			  max_obj_hypoxic = soln.hypoxia@lp_obj, max_obj_hypoxic2 = soln.pmf.hypoxia@lp_obj))
+
+fd.normoxic <- getFluxDist(soln)
+fd.hypoxic  <- getFluxDist(soln.hypoxia)
+df.alts <- rbind(df.alts, data.frame(KO="Full TCA", OBJ = "MAX_PMF",
+                                     AOX.normoxic = fd.normoxic[AOX_ind], AOX.hypoxic = fd.hypoxic[AOX_ind],
+                                     NDH2.normoxic = fd.normoxic[NDH2_ind], NDH2.hypoxic = fd.hypoxic[NDH2_ind],
+                                     ETC.normoxic = t(fd.normoxic[ETC_inds]), ETC.hypoxic = t(fd.hypoxic[ETC_inds])))
 
 # Do double knockouts
-KO_inds  <- combn(c(ETC_inds,TCA_inds[1]), m = 2) 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-KO_names <- combn(c("CI", "CII", "CIII", "CIV", "CV", "PDH"), m = 2)
-=======
-KO_names <- combn(c(ETC_names, TCA_names[1]), m = 2)
->>>>>>> Stashed changes
-=======
-KO_names <- combn(c(ETC_names, TCA_names[1]), m = 2)
->>>>>>> Stashed changes
-=======
-KO_names <- combn(c(ETC_names, TCA_names[1]), m = 2)
->>>>>>> Stashed changes
-for(i in 1:ncol(KO_inds)){
-  mm.KO <- optimizeProb(mm, react = c(EX_o2,KO_inds[1,i], KO_inds[2,i]), lb = c(o20/10,0,0), ub = c(-o20/10,0,0), lpdir = "max")
-
-  # Fetch the flux distribution
-  mm.KO.FD <- data.frame(x=getFluxDist(mm.KO))
-  names(mm.KO.FD) <- "Flux (µM/min/gDW)"
-
-  # Extract the data
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i],sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), TCA = t(mm.KO.FD[TCA_inds[1],]))
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  d3 <- rbind(d3, these_data)
+KOs <- data.frame(ind1 = c(rep(ETC_inds[1],5), rep(ETC_inds[2],4), rep(ETC_inds[3],3), rep(ETC_inds[4],2), ETC_inds[5]),
+                  ind2 = c(c(TCA_inds[1], ETC_inds[2:5]),
+                           c(TCA_inds[1], ETC_inds[3:5]),
+                           c(TCA_inds[1], ETC_inds[4:5]),
+                           c(TCA_inds[1], ETC_inds[5]),
+                           TCA_inds[1]),
+                  name1 = c(rep(ETC_names[1],5), rep(ETC_names[2],4), rep(ETC_names[3],3), rep(ETC_names[4],2), ETC_names[5]),
+                  name2 = c(c(TCA_names[1], ETC_names[2:5]),
+                            c(TCA_names[1], ETC_names[3:5]),
+                            c(TCA_names[1], ETC_names[4:5]),
+                            c(TCA_names[1], ETC_names[5]),
+                            TCA_names[1]))
+for(ko in 1:nrow(KOs)){
+  tmp.mod = fba.mod
+  
+  # Do the KOs
+  KOind1 = KOs$ind1[ko]
+  KOind2 = KOs$ind2[ko]
+  KOname1 = KOs$name1[ko]
+  KOname2 = KOs$name2[ko]
+  tmp.mod@lowbnd[c(KOind1,KOind2)] = 0
+  tmp.mod@uppbnd[c(KOind1,KOind2)] = 0
+  
+  # If CI is KOed, add NDH2
+  if(KOname1 == "CI" | KOname2 == "CI"){
+   #print(paste(KOname1,KOname2,sep =","))
+   tmp.mod@lowbnd[NDH2_ind] = ndh2.lowbnd
+   tmp.mod@uppbnd[NDH2_ind] = ndh2.uppbnd
+  }
+  
+  # If CIII or CIV is KOed, add AOX
+  if(KOname1 == "CIII" | KOname1 == "CIV" | KOname2 == "CIII" | KOname2 == "CIV"){
+    #print(paste(KOname1,KOname2,sep =","))
+    tmp.mod@lowbnd[AOX_ind] = aox.lowbnd
+    tmp.mod@uppbnd[AOX_ind] = aox.uppbnd
+  }
+  
+  soln = optimizeProb(tmp.mod)
+  soln.pmf = optimizeProb(tmp.mod, obj_coef = pmf.obj)
+  tmp.mod@lowbnd[EX_o2] = f.o2.l
+  tmp.mod@uppbnd[EX_o2] = f.o2.u
+  soln.hypoxia = optimizeProb(tmp.mod)
+  soln.pmf.hypoxia = optimizeProb(tmp.mod, obj_coef = pmf.obj)
+  df = rbind(df, data.frame(KO=paste(KOname1, KOname2, sep = ","), OBJ = "MAX_PMF", 
+			    max_obj_normoxic = soln@lp_obj, max_obj_normoxic2 = soln.pmf@lp_obj,
+  			    max_obj_hypoxic = soln.hypoxia@lp_obj, max_obj_hypoxic2 = soln.pmf.hypoxia@lp_obj))
+  
+  fd.normoxic <- getFluxDist(soln)
+  fd.hypoxic  <- getFluxDist(soln.hypoxia)
+  df.alts <- rbind(df.alts, data.frame(KO=paste(KOname1, KOname2, sep = ","), OBJ = "MAX_PMF", 
+                                       AOX.normoxic = fd.normoxic[AOX_ind], AOX.hypoxic = fd.hypoxic[AOX_ind],
+                                       NDH2.normoxic = fd.normoxic[NDH2_ind], NDH2.hypoxic = fd.hypoxic[NDH2_ind],
+                                       ETC.normoxic = t(fd.normoxic[ETC_inds]), ETC.hypoxic = t(fd.hypoxic[ETC_inds])))
 }
 
-names(d3) <- c("KO","EX_O2","MAX_ATP","CI","CII","CIII","CIV","CV","PDH")
-
-print(d3)
-
-# Print to file
-filename <- "single-double-KO-MAX_ATP-oxygen-restriction.csv"
-write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = d3, row.names = F)
-
-# Do triple knockouts
-KO_inds  <- combn(c(ETC_inds,TCA_inds[1]), m=3)
-KO_names <- combn(c("CI", "CII", "CIII", "CIV", "CV", "PDH"), m = 3)
-
-for(i in 1:ncol(KO_inds)){
-  mm.KO <- optimizeProb(mm, react = c(EX_o2, KO_inds[1,i], KO_inds[2,i], KO_inds[3,i]), lb = c(o20/10,0,0,0), ub = c(-o20/10,0,0,0), lpdir = "max")
-
-  # Fetch the flux distribution
-  mm.KO.FD <- data.frame(x=getFluxDist(mm.KO))
-  names(mm.KO.FD) <- "Flux (µM/min/gDW)"
-
-  # Extract the data
-  these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i], KO_names[3,i],sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), TCA = t(mm.KO.FD[TCA_inds[1],]))
-
-  d4 <- rbind(d4, these_data)
+# KO each ETC with TCA
+KOs <- data.frame(ind = ETC_inds,
+                  name1 = ETC_names,
+                  name2 = rep("TCA",5))
+for(ko in 1:nrow(KOs)){
+  tmp.mod = fba.mod
+  
+  # Do the KOs
+  KOind1 = KOs$ind[ko]
+  KOind2 = TCA_inds
+  KOname1 = KOs$name1[ko]
+  KOname2 = "TCA"
+  tmp.mod@lowbnd[c(KOind1,KOind2)] = 0
+  tmp.mod@uppbnd[c(KOind1,KOind2)] = 0
+  
+  # If CI is KOed, add NDH2
+  if(KOname1 == "CI"){
+   #print(paste(KOname1,KOname2,sep =","))
+   tmp.mod@lowbnd[NDH2_ind] = ndh2.lowbnd
+   tmp.mod@uppbnd[NDH2_ind] = ndh2.uppbnd
+  }
+  
+  # If CIII or CIV is KOed, add AOX
+  if(KOname1 == "CIII" | KOname1 == "CIV"){
+    #print(paste(KOname1,KOname2,sep =","))
+    tmp.mod@lowbnd[AOX_ind] = aox.lowbnd
+    tmp.mod@uppbnd[AOX_ind] = aox.uppbnd
+  }
+  
+  soln = optimizeProb(tmp.mod)
+  soln.pmf = optimizeProb(tmp.mod, obj_coef = pmf.obj)
+  tmp.mod@lowbnd[EX_o2] = f.o2.l
+  tmp.mod@uppbnd[EX_o2] = f.o2.u
+  soln.hypoxia = optimizeProb(tmp.mod)
+  soln.pmf.hypoxia = optimizeProb(tmp.mod, obj_coef = pmf.obj)
+  df = rbind(df, data.frame(KO=paste(KOname1, KOname2, sep = ","), OBJ = "MAX_PMF",
+			    max_obj_normoxic = soln@lp_obj, max_obj_normoxic2 = soln.pmf@lp_obj,
+  			    max_obj_hypoxic = soln.hypoxia@lp_obj, max_obj_hypoxic2 = soln.pmf.hypoxia@lp_obj))
+  
+  fd.normoxic <- getFluxDist(soln)
+  fd.hypoxic  <- getFluxDist(soln.hypoxia)
+  df.alts <- rbind(df.alts, data.frame(KO=paste(KOname1, KOname2, sep = ","), OBJ = "MAX_PMF",
+                                       AOX.normoxic = fd.normoxic[AOX_ind], AOX.hypoxic = fd.hypoxic[AOX_ind],
+                                       NDH2.normoxic = fd.normoxic[NDH2_ind], NDH2.hypoxic = fd.hypoxic[NDH2_ind],
+                                       ETC.normoxic = t(fd.normoxic[ETC_inds]), ETC.hypoxic = t(fd.hypoxic[ETC_inds])))
 }
 
-# Do quadruple knockouts
-KO_inds  <- combn(c(ETC_inds,TCA_inds[1]), m=4)
-KO_names <- combn(c("CI", "CII", "CIII", "CIV", "CV", "PDH"), m = 4)
+# Print df to file
+if(!dir.exists("MitoMammal/Results"))dir.create("MitoMammal/Results")
+if(!dir.exists(paste("MitoMammal/Results/",outfolder, sep = "")))dir.create(paste("MitoMammal/Results/",outfolder, sep = ""))
+filename <- paste(outfolder, "single-double", outlabel, ".csv", sep = "")
+write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = df, row.names = F)
 
-for(i in 1:ncol(KO_inds)){
-  mm.KO <- optimizeProb(mm, react = c(EX_o2, KO_inds[1,i], KO_inds[2,i], KO_inds[3,i], KO_inds[4,i]), lb = c(o20/10,0,0,0,0), ub = c(-o20,0,0,0,0), lpdir = "max")
+names(df.alts) <- c("KO","OBJ",
+                    paste("AOX",c("norm","hyp"),sep="."),
+                    paste("NDH2",c("norm","hyp"),sep="."),
+                    paste(ETC_names,"norm",sep="."),
+                    paste(ETC_names,"hyp",sep="."))
 
-  # Fetch the flux distribution
-  mm.KO.FD <- data.frame(x=getFluxDist(mm.KO))
-  names(mm.KO.FD) <- "Flux (µM/min/gDW)"
+df[,c(3:ncol(df))] <- round(df[,c(3:ncol(df))], 2)
+df.alts[,c(3:ncol(df.alts))] <- round(df.alts[,c(3:ncol(df.alts))], 2) 
 
-  # Extract the data
-  these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i], KO_names[3,i], KO_names[4,i], sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), TCA = t(mm.KO.FD[TCA_inds[1],]))
-
-  d4 <- rbind(d4, these_data)
-}
-
-names(d4) <- c("KO","EX_O2","MAX_ATP","CI","CII","CIII","CIV","CV","PDH")
-
-print(d4)
-
-# Print to file
-filename <- "triple-quadruple-KO-MAX_ATP-oxygen-restriction.csv"
-write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = d4, row.names = F)
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-  d2 <- rbind(d2, these_data)
-}
-
-names(d2) <- c("KO","EX_O2","MAX_ATP","CI","CII","CIII","CIV","CV","PDH")
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-  these_data <- data.frame(KO=paste(KO_names[1,i], KO_names[2,i],sep=","), EX_O2 = round(mm.KO.FD[EX_o2,],4), MAX_ATP = mm.KO.FD[OBJ_inds[1],], ETC = t(mm.KO.FD[ETC_inds,]), PDH = t(mm.KO.FD[TCA_inds[1],]))
-
-  d2 <- rbind(d2, these_data)
-}
-
-names(d2) <- c("KO","EX_O2","MAX_ATP",ETC_names,TCA_names[1])
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-
-#print(d2)
-
-# Print to file
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-filename <- "single-double-KO-MAX_ATP-oxygen-restriction.csv"
-write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = d2, row.names = F)
-
-# Make a heatmap showing the complexes, with (NONE, KOs) on the y-axis and values of (NONE, KOs) after KO for MAX_ATP in normoxic and anoxic conditions
-d.norm <- d[1:6,c(1,3:8)]
-d.anox <- d2[1:6,c(1,3:8)]
-
-for(i in 2:6){
-d.anox[,i]<-d.anox[,i]/d.norm[1,i]
-d.norm[,i]<-d.norm[,i]/d.norm[1,i]
-}
-
-print(d.norm)
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-print(d.anox)
->>>>>>> Stashed changes
-=======
-print(d.anox)
->>>>>>> Stashed changes
-=======
-print(d.anox)
->>>>>>> Stashed changes
-=======
-filename <- "single-double-KO-MAX_ATP-anoxic.csv"
-write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = d2, row.names = F)
->>>>>>> Stashed changes
-=======
-filename <- "single-double-KO-MAX_ATP-anoxic.csv"
-write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = d2, row.names = F)
->>>>>>> Stashed changes
-=======
-filename <- "single-double-KO-MAX_ATP-anoxic.csv"
-write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = d2, row.names = F)
->>>>>>> Stashed changes
+# Print df.alts to file
+filename <- paste(outfolder, "single-double", outlabel, "-alts.csv", sep = "")
+write.csv(file = paste("MitoMammal/Results/",filename,sep=""), x = df.alts, row.names = F)

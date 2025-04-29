@@ -4,14 +4,16 @@
 
 args <- commandArgs(trailingOnly = TRUE)
 
-if(length(args) != 2){
-  stop("Need two arguments: The number of datasets to make and the original dataset.\n Usage: randomizeData.R [integer] [dataset], e.g., randomizeData.R 10 mro-barcodes-2025.csv\n")
+if(length(args) != 3){
+  stop("Need three arguments: The number of datasets to make, the original dataset, and an output label (1: 1b --> 0; 2: 1b --> 1)].\n Usage: randomizeData.R [integer] [dataset] [label], e.g., randomizeData.R 10 mro-barcodes-2025.csv\n")
 }
 
 n <- as.numeric(args[1])
 datafile <- as.character(args[2])
+tag <- as.numeric(args[3])
 
 df <- read.csv(paste("Data/",datafile, sep = ""))
+if(!dir.exists(paste("Data/RandomizedData", tag, sep = "-")))dir.create(paste("Data/RandomizedData", tag, sep = "-"))
 
 # Set a seed
 set.seed(1234)
@@ -34,13 +36,5 @@ for(k in 1:n){
   this_df[change,] = tmp_df
 
   # Save this_df
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  write.csv(this_df, file = paste("Data/randomized/randomized-dataset-",k,".csv",sep = ""), quote = F, row.names = F)
-=======
-  write.csv(this_df, file = paste("Data/RandomizedData/randomized-dataset-",k,".csv",sep = ""), quote = F, row.names = F)
->>>>>>> Stashed changes
-=======
-  write.csv(this_df, file = paste("Data/RandomizedData/randomized-dataset-",k,".csv",sep = ""), quote = F, row.names = F)
->>>>>>> Stashed changes
+  write.csv(this_df, file = paste("Data/RandomizedData-",tag, "/randomized-dataset-", k, ".csv",sep = ""), quote = F, row.names = F)
 }
