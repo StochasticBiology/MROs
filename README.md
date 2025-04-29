@@ -17,6 +17,6 @@ Broadly, the pipeline:
 
 `prepare-pub.sh` is the wrapper script for the pipeline. Given source data (in `Data/`) on presence/absence of MRO features and phylogenies with and without branch lengths, it uses functionality from HyperTraPS-CT (https://github.com/StochasticBiology/hypertraps-ct) to reconstruct a set of evolutionary transitions. It examines dynamics in different subsets of the data, reflecting different clades, and also creates several resampled datasets to act as controls, and runs inference on these. Various visualisations are produced.
 
-We hypothesise a link between metabolic influence of a feature and its propensity to be lost. `prepare-pub.sh` takes a first look at this with a simple model-solver combo in the script `summarizeHyperTraPS-inference.R`. A broader flux balance analysis is performed by running the script `FBA/run-fba.R` (will fold into overall pipeline). 
+We hypothesise a link between metabolic influence of a feature and its propensity to be lost. The associated flux balance analysis is performed by the script `FBA/run-fba.R` (also called from `prepare-pub.sh`). 
 
 Outside `prepare-pub.R`, `summarizeHyperTraPS-inference.R` outputs visualizations with which to determined if chains mix well, if output converges, among other things. 
