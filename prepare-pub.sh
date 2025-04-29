@@ -47,7 +47,7 @@ wait
 wait
 
 cd FBA
-./run-fba.R MAX_ATP output
+./run-fba.R MAX_ATP AOX-NDH2
 
 wait
 
