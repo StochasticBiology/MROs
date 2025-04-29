@@ -20,6 +20,9 @@ tree <- read.tree(paste("Data/", treefile,sep =""))
 df <- read.csv(paste("Data/RandomizedData-2/", datafile, sep = ""))
 outfolder <- paste("Results/", output,"/", sep = "")
 
+if(!dir.exists("Results"))dir.create("Results")
+if(!dir.exists(outfolder))dir.create(outfolder)
+
 # IGJ March 2025 -- updated this file
 source("hypertraps.R")
 
