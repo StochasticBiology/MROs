@@ -1,0 +1,63 @@
+Acanthamoeba castellanii
+Aduncisulcus paluster
+Amoebophrya ceratii
+Anaerocyclidium porcatum
+Apolagynus cf. cucumis
+Apolagynus sp.
+Ascaris suum
+Blastocystis sp.
+Brevimastigomonas motovehiculus
+Carpediemonas membranifera
+Cantina marsupialis
+Chilodonella uncinata
+Chilomastix cuspidata
+Chlamydomonas reinhardtii
+Chromera velia
+Dysnectes brevis
+Encephalitozoon cuniculi
+Entamoeba histolytica
+Ergobibamus cyprinoides
+Euglena gracilis
+Fasciola hepatica
+Giardia intestinalis
+Henneguya salminicola
+Heterometopus sp. CSS
+Holophrya ovum
+Homo sapiens
+Kipferlia bialata
+Kudoa
+Lagynus cucumis
+Leishmania tropica
+Mastigamoeba balamuthi
+Metopus contortus
+Metopus laminarius
+Mikrocytos mackini
+Mitosporidium sp.
+Monocercomonoides exilis
+Muranothrix gubernata
+Myxobolus squamalis
+Naegleria gruberi
+Nematocida parisii
+Neocallimastix frontalis
+Neocallimastix sp.
+Nyctotherus ovalis
+Orpinomyces sp.
+Parablepharisma
+Paratrimastix pyriformis
+Piromyces sp.
+Plagiopyla frontata
+Plagiopyla cf. narasimhamurtii
+Psalteriomonas lanterna
+Pygsuia biforma
+Rozella
+Saccharomyces cerevisiae
+Sawyeria marylandensis
+Schizosaccharomyces pombe
+Spironucleus salmonicida
+Stygiella incarcerata
+Trepomonas sp.
+Trichomonas vaginalis
+Trimastix marina
+Trypanosoma brucei
+Viscum album
+Vitrella brassicaformis

@@ -1,0 +1,31 @@
+Acanthamoeba castellanii
+Ascaris suum
+Carpediemonas membranifera
+Chilodonella uncinata
+Chlamydomonas reinhardtii
+Cryptosporidium parvum
+Cyclidium porcatum
+Entamoeba histolytica
+Euglena gracilis
+Fasciola hepatica
+Giardia intestinalis
+Henneguya salminicola
+Homo sapiens
+Kudoa
+Leishmania tropica
+Mastigamoeba balamuthi
+Myxobolus squamalis
+Naegleria gruberi
+Neocallimastix frontalis
+Nyctotherus ovalis
+Paratrimastix pyriformis
+Plasmodium falciparum
+Rozella
+Saccharomyces cerevisiae
+Sawyeria marylandensis
+Schizosaccharomyces pombe
+Spironucleus salmonicida
+Toxoplasma gondii
+Trichomonas vaginalis
+Trypanosoma brucei
+Viscum album
