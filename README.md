@@ -6,7 +6,7 @@ Inference and investigation of reductive evolution of mitochondrion-related orga
 
 Dependencies
 ----
-This code requires R, sybil, sybilSBML, and HyperTraPS-CT and its dependencies (see https://github.com/StochasticBiology/hypertraps-ct).
+This code requires R, sybil, sybilSBML, and HyperTraPS-CT and its dependencies (see https://github.com/StochasticBiology/hypertraps-ct). The code is, by default, run in parallel; with 8 cores it should take perhaps 20-30min for the whole pipeline. 
 
 Outline
 ----
