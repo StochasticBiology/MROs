@@ -20,3 +20,7 @@ Broadly, the pipeline:
 We hypothesise a link between metabolic influence of a feature and its propensity to be lost. The associated flux balance analysis is performed by the script `FBA/run-fba.R` (also called from `prepare-pub.sh`). 
 
 Outside `prepare-pub.R`, `summarizeHyperTraPS-inference.R` outputs visualizations with which to determined if chains mix well, if output converges, among other things. 
+
+Data
+----
+Data with references and commentary can be found in `MRO-metaanalysis-2025.xlsx`. This is intepreted according to the various binarisation protocols described therein and (optionally) subsetted by clade, and the binarised curated results are stored in `Data/` for the analysis pipeline.
