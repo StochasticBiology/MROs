@@ -13,7 +13,6 @@ library(ggraph)
 library(ggtree)
 library(ggtreeExtra)
 library(ggpubr)
-library(forcats)
 source("hypertraps.R")
 
 mytag = as.character(args[1])
@@ -103,8 +102,8 @@ fig.4.dots = fig.4.dots[fig.4.dots$OBJ == "MAX_ATP",]
 fig.4.bars = fig.4.bars[fig.4.bars$OBJ == "MAX_ATP",]
 
 fig.4 = ggplot()+
-         geom_col(data = fig.4.bars, aes(x = fct_inorder(KO), y = max_obj_normoxic), fill = "#4A4A4A", color = "white")+
-         geom_point(data = fig.4.dots, aes(x = fct_inorder(KO), y = max_obj_normoxic), color = "#D9D9D9", size = 2)+
+         geom_col(data = fig.4.bars, aes(x = factor(KO, levels = unique(KO), ordered = T), y = max_obj_normoxic), fill = "#4A4A4A", color = "white")+
+         geom_point(data = fig.4.dots, aes(x = factor(KO, levels = unique(KO), ordered = T), y = max_obj_normoxic), color = "#D9D9D9", size = 2)+
 	 labs(x = "Knockout", y = "Modelled ATP production")+
          theme_minimal() 
 
@@ -191,13 +190,13 @@ fig.5.atp = fig.5.data[fig.5.data$OBJ == "MAX_ATP",]
 fig.5.pmf = fig.5.data[fig.5.data$OBJ == "MAX_PMF",]
 
 fig.5.top = ggplot()+
-              geom_col(data = fig.5.atp, aes(x = fct_inorder(KO), y = max_obj_normoxic), fill = "#FF000050")+
-              geom_col(data = fig.5.pmf, aes(x = fct_inorder(KO), y = max_obj_normoxic/3.737), fill = "#0000FF50")+
+              geom_col(data = fig.5.atp, aes(x = factor(KO, levels = unique(KO), ordered = T), y = max_obj_normoxic), fill = "#FF000050")+
+              geom_col(data = fig.5.pmf, aes(x = factor(KO, levels = unique(KO), ordered = T), y = max_obj_normoxic/3.737), fill = "#0000FF50")+
 	      labs(x = "KO", y = "Normoxic max ATP or\n (scaled) PMR generation")+
 	      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + theme(legend.position="none")
 fig.5.bot = ggplot()+
-              geom_col(data = fig.5.atp, aes(x = fct_inorder(KO), y = max_obj_hypoxic), fill = "#FF000050")+
-              geom_col(data = fig.5.pmf, aes(x = fct_inorder(KO), y = max_obj_hypoxic/3.737), fill = "#0000FF50")+
+              geom_col(data = fig.5.atp, aes(x = factor(KO, levels = unique(KO), ordered = T), y = max_obj_hypoxic), fill = "#FF000050")+
+              geom_col(data = fig.5.pmf, aes(x = factor(KO, levels = unique(KO), ordered = T), y = max_obj_hypoxic/3.737), fill = "#0000FF50")+
 	      labs(x = "KO", y = "Hypoxic max ATP or\n (scaled) PMR generation")+
 	      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) + theme(legend.position="none")
 
