@@ -15,7 +15,6 @@ library(ggtreeExtra)
 library(ggpubr)
 library(stringr)
 library(hypertrapsct)
-#source("hypertraps.R")
 
 mytag = as.character(args[1])
 cv.thresh = as.numeric(args[2])
@@ -127,9 +126,9 @@ png("Results/fig-3.png", width=800*sf, height=600*sf, res=72*sf)
 print(fig.3)
 dev.off()
 
-load(paste("Results/Alveolates-", mytag, "/Alveolates.RData",sep=""))
+load(paste("Results/Alveolates-", mytag, "/mro-save-0-0.RData",sep=""))
 set.3 = parallelised.runs[[1]]
-load(paste("Results/Alveolates-", mytag ,"/Non-Alveolates.RData",sep=""))
+load(paste("Results/Non-Alveolates-", mytag ,"/mro-save-0-0.RData",sep=""))
 set.4 = parallelised.runs[[1]]
 
 fig.3c.1 = plotHypercube.bubbles(set.3) + theme(legend.position="none")

@@ -10,6 +10,7 @@ if (length(args)!=5) {
 require(phytools)
 require(parallel)
 require(ggplot2)
+require(hypertrapsct)
 
 treefile <- as.character(args[1])
 datafile <- as.character(args[2])
@@ -20,9 +21,6 @@ with_timings <- as.numeric(args[5])
 tree <- read.tree(paste("Data/",treefile,sep =""))
 df <- read.csv(paste("Data/",datafile, sep = ""))
 outfolder <- paste("Results/",output,"/", sep = "")
-
-# IGJ March 2025 -- updated this file
-source("hypertraps.R")
 
 # harmonise labels across tree and barcode data # Download the full tree without changing type of file or labels in the file itself
 #tree$tip.label = gsub("'", "", tree$tip.label)

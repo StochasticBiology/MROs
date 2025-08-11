@@ -4,10 +4,6 @@
 chmod +x *.R
 chmod +x FBA/*.R
 
-# get the HyperTraPS-CT source code, and put the essential code into this directory
-git clone https://github.com/StochasticBiology/hypertraps-ct
-cp hypertraps-ct/hypertraps* .
-
 # Use: runHyperTraPS-inference.R [treefile] [file with binary string] [output folder] [penalty (0/1)] [with_timings (0/1)]
 
 #### Run all types of inferences with the interpretation that 1b --> 1
