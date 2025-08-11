@@ -10,6 +10,7 @@ if (length(args)!=4) {
 library(phytools)
 library(parallel)
 library(ggplot2)
+library(hypertrapsct)
 
 treefile <- as.character(args[1])
 datafile <- as.character(args[2])
@@ -22,9 +23,6 @@ outfolder <- paste("Results/", output,"/", sep = "")
 
 if(!dir.exists("Results"))dir.create("Results")
 if(!dir.exists(outfolder))dir.create(outfolder)
-
-# IGJ March 2025 -- updated this file
-source("hypertraps.R")
 
 # harmonise labels across tree and barcode data
 # IGJ March 2025 -- think I added something here

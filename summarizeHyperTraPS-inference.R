@@ -12,7 +12,7 @@ library(phytools)
 library(parallel)
 library(sybilSBML)
 library(ggplot2)
-source("hypertraps.R")
+library(hypertrapsct)
 
 treefile <- as.character(args[1])
 datafile <- as.character(args[2])

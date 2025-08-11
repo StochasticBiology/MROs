@@ -4,10 +4,6 @@
 chmod +x *.R
 chmod +x FBA/*.R
 
-# get the HyperTraPS-CT source code, and put the essential code into this directory
-git clone https://github.com/StochasticBiology/hypertraps-ct
-cp hypertraps-ct/hypertraps* .
-
 # Use: runHyperTraPS-inference.R [treefile] [file with binary string] [output folder] [penalty (0/1)] [with_timings (0/1)]
 
 #### Run all types of inferences with the interpretation that 1b --> 1
@@ -23,6 +19,12 @@ cp hypertraps-ct/hypertraps* .
 
 # Runs HyperTraPS on the ciliophora
 ./runHyperTraPS-inference.R mro-ncbi-tree-2025-ciliophora.nwk mro-barcodes-2025-ciliophora-2.csv Ciliophora-2 0 0 &
+
+# Runs HyperTraPS on the alveolates
+./runHyperTraPS-inference.R mro-ncbi-tree-2025-alveolates.nwk mro-barcodes-2025-2.csv Alveolates-2 0 0 &
+
+# Runs HyperTraPS on the non-alveolates
+./runHyperTraPS-inference.R mro-ncbi-tree-2025-non-alveolates.nwk mro-barcodes-2025-2.csv Non-Alveolates-2 0 0 &
 
 # Make ten datasets with one observation changed
 # Use: randomizeData.R [integer number of datasets] [file with binary strings] [label (1: 1b --> 0; 2: 1b --> 1)]
