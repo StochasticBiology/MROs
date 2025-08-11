@@ -24,6 +24,12 @@ cp hypertraps-ct/hypertraps* .
 # Runs HyperTraPS on the ciliophora
 ./runHyperTraPS-inference.R mro-ncbi-tree-2025-ciliophora.nwk mro-barcodes-2025-ciliophora-2.csv Ciliophora-2 0 0 &
 
+# Runs HyperTraPS on the alveolates
+./runHyperTraPS-inference.R mro-ncbi-tree-2025-alveolates.nwk mro-barcodes-2025-2.csv Alveolates-2 0 0 &
+
+# Runs HyperTraPS on the non-alveolates
+./runHyperTraPS-inference.R mro-ncbi-tree-2025-non-alveolates.nwk mro-barcodes-2025-2.csv Non-Alveolates-2 0 0 &
+
 # Make ten datasets with one observation changed
 # Use: randomizeData.R [integer number of datasets] [file with binary strings] [label (1: 1b --> 0; 2: 1b --> 1)]
 ./randomizeData.R 10 mro-barcodes-2025-2.csv 2
