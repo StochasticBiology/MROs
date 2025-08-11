@@ -2,6 +2,8 @@
 
 Inference and investigation of reductive evolution of mitochondrion-related organelles (MROs).
 
+<a href="https://doi.org/10.5281/zenodo.16798558"><img src="https://zenodo.org/badge/826822041.svg" alt="DOI"></a>
+
 ![image](https://github.com/user-attachments/assets/37c59f21-8094-4c48-b8a9-2c60a3b6a3a5)
 
 Dependencies
